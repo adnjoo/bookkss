@@ -1,5 +1,7 @@
 Bookkss is a monorepo that provides a platform for users to write and share book reviews. 
 
+The app is [deployed](bookkss.com) with Vercel
+
 ---
 
 Technologies used:
