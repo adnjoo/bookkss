@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 
 export function LoginSignup() {
   return (
-    <div className='mx-4 flex justify-center'>
+    <div className='mx-4 mt-12 flex justify-center'>
       <Form className='flex flex-col rounded-xl border p-4 sm:w-[400px]'>
         <Form.Group className='mb-3' controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
