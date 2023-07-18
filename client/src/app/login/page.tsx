@@ -1,5 +1,11 @@
+import { LoginSignup } from '@/components/login';
+
 function Login() {
-  return <>hello</>;
+  return (
+    <>
+      <LoginSignup />
+    </>
+  );
 }
 
 export default Login;
