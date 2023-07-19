@@ -9,10 +9,12 @@ const ServerProtectedPage = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/get-reviews').then((res) => {
-      console.log(res.data);
-      setReviews(res.data);
-    });
+    axios
+      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/get-reviews`)
+      .then((res) => {
+        console.log(res.data);
+        setReviews(res.data);
+      });
   }, []);
 
   return (
