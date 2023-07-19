@@ -1,6 +1,5 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Provider, MyNavbar } from '@/components';
 
