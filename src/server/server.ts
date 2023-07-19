@@ -13,7 +13,7 @@ const pool = mysql.createPool({
   connectionLimit: 10, // Adjust this according to your needs
 });
 
-pool.getConnection((err, connection) => {
+pool.getConnection((err: any, connection: any) => {
   if (err) {
     console.error('Error connecting to MySQL database:', err);
     return;
@@ -22,25 +22,25 @@ pool.getConnection((err, connection) => {
   connection.release();
 });
 
-app.get('/hello', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
+app.get('/hello', (req: any, res: any) => {
+  res.header('Access-Control-Allow-Origin', '*');
   res.send('Hello, World!');
 });
 
-app.get('/get-reviews', (req, res) => {
-  pool.query('SELECT * FROM Review', (error, results) => {
+app.get('/get-reviews', (req: any, res: any) => {
+  pool.query('SELECT * FROM Review', (error: any, results: any) => {
     if (error) {
       console.error('Error querying MySQL database:', error);
       res.status(500).send('Error querying the database');
       return;
     }
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Origin', '*');
     res.json(results);
   });
 });
 
-app.post('/add-review', (req, res) => {
-  console.log(req.body)
+app.post('/add-review', (req: any, res: any) => {
+  console.log(req.body);
   const { title, body } = req.body;
 
   if (!title || !body) {
@@ -53,16 +53,17 @@ app.post('/add-review', (req, res) => {
     body: body,
   };
 
-  pool.query('INSERT INTO Review SET ?', review, (error, result) => {
+  pool.query('INSERT INTO Review SET ?', review, (error: any, result: any) => {
     if (error) {
       console.error('Error inserting review into MySQL database:', error);
-      res.status(500).json({ error: 'Error inserting review into the database' });
+      res
+        .status(500)
+        .json({ error: 'Error inserting review into the database' });
       return;
     }
     res.json({ message: 'Review added successfully!' });
   });
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
