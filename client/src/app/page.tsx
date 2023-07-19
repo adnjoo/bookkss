@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <div>
       <div className='mt-40'>
-        <div className='text-center'>
+        <div className='mx-4 text-center'>
           <h1 className='text-4xl font-bold text-gray-900 sm:text-6xl'>
             Expand your knowledge
           </h1>
@@ -11,7 +11,7 @@ export default function Home() {
             for future reference.
           </p>
           <div className='mt-10 flex justify-center'>
-            <a href='/login' className='rounded-xl bg-gray-500 p-3 text-white'>
+            <a href='/signin' className='rounded-xl bg-gray-500 p-3 text-white'>
               Get started
             </a>
           </div>
