@@ -28,7 +28,7 @@ const ServerProtectedPage = () => {
         </h2>
         <div className='mt-4'>
           Reviews
-          {reviews.map((review) => (
+          {reviews.map((review: any) => (
             <div key={review.id}>
               <h3>{review.title}</h3>
               <p>{review.body}</p>
