@@ -1,37 +1,33 @@
-'use client';
+import { getServerSession } from 'next-auth/next';
 
-import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
-import { signOut, useSession } from 'next-auth/react';
+import { authOptions } from '@/lib/auth';
 
-export function MyNavbar() {
-  const { data: session } = useSession({
-    required: false,
-  });
-
-  console.log(session);
-
+export const MyNavbar = async () => {
+  const session = await getServerSession(authOptions);
   return (
-    <Navbar
-      expand='lg'
-      className='bg-body-tertiary
-    '
-    >
-      <Container>
-        <Navbar.Brand href='/'>bookkss</Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='flex w-full justify-between'>
-            <div className='flex'>
-              <Nav.Link href='/'>Home</Nav.Link>
-              {session && <Nav.Link href='/dashboard'>Dashboard</Nav.Link>}
-            </div>
-            <NavDropdown title='Dropdown' id='basic-nav-dropdown'>
-              <Nav.Link href='/login'>Login</Nav.Link>
-              <Nav.Link onClick={() => signOut()}>Sign out</Nav.Link>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <>
+      {session ? (
+        <nav className='mx-4 mt-4 flex justify-between gap-4'>
+          <div className='flex gap-4'>
+            <a href='/'>bookkss</a>
+            <a href='/'>Home</a>
+            <a href='/dashboard'>Dashboard</a>
+          </div>
+          <div>
+            <a href='/api/auth/signout'>Sign out</a>
+          </div>
+        </nav>
+      ) : (
+        <nav className='mx-4 mt-4 flex justify-between gap-4'>
+          <div className='flex gap-4'>
+            <a href='/'>bookkss</a>
+            <a href='/'>Home</a>
+          </div>
+          <div>
+            <a href='/signin'>Sign in</a>
+          </div>
+        </nav>
+      )}
+    </>
   );
-}
+};
