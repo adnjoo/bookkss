@@ -1,2 +1,2 @@
 export * from './MyNavbar'
-export * from './SessionProvider'
+export * from './Provider'
