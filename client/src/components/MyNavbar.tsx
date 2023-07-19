@@ -1,54 +1,33 @@
-'use client';
+import { getServerSession } from 'next-auth/next';
 
-import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
-import { signOut, useSession } from 'next-auth/react';
-import { CgProfile } from 'react-icons/cg';
+import { authOptions } from '@/lib/auth';
 
-export function MyNavbar() {
-  const { data: session } = useSession();
-
-  console.log(session);
-
+export const MyNavbar = async () => {
+  const session = await getServerSession(authOptions);
   return (
-    <Navbar
-      expand='lg'
-      className='bg-body-tertiary
-    '
-    >
-      <Container>
-        <Navbar.Brand href='/'>bookkss</Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='flex w-full justify-between'>
-            <div className='flex'>
-              <Nav.Link href='/'>Home</Nav.Link>
-              {1 && <Nav.Link href='/dashboard'>Dashboard</Nav.Link>}
-            </div>
-            <NavDropdown
-              align='end'
-              title={
-                <div className='flex flex-row'>
-                  {session ? (
-                    <img
-                      src={session?.user?.image as string}
-                      className='rounded-full'
-                      width={20}
-                    />
-                  ) : (
-                    <CgProfile size={20} />
-                  )}
-                </div>
-              }
-              id='basic-nav-dropdown'
-            >
-              {!session && <Nav.Link href='/signin'>Sign In</Nav.Link>}
-              {session && (
-                <Nav.Link onClick={() => signOut()}>Sign out</Nav.Link>
-              )}
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <>
+      {session ? (
+        <nav className='mx-4 mt-4 flex justify-between gap-4'>
+          <div className='flex gap-4'>
+            <a href='/'>bookkss</a>
+            <a href='/'>Home</a>
+            <a href='/dashboard'>Dashboard</a>
+          </div>
+          <div>
+            <a href='/api/auth/signout'>Sign out</a>
+          </div>
+        </nav>
+      ) : (
+        <nav className='mx-4 mt-4 flex justify-between gap-4'>
+          <div className='flex gap-4'>
+            <a href='/'>bookkss</a>
+            <a href='/'>Home</a>
+          </div>
+          <div>
+            <a href='/signin'>Sign in</a>
+          </div>
+        </nav>
+      )}
+    </>
   );
-}
+};
