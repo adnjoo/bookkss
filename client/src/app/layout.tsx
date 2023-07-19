@@ -1,10 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { MyNavbar } from '@/components/navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const inter = Inter({ subsets: ['latin'] });
+import { Provider, MyNavbar } from '@/components';
 
 export const metadata: Metadata = {
   title: 'bookkss',
@@ -17,10 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
-        <MyNavbar />
-        {children}
+    <html>
+      <body>
+        <Provider>
+          <MyNavbar />
+          {children}
+        </Provider>
       </body>
     </html>
   );

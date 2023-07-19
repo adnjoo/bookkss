@@ -3,16 +3,13 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-export function LoginSignup() {
+export default function SignIn() {
   return (
     <div className='mx-4 mt-12 flex justify-center'>
       <Form className='flex flex-col rounded-xl border p-4 sm:w-[400px]'>
         <Form.Group className='mb-3' controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
           <Form.Control type='email' placeholder='Enter email' />
-          <Form.Text className='text-muted'>
-            We&apos;ll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
         <Form.Group className='mb-3' controlId='formBasicPassword'>
@@ -23,6 +20,9 @@ export function LoginSignup() {
         <Button className='bg-slate-700' variant='secondary' type='submit'>
           Submit
         </Button>
+        <div className='mt-4'>
+          <a href='/api/auth/signin'>Continue with Google</a>
+        </div>
       </Form>
     </div>
   );
