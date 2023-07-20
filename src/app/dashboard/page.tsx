@@ -10,13 +10,15 @@ const ServerProtectedPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
+  const getReviews = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/get-reviews`
+    );
+    setReviews(res.data);
+  };
+
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/get-reviews`)
-      .then((res) => {
-        console.log(res.data);
-        setReviews(res.data);
-      });
+    getReviews();
   }, []);
 
   const onAddReview = () => {
@@ -27,6 +29,9 @@ const ServerProtectedPage = () => {
       })
       .then((res) => {
         console.log(res.data);
+        getReviews();
+        setTitle('');
+        setBody('');
       });
   };
 
@@ -41,24 +46,37 @@ const ServerProtectedPage = () => {
           <div className='mb-2 underline'>Add review</div>
           <div>
             <div className='mb-2'>Title</div>
-            <textarea
-              className='border p-2'
+            <input
+              className='w-full border p-4'
               onChange={(e) => setTitle(e.target.value)}
+              value={title}
             />
           </div>
           <div>
             <div className='mb-2'>Body</div>
             <textarea
-              className='border p-2'
+              className='w-full border p-6'
               onChange={(e) => setBody(e.target.value)}
+              value={body}
             />
           </div>
-          <button
-            className='mt-4 w-[100px] rounded bg-gray-500 px-4 py-2 text-white'
-            onClick={onAddReview}
-          >
-            Add review
-          </button>
+          <div className='flex gap-2'>
+            <button
+              className='mt-4 w-[100px] rounded bg-gray-500 p-2 text-white'
+              onClick={onAddReview}
+            >
+              Add review
+            </button>
+            <button
+              className='mt-4 w-[100px] rounded bg-gray-700 p-2 text-white'
+              onClick={() => {
+                setTitle('');
+                setBody('');
+              }}
+            >
+              Clear content
+            </button>
+          </div>
         </div>
         <div className='mt-4'>
           <div className='mb-2'>Reviews</div>
