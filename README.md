@@ -1,8 +1,8 @@
 Front-end to Bookkss app that provides a platform for users to write and share book reviews.
 
-The app is [deployed](https://bookkss.com) with Vercel.
+[@](https://bookkss.com) FE, Vercel
 
-Back-end [at](https://github.com/adnjoo/bookkss-server)
+[@](https://github.com/adnjoo/bookkss-server) BE repo
 
 ---
 
