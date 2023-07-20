@@ -1,4 +1,4 @@
-Bookkss is a monorepo that provides a platform for users to write and share book reviews.
+Front-end to Bookkss app that provides a platform for users to write and share book reviews.
 
 The app is [deployed](https://bookkss.com) with Vercel
 
@@ -16,22 +16,10 @@ Middleware
 
 - Next-Auth 4.x
 
-Back-end
-
-- Express 4.x
-
 ---
 
 Quick start (client):
 
 ```
 npm run dev
-```
-
-Quick start (server):
-
-```
-npm install
-cd src/server
-nodemon server
 ```
