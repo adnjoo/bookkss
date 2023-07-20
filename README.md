@@ -12,6 +12,10 @@ Front-end
 - React 18.x
 - TypeScript 5.x
 
+Middleware
+
+- Next-Auth 4.x
+
 Back-end
 
 - Express 4.x
@@ -28,5 +32,6 @@ Quick start (server):
 
 ```
 npm install
-node server
+cd src/server
+nodemon server
 ```
