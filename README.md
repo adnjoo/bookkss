@@ -25,3 +25,5 @@ Quick start (client):
 ```
 npm run dev
 ```
+
+SLOC: 151
