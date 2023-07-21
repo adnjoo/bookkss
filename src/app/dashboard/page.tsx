@@ -5,32 +5,32 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const ServerProtectedPage = () => {
-  const { data: session } = useSession();
+  const { data: session }: { data: any } = useSession();
   const [reviews, setReviews] = useState([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
-  console.log('session', session);
+  // console.log('session', session);
 
   const getReviews = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/get-reviews`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/get-user-reviews?userid=${session?.user?.id}`
     );
     setReviews(res.data);
   };
 
   useEffect(() => {
     getReviews();
-  }, []);
+  }, [session]);
 
   const onAddReview = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/add-review`, {
         title,
         body,
+        userid: session?.user?.id,
       })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         getReviews();
         setTitle('');
         setBody('');
