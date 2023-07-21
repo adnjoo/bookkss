@@ -2,8 +2,6 @@ Front-end to Bookkss app that provides a platform for users to write and share b
 
 [@](https://bookkss.com) FE, Vercel
 
-[@](https://github.com/adnjoo/bookkss-server) BE repo
-
 ---
 
 Technologies used:
