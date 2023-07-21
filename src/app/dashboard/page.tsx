@@ -10,6 +10,8 @@ const ServerProtectedPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
+  console.log('session', session);
+
   const getReviews = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/get-reviews`
