@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 
-import { Provider, MyNavbar } from '@/components';
+import { Provider, MyNavbar } from '../components';
 
 export const metadata: Metadata = {
   title: 'bookkss',
