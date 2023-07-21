@@ -30,22 +30,33 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-app.get('/get-reviews', (req, res) => {
-  pool.query('SELECT * FROM "Review"', (error, results) => {
+app.get('/get-user-reviews', (req, res) => {
+  const userid = req.query.userid;
+
+  if (!userid) {
+    res.status(400).send('Missing userid parameter');
+    return;
+  }
+
+  const query = {
+    text: 'SELECT * FROM "Review" WHERE userid = $1',
+    values: [userid],
+  };
+
+  pool.query(query, (error, results) => {
     if (error) {
       console.error('Error querying database:', error);
       res.status(500).send('Error querying the database');
       return;
     }
-    res.header('Access-Control-Allow-Origin', '*');
     res.json(results.rows);
   });
 });
 
 app.post('/add-review', (req, res) => {
-  const { title, body, userId } = req.body;
+  const { title, body, userid } = req.body;
 
-  if (!title || !body || !userId) {
+  if (!title || !body || !userid) {
     res.status(400).json({ error: 'Missing required fields.' });
     return;
   }
@@ -53,12 +64,12 @@ app.post('/add-review', (req, res) => {
   const review = {
     title,
     body,
-    userId,
+    userid,
   };
 
   pool.query(
     'INSERT INTO "Review" (title, body, userid) VALUES($1, $2, $3)',
-    [review.title, review.body, review.userId],
+    [review.title, review.body, review.userid],
     (error, result) => {
       if (error) {
         console.error(
