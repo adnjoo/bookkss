@@ -29,9 +29,10 @@ const countLinesOfCode = (path, extensions) => {
   }
 };
 
-const srcPath = '../src/';
+const srcPath = '../client/src/';
+const srcPath2 = '../server/';
 const extensionsToCount = ['.ts', '.tsx', '.js'];
-const linesOfCode = countLinesOfCode(srcPath, extensionsToCount);
+const linesOfCode = countLinesOfCode(srcPath, extensionsToCount) + countLinesOfCode(srcPath2, extensionsToCount);
 
 const readmeFile = '../README.md';
 fs.readFile(readmeFile, 'utf-8', function (err, data) {
