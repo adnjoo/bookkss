@@ -16,6 +16,7 @@ const ServerProtectedPage = () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/get-user-reviews?userid=${session?.user?.id}`
     );
+    // console.log(res.data);
     setReviews(res.data);
   };
 
@@ -87,6 +88,18 @@ const ServerProtectedPage = () => {
               <h3 className='text-xl font-bold'>
                 {review.title} {new Date(review.createdAt).toLocaleDateString()}
               </h3>
+              <p>
+                Private:{' '}
+                <input
+                  type='checkbox'
+                  checked={review.private}
+                  onChange={(e) => {
+                    window.confirm(
+                      'Are you sure you want to change the privacy setting of this review?'
+                    );
+                  }}
+                />
+              </p>
               <p className='mt-2'>{review.body}</p>
             </div>
           ))}
