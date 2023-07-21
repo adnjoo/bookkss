@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -18,7 +19,7 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-pool.connect((err) => {
+pool.connect((err: any) => {
   if (err) {
     console.error('Error connecting to PostgreSQL database:', err);
     return;
@@ -26,11 +27,11 @@ pool.connect((err) => {
   console.log('Connected to PostgreSQL database!');
 });
 
-app.get('/', (req, res) => {
+app.get('/', (req: any, res: any) => {
   res.send('Hello, World!');
 });
 
-app.get('/get-user-reviews', (req, res) => {
+app.get('/get-user-reviews', (req: any, res: any) => {
   const userid = req.query.userid;
 
   if (!userid) {
@@ -43,7 +44,7 @@ app.get('/get-user-reviews', (req, res) => {
     values: [userid],
   };
 
-  pool.query(query, (error, results) => {
+  pool.query(query, (error: any, results: any) => {
     if (error) {
       console.error('Error querying database:', error);
       res.status(500).send('Error querying the database');
@@ -53,7 +54,7 @@ app.get('/get-user-reviews', (req, res) => {
   });
 });
 
-app.post('/add-review', (req, res) => {
+app.post('/add-review', (req: any, res: any) => {
   const { title, body, userid } = req.body;
 
   if (!title || !body || !userid) {
@@ -70,7 +71,7 @@ app.post('/add-review', (req, res) => {
   pool.query(
     'INSERT INTO "Review" (title, body, userid) VALUES($1, $2, $3)',
     [review.title, review.body, review.userid],
-    (error, result) => {
+    (error: any, result: any) => {
       if (error) {
         console.error(
           'Error inserting review into PostgreSQL database:',
