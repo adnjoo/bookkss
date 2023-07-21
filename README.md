@@ -24,4 +24,12 @@ Quick start (client):
 npm run dev
 ```
 
-SLOC: 151
+Quick start (server):
+
+```
+cd src/server
+npm install
+npm run start
+```
+
+SLOC: 304

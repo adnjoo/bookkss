@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+const exclude = ['node_modules', '.next', '.git', '.vscode', '.vercel'];
+
 const countLinesOfCode = (path, extensions) => {
   try {
     const files = fs.readdirSync(path);
@@ -9,7 +11,7 @@ const countLinesOfCode = (path, extensions) => {
       const filePath = `${path}/${file}`;
       const stats = fs.statSync(filePath);
 
-      if (stats.isDirectory()) {
+      if (stats.isDirectory() && !file.startsWith('node_modules')) {
         totalLines += countLinesOfCode(filePath, extensions);
       } else if (extensions.some((ext) => file.endsWith(ext))) {
         const content = fs.readFileSync(filePath, 'utf-8');
@@ -27,11 +29,11 @@ const countLinesOfCode = (path, extensions) => {
   }
 };
 
-const srcPath = './src';
-const extensionsToCount = ['.ts', '.tsx'];
+const srcPath = '../src/';
+const extensionsToCount = ['.ts', '.tsx', '.js'];
 const linesOfCode = countLinesOfCode(srcPath, extensionsToCount);
 
-const readmeFile = 'README.md';
+const readmeFile = '../README.md';
 fs.readFile(readmeFile, 'utf-8', function (err, data) {
   if (err) {
     return console.log(err);
