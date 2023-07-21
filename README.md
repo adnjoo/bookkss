@@ -1,6 +1,8 @@
-Front-end to Bookkss app that provides a platform for users to write and share book reviews.
+Bookkss provides a platform for users to write and share book reviews.
 
 [@](https://bookkss.com) FE, Vercel
+[@](https://bookkss.fly.dev) BE, Fly
+[DB](https://vercel.com/storage/postgres) is serverless Postgres, Vercel
 
 ---
 
@@ -15,6 +17,10 @@ Front-end
 Middleware
 
 - Next-Auth 4.x
+
+Back-end
+
+- Express 4.x
 
 ---
 
