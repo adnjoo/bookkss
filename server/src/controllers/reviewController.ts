@@ -5,7 +5,7 @@ export const getUserReviews = async (req: Request, res: Response) => {
   const userId = req.query.userId as string;
 
   if (!userId) {
-    res.status(400).send('Missing userid parameter');
+    res.status(400).send('Missing userId parameter');
     return;
   }
 
