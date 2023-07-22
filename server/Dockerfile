@@ -1,39 +1,23 @@
-# syntax = docker/dockerfile:1
+# Use the official Node.js 14 image as the base image
+FROM node:14
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.3.1
-FROM node:${NODE_VERSION}-slim as base
+# Set the working directory inside the container
+WORKDIR /usr/src/app
 
-LABEL fly_launch_runtime="Node.js"
+# Copy the package.json and package-lock.json files to the container
+COPY package*.json ./
 
-# Node.js app lives here
-WORKDIR /app
+# Install project dependencies
+RUN npm install
 
-# Set production environment
-ENV NODE_ENV=production
+# Copy the rest of the application code to the container
+COPY . .
 
+# Build the TypeScript code
+RUN npm run build
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install -y python-is-python3 pkg-config build-essential 
-
-# Install node modules
-COPY --link package-lock.json package.json ./
-RUN npm ci
-
-# Copy application code
-COPY --link . .
-
-
-# Final stage for app image
-FROM base
-
-# Copy built application
-COPY --from=build /app /app
-
-# Start the server by default, this can be overwritten at runtime
+# Expose the port the app will run on
 EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+
+# Start the Express server
+CMD ["npm", "start"]
