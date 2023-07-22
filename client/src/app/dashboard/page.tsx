@@ -4,11 +4,23 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+interface Review {
+  id: string;
+  title: string;
+  body: string;
+  createdAt: string;
+}
+
+interface EditModeState {
+  [reviewId: string]: boolean;
+}
+
 const ServerProtectedPage = () => {
   const { data: session }: { data: any } = useSession();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [editMode, setEditMode] = useState<EditModeState>({});
 
   // console.log('session', session);
 
@@ -26,7 +38,7 @@ const ServerProtectedPage = () => {
 
   const onAddReview = () => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/add-review`, {
+      .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
         title,
         body,
         userId: session?.user?.id,
@@ -48,6 +60,30 @@ const ServerProtectedPage = () => {
           },
         })
         .then(() => getReviews());
+  };
+
+  const toggleEditMode = (reviewId: string) => {
+    setEditMode((prevEditMode) => ({
+      ...prevEditMode,
+      [reviewId]: !prevEditMode[reviewId],
+    }));
+  };
+
+  const onSaveReview = (reviewId: string, updatedBody: string) => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
+        id: reviewId,
+        title: reviews.find((review) => review.id === reviewId)?.title, // Keep the existing title
+        body: updatedBody,
+        userId: session?.user?.id,
+      })
+      .then(() => {
+        getReviews();
+        setEditMode((prevEditMode) => ({
+          ...prevEditMode,
+          [reviewId]: false, // Turn off edit mode after saving
+        }));
+      });
   };
 
   return (
@@ -100,15 +136,45 @@ const ServerProtectedPage = () => {
               <h3 className='text-xl font-bold'>
                 {review.title} {new Date(review.createdAt).toLocaleDateString()}
               </h3>
-              <p>
-                Delete:{' '}
-                <input
-                  type='checkbox'
-                  checked={review.private}
-                  onChange={() => onDelete(review.id)}
+              <div className='flex gap-2'>
+                {editMode[review.id] ? (
+                  <button
+                    className='rounded bg-indigo-500 px-2 py-1 text-white'
+                    onClick={() => onSaveReview(review.id, review.body)}
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button
+                    className='rounded bg-blue-500 px-2 py-1 text-white'
+                    onClick={() => toggleEditMode(review.id)}
+                  >
+                    Edit
+                  </button>
+                )}
+                <p>
+                  Delete:{' '}
+                  <input type='checkbox' onChange={() => onDelete(review.id)} />
+                </p>
+              </div>
+              {editMode[review.id] ? (
+                <textarea
+                  className='w-full border p-6'
+                  onChange={(e) => {
+                    // Real-time update of the textarea value while editing
+                    setReviews((prevReviews) =>
+                      prevReviews.map((prevReview) =>
+                        prevReview.id === review.id
+                          ? { ...prevReview, body: e.target.value }
+                          : prevReview
+                      )
+                    );
+                  }}
+                  value={review.body}
                 />
-              </p>
-              <p className='mt-2'>{review.body}</p>
+              ) : (
+                <p className='mt-2'>{review.body}</p>
+              )}
             </div>
           ))}
         </div>

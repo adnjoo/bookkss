@@ -2,13 +2,12 @@ import express from 'express';
 
 import {
   getUserReviews,
-  addReview,
+  upsertReview,
   deleteReview,
 } from '../controllers/reviewController';
 
 export const reviewRouter = express.Router();
 
-// Define the routes and their corresponding controller functions
+reviewRouter.post('/upsert-review', upsertReview);
 reviewRouter.get('/get-user-reviews', getUserReviews);
-reviewRouter.post('/add-review', addReview);
 reviewRouter.delete('/delete-review', deleteReview);
