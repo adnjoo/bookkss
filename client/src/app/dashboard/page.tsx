@@ -14,7 +14,7 @@ const ServerProtectedPage = () => {
 
   const getReviews = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/get-user-reviews?userid=${session?.user?.id}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/get-user-reviews?userId=${session?.user?.id}`
     );
     // console.log(res.data);
     setReviews(res.data);
@@ -29,7 +29,7 @@ const ServerProtectedPage = () => {
       .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/add-review`, {
         title,
         body,
-        userid: session?.user?.id,
+        userId: session?.user?.id,
       })
       .then(() => {
         getReviews();

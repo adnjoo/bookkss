@@ -2,17 +2,17 @@ import { Request, Response } from 'express';
 import { pool } from '../db';
 
 export const getUserReviews = async (req: Request, res: Response) => {
-  const userid = req.query.userid as string;
+  const userId = req.query.userId as string;
 
-  if (!userid) {
+  if (!userId) {
     res.status(400).send('Missing userid parameter');
     return;
   }
 
   try {
     const query = {
-      text: 'SELECT * FROM "Review" WHERE userid = $1',
-      values: [userid],
+      text: 'SELECT * FROM "Review" WHERE "userId" = $1',
+      values: [userId],
     };
 
     const result = await pool.query(query);
@@ -25,9 +25,9 @@ export const getUserReviews = async (req: Request, res: Response) => {
 };
 
 export const addReview = async (req: Request, res: Response) => {
-  const { title, body, userid } = req.body;
+  const { title, body, userId } = req.body;
 
-  if (!title || !body || !userid) {
+  if (!title || !body || !userId) {
     res.status(400).json({ error: 'Missing required fields.' });
     return;
   }
@@ -35,12 +35,12 @@ export const addReview = async (req: Request, res: Response) => {
   const review = {
     title,
     body,
-    userid,
+    userId,
   };
 
   pool.query(
-    'INSERT INTO "Review" (title, body, userid) VALUES($1, $2, $3)',
-    [review.title, review.body, review.userid],
+    'INSERT INTO "Review" (title, body, "userId") VALUES($1, $2, $3)',
+    [review.title, review.body, review.userId],
     (error: any, result: any) => {
       if (error) {
         console.error(

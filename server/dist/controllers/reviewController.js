@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addReview = exports.getUserReviews = void 0;
 const db_1 = require("../db");
 const getUserReviews = async (req, res) => {
-    const userid = req.query.userid;
-    if (!userid) {
+    const userId = req.query.userId;
+    if (!userId) {
         res.status(400).send('Missing userid parameter');
         return;
     }
     try {
         const query = {
-            text: 'SELECT * FROM "Review" WHERE userid = $1',
-            values: [userid],
+            text: 'SELECT * FROM "Review" WHERE "userId" = $1',
+            values: [userId],
         };
         const result = await db_1.pool.query(query);
         res.json(result.rows);
@@ -23,17 +23,17 @@ const getUserReviews = async (req, res) => {
 };
 exports.getUserReviews = getUserReviews;
 const addReview = async (req, res) => {
-    const { title, body, userid } = req.body;
-    if (!title || !body || !userid) {
+    const { title, body, userId } = req.body;
+    if (!title || !body || !userId) {
         res.status(400).json({ error: 'Missing required fields.' });
         return;
     }
     const review = {
         title,
         body,
-        userid,
+        userId,
     };
-    db_1.pool.query('INSERT INTO "Review" (title, body, userid) VALUES($1, $2, $3)', [review.title, review.body, review.userid], (error, result) => {
+    db_1.pool.query('INSERT INTO "Review" (title, body, "userId") VALUES($1, $2, $3)', [review.title, review.body, review.userId], (error, result) => {
         if (error) {
             console.error('Error inserting review into PostgreSQL database:', error);
             res
