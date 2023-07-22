@@ -6,7 +6,6 @@ Bookkss provides a platform for users to write and share book reviews.
 
 [@BE](https://bookkss.fly.dev) Fly
 
-
 ---
 
 Technologies used:
@@ -36,9 +35,9 @@ npm run dev
 Quick start (server):
 
 ```
-cd src/server
+cd server
 npm install
-npm run start
+npm run dev
 ```
 
-SLOC: 317
+SLOC: 438
