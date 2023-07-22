@@ -1,5 +1,7 @@
 Bookkss provides a platform for users to write and share book reviews.
 
+<img src='./screen.png' width=300 >
+
 [@FE](https://bookkss.com) Vercel
 
 [@DB](https://vercel.com/storage/postgres) Vercel x Postgres
@@ -40,4 +42,4 @@ npm install
 npm run dev
 ```
 
-SLOC: 438
+SLOC: 475

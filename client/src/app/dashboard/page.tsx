@@ -21,6 +21,7 @@ const ServerProtectedPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [editMode, setEditMode] = useState<EditModeState>({});
+  const [showAddReview, setShowAddReview] = useState(false);
 
   // console.log('session', session);
 
@@ -93,42 +94,51 @@ const ServerProtectedPage = () => {
         <h2 className='mt-4 font-medium'>
           You are logged in as: {session?.user?.name}
         </h2>
-        <div className='mt-4 flex flex-col rounded-xl border p-4'>
-          <div className='mb-2 underline'>Add review</div>
-          <div>
-            <div className='mb-2'>Title</div>
-            <input
-              className='w-full border p-4'
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-            />
+        <button
+          className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
+          onClick={() => setShowAddReview((prev) => !prev)}
+        >
+          {showAddReview ? 'Hide Add Review' : 'Add Review'}
+        </button>
+
+        {showAddReview && (
+          <div className='mt-4 flex flex-col rounded-xl border p-4'>
+            <div className='mb-2 underline'>Add review</div>
+            <div>
+              <div className='mb-2'>Title</div>
+              <input
+                className='w-full border p-4'
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+              />
+            </div>
+            <div>
+              <div className='mb-2'>Body</div>
+              <textarea
+                className='w-full border p-6'
+                onChange={(e) => setBody(e.target.value)}
+                value={body}
+              />
+            </div>
+            <div className='flex gap-2'>
+              <button
+                className='mt-4 w-[100px] rounded bg-gray-500 p-2 text-white'
+                onClick={onAddReview}
+              >
+                Add review
+              </button>
+              <button
+                className='mt-4 w-[100px] rounded bg-gray-700 p-2 text-white'
+                onClick={() => {
+                  setTitle('');
+                  setBody('');
+                }}
+              >
+                Clear content
+              </button>
+            </div>
           </div>
-          <div>
-            <div className='mb-2'>Body</div>
-            <textarea
-              className='w-full border p-6'
-              onChange={(e) => setBody(e.target.value)}
-              value={body}
-            />
-          </div>
-          <div className='flex gap-2'>
-            <button
-              className='mt-4 w-[100px] rounded bg-gray-500 p-2 text-white'
-              onClick={onAddReview}
-            >
-              Add review
-            </button>
-            <button
-              className='mt-4 w-[100px] rounded bg-gray-700 p-2 text-white'
-              onClick={() => {
-                setTitle('');
-                setBody('');
-              }}
-            >
-              Clear content
-            </button>
-          </div>
-        </div>
+        )}
         <div className='mt-4'>
           <div className='mb-2'>Reviews</div>
           {reviews.map((review: any) => (
