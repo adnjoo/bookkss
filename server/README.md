@@ -5,10 +5,10 @@
 fly deploy instructions
 
 ```
-flyctl deploy
+fly deploy
 ```
 
-set .env/secrets
+set fly secrets
 
 ```
 fly secrets set DATABASE_URL=***
