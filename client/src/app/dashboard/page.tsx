@@ -138,12 +138,33 @@ const ServerProtectedPage = () => {
               </h3>
               <div className='flex gap-2'>
                 {editMode[review.id] ? (
-                  <button
-                    className='rounded bg-indigo-500 px-2 py-1 text-white'
-                    onClick={() => onSaveReview(review.id, review.body)}
-                  >
-                    Save
-                  </button>
+                  <>
+                    <button
+                      className='rounded bg-indigo-500 px-2 py-1 text-white'
+                      onClick={() => onSaveReview(review.id, review.body)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className='rounded bg-gray-500 px-2 py-1 text-white'
+                      onClick={() => {
+                        // Cancel edit mode and reset the review body to its original value
+                        setEditMode((prevEditMode) => ({
+                          ...prevEditMode,
+                          [review.id]: false,
+                        }));
+                        setReviews((prevReviews) =>
+                          prevReviews.map((prevReview) =>
+                            prevReview.id === review.id
+                              ? { ...prevReview, body: review.body }
+                              : prevReview
+                          )
+                        );
+                      }}
+                    >
+                      Cancel Edit
+                    </button>
+                  </>
                 ) : (
                   <button
                     className='rounded bg-blue-500 px-2 py-1 text-white'
@@ -152,10 +173,12 @@ const ServerProtectedPage = () => {
                     Edit
                   </button>
                 )}
-                <p>
-                  Delete:{' '}
-                  <input type='checkbox' onChange={() => onDelete(review.id)} />
-                </p>
+                <button
+                  className='rounded bg-red-500 px-2 py-1 text-white'
+                  onClick={() => onDelete(review.id)}
+                >
+                  Delete
+                </button>
               </div>
               {editMode[review.id] ? (
                 <textarea
