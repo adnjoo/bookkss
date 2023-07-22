@@ -2,37 +2,55 @@ import { Request, Response } from 'express';
 
 import { pool } from '../db';
 
-export const addReview = async (req: Request, res: Response) => {
-  const { title, body, userId } = req.body;
+export const upsertReview = async (req: Request, res: Response) => {
+  const { id, title, body, userId } = req.body;
 
   if (!title || !body || !userId) {
     res.status(400).json({ error: 'Missing required fields.' });
     return;
   }
 
-  const review = {
-    title,
-    body,
-    userId,
-  };
-
-  pool.query(
-    'INSERT INTO "Review" (title, body, "userId") VALUES($1, $2, $3)',
-    [review.title, review.body, review.userId],
-    (error: any, result: any) => {
-      if (error) {
-        console.error(
-          'Error inserting review into PostgreSQL database:',
-          error
-        );
-        res
-          .status(500)
-          .json({ error: 'Error inserting review into the database' });
-        return;
+  if (!id) {
+    pool.query(
+      `
+      INSERT INTO "Review" (title, body, "userId")
+      VALUES ($1, $2, $3)
+      `,
+      [title, body, userId],
+      (error: any, result: any) => {
+        if (error) {
+          console.error(
+            'Error inserting review into PostgreSQL database:',
+            error
+          );
+          res
+            .status(500)
+            .json({ error: 'Error inserting review into the database' });
+          return;
+        }
+        res.json({ message: 'Review inserted successfully!' });
       }
-      res.json({ message: 'Review added successfully!' });
-    }
-  );
+    );
+  } else {
+    pool.query(
+      `
+      UPDATE "Review"
+      SET title = $1, body = $2
+      WHERE "userId" = $3 AND id = $4 
+      `,
+      [title, body, userId, id],
+      (error: any, result: any) => {
+        if (error) {
+          console.error('Error updating review in PostgreSQL database:', error);
+          res
+            .status(500)
+            .json({ error: 'Error updating review in the database' });
+          return;
+        }
+        res.json({ message: 'Review updated successfully!' });
+      }
+    );
+  }
 };
 
 export const getUserReviews = async (req: Request, res: Response) => {
