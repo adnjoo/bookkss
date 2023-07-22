@@ -21,7 +21,7 @@ const ServerProtectedPage = () => {
   };
 
   useEffect(() => {
-    getReviews();
+    if (session) getReviews();
   }, [session]);
 
   const onAddReview = () => {
@@ -36,6 +36,18 @@ const ServerProtectedPage = () => {
         setTitle('');
         setBody('');
       });
+  };
+
+  const onDelete = (id: string) => {
+    window.confirm('Are you sure you want to delete this review?') &&
+      axios
+        .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/delete-review`, {
+          data: {
+            id,
+            userId: session?.user?.id,
+          },
+        })
+        .then(() => getReviews());
   };
 
   return (
@@ -89,15 +101,11 @@ const ServerProtectedPage = () => {
                 {review.title} {new Date(review.createdAt).toLocaleDateString()}
               </h3>
               <p>
-                Private:{' '}
+                Delete:{' '}
                 <input
                   type='checkbox'
                   checked={review.private}
-                  onChange={(e) => {
-                    window.confirm(
-                      'Are you sure you want to change the privacy setting of this review?'
-                    );
-                  }}
+                  onChange={() => onDelete(review.id)}
                 />
               </p>
               <p className='mt-2'>{review.body}</p>
