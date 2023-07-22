@@ -31,6 +31,7 @@ Back-end
 Quick start (client):
 
 ```
+cd client
 npm run dev
 ```
 
