@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <div>
-      <div className='mt-40'>
+      <div className='mt-20'>
         <div className='mx-4 text-center'>
           <h1 className='text-4xl font-bold text-gray-900 sm:text-6xl'>
             Expand your knowledge
@@ -26,6 +26,30 @@ export default async function Home() {
               Get started
             </a>
           </div>
+        </div>
+      </div>
+      <div className='my-20 bg-gray-100 py-20'>
+        <div className='mx-auto max-w-3xl px-4'>
+          <h2 className='mb-4 text-center text-3xl font-bold text-gray-800'>
+            Discover New Books
+          </h2>
+          {/* Add your book discovery grid or carousel here */}
+        </div>
+      </div>
+      <div className='my-20 py-20'>
+        <div className='mx-auto max-w-3xl px-4'>
+          <h2 className='mb-4 text-center text-3xl font-bold text-gray-800'>
+            Track Reading Progress
+          </h2>
+          {/* Add your reading progress visualization here */}
+        </div>
+      </div>
+      <div className='my-20 bg-gray-100 py-20'>
+        <div className='mx-auto max-w-3xl px-4'>
+          <h2 className='mb-4 text-center text-3xl font-bold text-gray-800'>
+            Book Reviews and Recommendations
+          </h2>
+          {/* Add your book reviews and recommendations here */}
         </div>
       </div>
     </div>
