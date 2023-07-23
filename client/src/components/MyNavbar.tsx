@@ -9,6 +9,7 @@ export const MyNavbar = async () => {
       {session ? (
         <nav className='mx-4 mt-4 flex justify-between gap-4'>
           <div className='flex gap-4'>
+            <img src='/logo.png' className='h-8 w-8' />
             <a href='/'>bookkss</a>
             <a href='/'>Home</a>
             <a href='/dashboard'>Dashboard</a>
@@ -20,6 +21,7 @@ export const MyNavbar = async () => {
       ) : (
         <nav className='mx-4 mt-4 flex justify-between gap-4'>
           <div className='flex gap-4'>
+            <img src='/logo.png' className='h-8 w-8' />
             <a href='/'>bookkss</a>
             <a href='/'>Home</a>
           </div>
