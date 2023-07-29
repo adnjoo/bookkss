@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'bookkss',
   description: 'bookkss is a social media platform for book lovers.',
   icons: {
-    icon: '/logo.png',
+    icon: '/logo-nobg.png',
   },
 };
 
