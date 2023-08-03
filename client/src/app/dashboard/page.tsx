@@ -90,7 +90,7 @@ const ServerProtectedPage = () => {
   };
 
   return (
-    <section className='py-12'>
+    <section className='pb-64 pt-12'>
       <div className='container mx-auto flex flex-col px-4'>
         <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
         <h2 className='mt-4 font-medium'>
