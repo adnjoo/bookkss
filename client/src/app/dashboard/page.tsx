@@ -212,11 +212,7 @@ const ServerProtectedPage = () => {
               ) : (
                 <MDEditor.Markdown
                   source={review.body}
-                  style={{
-                    whiteSpace: 'pre-wrap',
-                    background: 'white',
-                    color: 'black',
-                  }}
+                  wrapperElement={{ 'data-color-mode': 'light' } as any}
                 />
               )}
             </div>
