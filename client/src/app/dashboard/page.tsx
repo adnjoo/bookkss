@@ -194,6 +194,8 @@ const ServerProtectedPage = () => {
               </div>
               {editMode[review.id] ? (
                 <MDEditor
+                  height={600}
+                  data-color-mode='light'
                   value={review.body}
                   onChange={(updatedBody) => {
                     // Real-time update of the Markdown content while editing
