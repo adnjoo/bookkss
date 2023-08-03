@@ -3,6 +3,8 @@
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import MDEditor from '@uiw/react-md-editor';
+import rehypeSanitize from 'rehype-sanitize';
 
 interface Review {
   id: string;
@@ -191,22 +193,31 @@ const ServerProtectedPage = () => {
                 </button>
               </div>
               {editMode[review.id] ? (
-                <textarea
-                  className='w-full border p-6'
-                  onChange={(e) => {
-                    // Real-time update of the textarea value while editing
-                    setReviews((prevReviews) =>
-                      prevReviews.map((prevReview) =>
+                <MDEditor
+                  value={review.body}
+                  onChange={(updatedBody) => {
+                    // Real-time update of the Markdown content while editing
+                    setReviews((prevReviews: any) =>
+                      prevReviews.map((prevReview: Review) =>
                         prevReview.id === review.id
-                          ? { ...prevReview, body: e.target.value }
+                          ? { ...prevReview, body: updatedBody }
                           : prevReview
                       )
                     );
                   }}
-                  value={review.body}
+                  previewOptions={{
+                    rehypePlugins: [[rehypeSanitize]],
+                  }}
                 />
               ) : (
-                <p className='mt-2'>{review.body}</p>
+                <MDEditor.Markdown
+                  source={review.body}
+                  style={{
+                    whiteSpace: 'pre-wrap',
+                    background: 'white',
+                    color: 'black',
+                  }}
+                />
               )}
             </div>
           ))}
