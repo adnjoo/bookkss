@@ -28,18 +28,12 @@ export const ReviewPublic: React.FC<ReviewProps> = ({ review }) => {
         <MDEditor.Markdown
           source={review.body}
           wrapperElement={{ 'data-color-mode': 'light' } as any}
-          previewOptions={{
-            rehypePlugins: [[rehypeSanitize]],
-          }}
         />
       ) : (
         <>
           <MDEditor.Markdown
             source={review.body.slice(0, 10) + '...'}
             wrapperElement={{ 'data-color-mode': 'light' } as any}
-            previewOptions={{
-              rehypePlugins: [[rehypeSanitize]],
-            }}
           />
         </>
       )}
