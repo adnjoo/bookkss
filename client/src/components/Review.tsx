@@ -23,7 +23,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   toggleEditMode,
 }) => {
   const [editMode, setEditMode] = useState(false);
-  const [updatedBody, setUpdatedBody] = useState(review.body);
+  const [updatedBody, setUpdatedBody] = useState<any>(review.body);
 
   const handleSaveReview = () => {
     onSaveReview(review.id, updatedBody);
