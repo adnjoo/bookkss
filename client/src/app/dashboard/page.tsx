@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LoadingBar from 'react-top-loading-bar';
+import { redirect } from 'next/navigation';
 
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
 
@@ -87,74 +88,86 @@ const ServerProtectedPage = () => {
   };
 
   return (
-    <section className='pb-64 pt-12'>
-      <LoadingBar color='#3b82f6' progress={loading ? 50 : 100} height={5} />
-      <div className='container mx-auto flex flex-col px-4'>
-        <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
-        <h2 className='mt-4 font-medium'>
-          You are logged in as: {session?.user?.name}
-        </h2>
-        <button
-          className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
-          onClick={() => setShowAddReview((prev) => !prev)}
-        >
-          {showAddReview ? 'Hide Add Review' : 'Add Review'}
-        </button>
+    <>
+      {session ? (
+        <section className='pb-64 pt-12'>
+          <LoadingBar
+            color='#3b82f6'
+            progress={loading ? 50 : 100}
+            height={5}
+          />
+          <div className='container mx-auto flex flex-col px-4'>
+            <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
+            <h2 className='mt-4 font-medium'>
+              You are logged in as: {session?.user?.name}
+            </h2>
+            <button
+              className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
+              onClick={() => setShowAddReview((prev) => !prev)}
+            >
+              {showAddReview ? 'Hide Add Review' : 'Add Review'}
+            </button>
 
-        {showAddReview && (
-          <div className='mt-4 flex flex-col rounded-xl border p-4'>
-            <div className='mb-2 underline'>Add review</div>
-            <div>
-              <div className='mb-2'>Title</div>
-              <input
-                className='w-full border p-4'
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-              />
-            </div>
-            <div>
-              <div className='mb-2'>Body</div>
-              <textarea
-                className='w-full border p-6'
-                onChange={(e) => setBody(e.target.value)}
-                value={body}
-              />
-            </div>
-            <div className='flex gap-2'>
-              <button
-                className='mt-4 w-[100px] rounded bg-gray-500 p-2 text-white'
-                onClick={onAddReview}
-              >
-                Add review
-              </button>
-              <button
-                className='mt-4 w-[100px] rounded bg-gray-700 p-2 text-white'
-                onClick={() => {
-                  setTitle('');
-                  setBody('');
-                }}
-              >
-                Clear content
-              </button>
+            {showAddReview && (
+              <div className='mt-4 flex flex-col rounded-xl border p-4'>
+                <div className='mb-2 underline'>Add review</div>
+                <div>
+                  <div className='mb-2'>Title</div>
+                  <input
+                    className='w-full border p-4'
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                  />
+                </div>
+                <div>
+                  <div className='mb-2'>Body</div>
+                  <textarea
+                    className='w-full border p-6'
+                    onChange={(e) => setBody(e.target.value)}
+                    value={body}
+                  />
+                </div>
+                <div className='flex gap-2'>
+                  <button
+                    className='mt-4 w-[100px] rounded bg-gray-500 p-2 text-white'
+                    onClick={onAddReview}
+                  >
+                    Add review
+                  </button>
+                  <button
+                    className='mt-4 w-[100px] rounded bg-gray-700 p-2 text-white'
+                    onClick={() => {
+                      setTitle('');
+                      setBody('');
+                    }}
+                  >
+                    Clear content
+                  </button>
+                </div>
+              </div>
+            )}
+            <div className='mt-4'>
+              <div className='mb-2'>Reviews</div>
+              {reviews.map((review: Review) => (
+                <ReviewComponent
+                  key={review.id}
+                  review={review}
+                  onSaveReview={onSaveReview}
+                  onDelete={onDelete}
+                  toggleEditMode={toggleEditMode}
+                  editMode={editMode[review.id]}
+                  setEditMode={setEditMode}
+                />
+              ))}
             </div>
           </div>
-        )}
-        <div className='mt-4'>
-          <div className='mb-2'>Reviews</div>
-          {reviews.map((review: Review) => (
-            <ReviewComponent
-              key={review.id}
-              review={review}
-              onSaveReview={onSaveReview}
-              onDelete={onDelete}
-              toggleEditMode={toggleEditMode}
-              editMode={editMode[review.id]}
-              setEditMode={setEditMode}
-            />
-          ))}
+        </section>
+      ) : (
+        <div className='mx-auto mb-[600px] mt-24 text-center'>
+          <h1 className='text-2xl font-bold'>You are not logged in</h1>
         </div>
-      </div>
-    </section>
+      )}
+    </>
   );
 };
 

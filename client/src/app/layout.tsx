@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 
-import { Provider, MyNavbar } from '../components';
+import { Provider, MyNavbar, Footer } from '@/components';
 
 export const metadata: Metadata = {
   title: 'bookkss',
@@ -22,6 +22,7 @@ export default function RootLayout({
         <Provider>
           <MyNavbar />
           {children}
+          <Footer />
         </Provider>
       </body>
     </html>
