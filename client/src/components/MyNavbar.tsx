@@ -12,6 +12,7 @@ export const MyNavbar = async () => {
             <img src='/logo-long.png' className='w-24' />
             <a href='/'>Home</a>
             <a href='/dashboard'>Dashboard</a>
+            <a href='/discover'>Discover</a>
           </div>
           <div>
             <a href='/api/auth/signout'>Sign out</a>
@@ -22,6 +23,7 @@ export const MyNavbar = async () => {
           <div className='flex gap-4'>
             <img src='/logo-long.png' className='w-24' />
             <a href='/'>Home</a>
+            <a href='/discover'>Discover</a>
           </div>
           <div>
             <a href='/signin'>Sign in</a>

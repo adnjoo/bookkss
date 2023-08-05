@@ -4,6 +4,8 @@
 
 fly deploy instructions
 
+`tsc` then deploy
+
 ```
 fly deploy
 ```
