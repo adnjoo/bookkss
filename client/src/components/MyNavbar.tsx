@@ -10,7 +10,6 @@ export const MyNavbar = async () => {
         <nav className='mx-4 mt-6 flex justify-between gap-4 lg:mx-60'>
           <div className='flex gap-4'>
             <img src='/logo-long.png' className='w-24' />
-            {/* <a href='/'>bookkss</a> */}
             <a href='/'>Home</a>
             <a href='/dashboard'>Dashboard</a>
           </div>
@@ -22,7 +21,6 @@ export const MyNavbar = async () => {
         <nav className='mx-4 mt-6 flex justify-between gap-4 lg:mx-60'>
           <div className='flex gap-4'>
             <img src='/logo-long.png' className='w-24' />
-            {/* <a href='/'>bookkss</a> */}
             <a href='/'>Home</a>
           </div>
           <div>
