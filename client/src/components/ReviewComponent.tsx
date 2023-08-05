@@ -35,7 +35,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
 }) => {
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
 
   const handleSaveReview = () => {
     onSaveReview(review.id, updatedBody);
@@ -64,7 +63,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
         <div className='flex items-center gap-2'>
-          {showButtons && (
+          {expanded && (
             <>
               <button
                 onClick={() => toggleEditMode(review.id)}
@@ -91,16 +90,9 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             title={expanded ? 'Collapse' : 'Expand'}
           >
             {expanded ? (
-              <AiOutlineMinusSquare
-                size={24}
-                color='green'
-                onClick={() => setShowButtons(!showButtons)}
-              />
+              <AiOutlineMinusSquare size={24} color='green' />
             ) : (
-              <AiOutlinePlusSquare
-                size={24}
-                onClick={() => setShowButtons(!showButtons)}
-              />
+              <AiOutlinePlusSquare size={24} />
             )}
           </button>
         </div>
