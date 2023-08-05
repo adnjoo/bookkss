@@ -3,15 +3,8 @@
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import MDEditor from '@uiw/react-md-editor';
-import rehypeSanitize from 'rehype-sanitize';
 
-interface Review {
-  id: string;
-  title: string;
-  body: string;
-  createdAt: string;
-}
+import { Review, ReviewComponent } from '@/components/Review';
 
 interface EditModeState {
   [reviewId: string]: boolean;
@@ -143,81 +136,14 @@ const ServerProtectedPage = () => {
         )}
         <div className='mt-4'>
           <div className='mb-2'>Reviews</div>
-          {reviews.map((review: any) => (
-            <div key={review.id} className='mb-4 rounded border p-4'>
-              <h3 className='text-xl font-bold'>
-                {review.title} {new Date(review.createdAt).toLocaleDateString()}
-              </h3>
-              <div className='flex gap-2'>
-                {editMode[review.id] ? (
-                  <>
-                    <button
-                      className='rounded bg-indigo-500 px-2 py-1 text-white'
-                      onClick={() => onSaveReview(review.id, review.body)}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className='rounded bg-gray-500 px-2 py-1 text-white'
-                      onClick={() => {
-                        // Cancel edit mode and reset the review body to its original value
-                        setEditMode((prevEditMode) => ({
-                          ...prevEditMode,
-                          [review.id]: false,
-                        }));
-                        setReviews((prevReviews) =>
-                          prevReviews.map((prevReview) =>
-                            prevReview.id === review.id
-                              ? { ...prevReview, body: review.body }
-                              : prevReview
-                          )
-                        );
-                      }}
-                    >
-                      Cancel Edit
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    className='rounded bg-blue-500 px-2 py-1 text-white'
-                    onClick={() => toggleEditMode(review.id)}
-                  >
-                    Edit
-                  </button>
-                )}
-                <button
-                  className='rounded bg-red-500 px-2 py-1 text-white'
-                  onClick={() => onDelete(review.id)}
-                >
-                  Delete
-                </button>
-              </div>
-              {editMode[review.id] ? (
-                <MDEditor
-                  height={600}
-                  data-color-mode='light'
-                  value={review.body}
-                  onChange={(updatedBody) => {
-                    // Real-time update of the Markdown content while editing
-                    setReviews((prevReviews: any) =>
-                      prevReviews.map((prevReview: Review) =>
-                        prevReview.id === review.id
-                          ? { ...prevReview, body: updatedBody }
-                          : prevReview
-                      )
-                    );
-                  }}
-                  previewOptions={{
-                    rehypePlugins: [[rehypeSanitize]],
-                  }}
-                />
-              ) : (
-                <MDEditor.Markdown
-                  source={review.body}
-                  wrapperElement={{ 'data-color-mode': 'light' } as any}
-                />
-              )}
-            </div>
+          {reviews.map((review: Review) => (
+            <ReviewComponent
+              key={review.id}
+              review={review}
+              onSaveReview={onSaveReview}
+              onDelete={onDelete}
+              toggleEditMode={toggleEditMode}
+            />
           ))}
         </div>
       </div>
