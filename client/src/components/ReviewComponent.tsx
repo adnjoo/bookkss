@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
+import {
+  AiOutlinePlusSquare,
+  AiOutlineMinusSquare,
+  AiOutlineEdit,
+  AiOutlineDelete,
+} from 'react-icons/ai';
 
 export interface Review {
   id: string;
@@ -46,47 +51,39 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
         <h3 className='text-xl font-bold'>
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
-        <button
-          className='rounded px-2 py-1'
-          onClick={() => setExpanded(!expanded)}
-        >
-          {expanded ? (
-            <AiOutlineMinusSquare size={24} />
-          ) : (
-            <AiOutlinePlusSquare size={24} />
-          )}
-        </button>
+        <div className='flex items-center'>
+          <button onClick={() => setExpanded(!expanded)}>
+            {expanded ? (
+              <AiOutlineMinusSquare size={24} color='green' />
+            ) : (
+              <AiOutlinePlusSquare size={24} />
+            )}
+          </button>
+          <button onClick={() => toggleEditMode(review.id)}>
+            <AiOutlineEdit size={24} color={editMode ? 'orange' : 'black'} />
+          </button>
+          <button onClick={() => onDelete(review.id)}>
+            <AiOutlineDelete size={24} />
+          </button>
+        </div>
       </div>
-      <div className='flex gap-2'>
-        {editMode ? (
+      <div className='my-3 flex gap-2'>
+        {editMode && (
           <>
             <button
-              className='rounded bg-indigo-500 px-2 py-1 text-white'
+              className='rounded bg-green-600 px-2 py-1 text-white'
               onClick={handleSaveReview}
             >
               Save
             </button>
             <button
-              className='rounded bg-gray-500 px-2 py-1 text-white'
+              className='rounded bg-slate-600 px-2 py-1 text-white'
               onClick={handleCancelEdit}
             >
-              Cancel Edit
+              Cancel
             </button>
           </>
-        ) : (
-          <button
-            className='rounded bg-blue-500 px-2 py-1 text-white'
-            onClick={() => toggleEditMode(review.id)}
-          >
-            Edit
-          </button>
         )}
-        <button
-          className='rounded bg-red-500 px-2 py-1 text-white'
-          onClick={() => onDelete(review.id)}
-        >
-          Delete
-        </button>
       </div>
       {editMode ? (
         <MDEditor
