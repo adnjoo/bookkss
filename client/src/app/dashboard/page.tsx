@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import LoadingBar from 'react-top-loading-bar';
 
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
 
@@ -12,6 +13,7 @@ interface EditModeState {
 
 const ServerProtectedPage = () => {
   const { data: session }: { data: any } = useSession();
+  const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -21,11 +23,13 @@ const ServerProtectedPage = () => {
   // console.log('session', session);
 
   const getReviews = async () => {
+    setLoading(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/get-user-reviews?userId=${session?.user?.id}`
     );
     // console.log(res.data);
     setReviews(res.data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -84,6 +88,7 @@ const ServerProtectedPage = () => {
 
   return (
     <section className='pb-64 pt-12'>
+      <LoadingBar color='#e63946' progress={loading ? 50 : 100} height={5} />
       <div className='container mx-auto flex flex-col px-4'>
         <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
         <h2 className='mt-4 font-medium'>
