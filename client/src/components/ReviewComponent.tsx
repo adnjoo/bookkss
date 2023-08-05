@@ -67,13 +67,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           {showButtons && (
             <>
               <button
-                onClick={() => downloadMarkdown(review.title, updatedBody)}
-                title='Download as Markdown'
-              >
-                <AiOutlineDownload size={24} />
-              </button>
-
-              <button
                 onClick={() => toggleEditMode(review.id)}
                 title={editMode ? 'Cancel Edit' : 'Edit'}
               >
@@ -81,6 +74,12 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
                   size={24}
                   color={editMode ? 'orange' : 'black'}
                 />
+              </button>
+              <button
+                onClick={() => downloadMarkdown(review.title, updatedBody)}
+                title='Download as Markdown'
+              >
+                <AiOutlineDownload size={24} />
               </button>
               <button onClick={() => onDelete(review.id)} title='Delete'>
                 <AiOutlineDelete size={24} />
