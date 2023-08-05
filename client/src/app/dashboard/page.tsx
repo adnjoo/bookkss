@@ -102,7 +102,7 @@ const ServerProtectedPage = () => {
           />
           <div className='container mx-auto flex flex-col px-4'>
             <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
-            <div className='flex flex-row justify-between'>
+            <div className='flex flex-col justify-between'>
               <h2 className='mt-4 font-medium'>
                 You are logged in as: {session?.user?.name}
               </h2>
