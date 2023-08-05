@@ -2,6 +2,7 @@ import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
+import { ReviewProps } from './ReviewComponent';
 
 export const ReviewPublic: React.FC<ReviewProps> = ({ review }) => {
   const [expanded, setExpanded] = useState(false);
