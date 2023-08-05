@@ -13,7 +13,7 @@ interface EditModeState {
 
 const ServerProtectedPage = () => {
   const { data: session }: { data: any } = useSession();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -88,7 +88,7 @@ const ServerProtectedPage = () => {
 
   return (
     <section className='pb-64 pt-12'>
-      <LoadingBar color='#e63946' progress={loading ? 50 : 100} height={5} />
+      <LoadingBar color='#3b82f6' progress={loading ? 50 : 100} height={5} />
       <div className='container mx-auto flex flex-col px-4'>
         <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
         <h2 className='mt-4 font-medium'>
