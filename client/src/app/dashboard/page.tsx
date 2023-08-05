@@ -13,7 +13,7 @@ interface EditModeState {
 
 const ServerProtectedPage = () => {
   const { data: session }: { data: any } = useSession();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
