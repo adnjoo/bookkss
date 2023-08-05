@@ -26,8 +26,9 @@ export const MyNavbar = async () => {
       ) : (
         <nav className='mx-4 mt-6 flex justify-between gap-4 lg:mx-60'>
           <div className='flex items-center gap-4'>
-            <img src='/logo-long.png' className='w-24' />
-            <a href='/'>Home</a>
+            <a href='/'>
+              <img src='/logo-long.png' className='w-24' />
+            </a>
             <a href='/discover'>Discover</a>
           </div>
           <div>
