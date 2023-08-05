@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
+import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
 
 export interface Review {
   id: string;
@@ -24,6 +25,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
+  const [expanded, setExpanded] = useState(false);
 
   const handleSaveReview = () => {
     onSaveReview(review.id, updatedBody);
@@ -37,9 +39,21 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
 
   return (
     <div key={review.id} className='mb-4 rounded border p-4'>
-      <h3 className='text-xl font-bold'>
-        {review.title} {new Date(review.createdAt).toLocaleDateString()}
-      </h3>
+      <div className='flex justify-between'>
+        <h3 className='text-xl font-bold'>
+          {review.title} {new Date(review.createdAt).toLocaleDateString()}
+        </h3>
+        <button
+          className='rounded px-2 py-1'
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ? (
+            <AiOutlineMinusSquare size={24} />
+          ) : (
+            <AiOutlinePlusSquare size={24} />
+          )}
+        </button>
+      </div>
       <div className='flex gap-2'>
         {editMode ? (
           <>
@@ -82,10 +96,12 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           }}
         />
       ) : (
-        <MDEditor.Markdown
-          source={review.body}
-          wrapperElement={{ 'data-color-mode': 'light' } as any}
-        />
+        <>
+          <MDEditor.Markdown
+            source={expanded ? review.body : review.body.slice(0, 10) + '...'}
+            wrapperElement={{ 'data-color-mode': 'light' } as any}
+          />
+        </>
       )}
     </div>
   );
