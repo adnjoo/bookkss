@@ -163,9 +163,7 @@ const ServerProtectedPage = () => {
           </div>
         </section>
       ) : (
-        <div className='mx-auto mb-[600px] mt-24 text-center'>
-          <h1 className='text-2xl font-bold'>You are not logged in</h1>
-        </div>
+        <div className='mx-auto mb-[600px] mt-24 text-center'></div>
       )}
     </>
   );
