@@ -7,7 +7,7 @@ export const MyNavbar = async () => {
   return (
     <>
       {session ? (
-        <nav className='mx-4 mt-4 flex justify-between gap-4 lg:mx-60'>
+        <nav className='mx-4 mt-6 flex justify-between gap-4 lg:mx-60'>
           <div className='flex gap-4'>
             <img src='/logo-long.png' className='w-24' />
             {/* <a href='/'>bookkss</a> */}
@@ -19,7 +19,7 @@ export const MyNavbar = async () => {
           </div>
         </nav>
       ) : (
-        <nav className='mx-4 mt-4 flex justify-between gap-4 lg:mx-60'>
+        <nav className='mx-4 mt-6 flex justify-between gap-4 lg:mx-60'>
           <div className='flex gap-4'>
             <img src='/logo-long.png' className='w-24' />
             {/* <a href='/'>bookkss</a> */}
