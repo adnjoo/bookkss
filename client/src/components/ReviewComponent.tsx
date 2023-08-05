@@ -55,6 +55,11 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
     setEditMode(false);
   };
 
+  const handleSetExpanded = () => {
+    setExpanded(!expanded);
+    setOptionsTab(false);
+  };
+
   const downloadMarkdown = (title: string, body: string) => {
     const content = `# ${title}\n\n${body}`;
     const blob = new Blob([content], { type: 'text/markdown' });
@@ -95,7 +100,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             </>
           )}
           <button
-            onClick={() => setExpanded(!expanded)}
+            onClick={handleSetExpanded}
             title={expanded ? 'Collapse' : 'Expand'}
           >
             {expanded ? (

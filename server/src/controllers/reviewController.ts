@@ -102,7 +102,7 @@ export const deleteReview = async (req: Request, res: Response) => {
 
 export const getPublicReviews = async (req: Request, res: Response) => {
   pool.query(
-    'SELECT "createdAt", title, body from "Review" WHERE private = false',
+    'SELECT "createdAt", id, title, body from "Review" WHERE private = false',
     (error: any, result: any) => {
       if (error) {
         console.error('Error querying database:', error);

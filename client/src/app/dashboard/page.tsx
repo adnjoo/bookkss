@@ -102,19 +102,23 @@ const ServerProtectedPage = () => {
           />
           <div className='container mx-auto flex flex-col px-4'>
             <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
-            <h2 className='mt-4 font-medium'>
-              You are logged in as: {session?.user?.name}
-            </h2>
-            <button
-              className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
-              onClick={() => setShowAddReview((prev) => !prev)}
-            >
-              {showAddReview ? 'Hide Add Review' : 'Add Review'}
-            </button>
-
+            <div className='flex flex-row justify-between'>
+              <h2 className='mt-4 font-medium'>
+                You are logged in as: {session?.user?.name}
+              </h2>
+              <button
+                className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
+                onClick={() => {
+                  setShowAddReview(!showAddReview);
+                  setTitle('');
+                  setBody('');
+                }}
+              >
+                {showAddReview ? 'Cancel' : 'Add Review'}
+              </button>
+            </div>
             {showAddReview && (
-              <div className='mt-4 flex flex-col rounded-xl border p-4'>
-                <div className='mb-2 underline'>Add review</div>
+              <div className='mx-4 mb-12 mt-12 border p-4'>
                 <div>
                   <div className='mb-2'>Title</div>
                   <input
@@ -138,20 +142,11 @@ const ServerProtectedPage = () => {
                   >
                     Add review
                   </button>
-                  <button
-                    className='mt-4 w-[100px] rounded bg-gray-700 p-2 text-white'
-                    onClick={() => {
-                      setTitle('');
-                      setBody('');
-                    }}
-                  >
-                    Clear content
-                  </button>
                 </div>
               </div>
             )}
             <div className='mt-4'>
-              <div className='mb-2'>Reviews</div>
+              <div className='mb-6 mt-2 text-3xl font-bold'>My Reviews</div>
               {reviews.map((review: Review) => (
                 <ReviewComponent
                   key={review.id}
