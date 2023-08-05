@@ -52,17 +52,23 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
         <div className='flex items-center'>
-          <button onClick={() => setExpanded(!expanded)}>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            title={expanded ? 'Collapse' : 'Expand'}
+          >
             {expanded ? (
               <AiOutlineMinusSquare size={24} color='green' />
             ) : (
               <AiOutlinePlusSquare size={24} />
             )}
           </button>
-          <button onClick={() => toggleEditMode(review.id)}>
+          <button
+            onClick={() => toggleEditMode(review.id)}
+            title={editMode ? 'Cancel Edit' : 'Edit'}
+          >
             <AiOutlineEdit size={24} color={editMode ? 'orange' : 'black'} />
           </button>
-          <button onClick={() => onDelete(review.id)}>
+          <button onClick={() => onDelete(review.id)} title='Delete'>
             <AiOutlineDelete size={24} />
           </button>
         </div>
