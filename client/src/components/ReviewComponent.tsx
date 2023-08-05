@@ -15,6 +15,8 @@ export interface ReviewProps {
   onSaveReview: (reviewId: string, updatedBody: string) => void;
   onDelete: (id: string) => void;
   toggleEditMode: (reviewId: string) => void;
+  editMode: boolean;
+  setEditMode: any;
 }
 
 export const ReviewComponent: React.FC<ReviewProps> = ({
@@ -22,8 +24,9 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   onSaveReview,
   onDelete,
   toggleEditMode,
+  editMode,
+  setEditMode,
 }) => {
-  const [editMode, setEditMode] = useState(false);
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
 

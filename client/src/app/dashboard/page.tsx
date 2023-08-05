@@ -143,6 +143,8 @@ const ServerProtectedPage = () => {
               onSaveReview={onSaveReview}
               onDelete={onDelete}
               toggleEditMode={toggleEditMode}
+              editMode={editMode[review.id]}
+              setEditMode={setEditMode}
             />
           ))}
         </div>
