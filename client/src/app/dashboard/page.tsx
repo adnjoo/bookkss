@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { Review, ReviewComponent } from '@/components/Review';
+import { Review, ReviewComponent } from '@/components/ReviewComponent';
 
 interface EditModeState {
   [reviewId: string]: boolean;
