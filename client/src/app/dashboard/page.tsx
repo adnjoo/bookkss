@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LoadingBar from 'react-top-loading-bar';
-import { redirect } from 'next/navigation';
 
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
 
@@ -70,13 +69,18 @@ const ServerProtectedPage = () => {
     }));
   };
 
-  const onSaveReview = (reviewId: string, updatedBody: string) => {
+  const onSaveReview = (
+    reviewId: string,
+    updatedBody: string,
+    setPrivate: boolean
+  ) => {
     axios
       .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
         id: reviewId,
         title: reviews.find((review) => review.id === reviewId)?.title, // Keep the existing title
         body: updatedBody,
         userId: session?.user?.id,
+        setPrivate,
       })
       .then(() => {
         getReviews();

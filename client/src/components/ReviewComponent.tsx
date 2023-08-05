@@ -7,6 +7,9 @@ import {
   AiOutlineEdit,
   AiOutlineDelete,
   AiOutlineDownload,
+  AiFillLock,
+  AiFillUnlock,
+  AiOutlineEllipsis,
 } from 'react-icons/ai';
 
 export interface Review {
@@ -14,11 +17,16 @@ export interface Review {
   title: string;
   body: string;
   createdAt: string;
+  private: boolean;
 }
 
 export interface ReviewProps {
   review: Review;
-  onSaveReview: (reviewId: string, updatedBody: string) => void;
+  onSaveReview: (
+    reviewId: string,
+    updatedBody: string,
+    setPrivate: boolean
+  ) => void;
   onDelete: (id: string) => void;
   toggleEditMode: (reviewId: string) => void;
   editMode: boolean;
@@ -35,9 +43,10 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
 }) => {
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
+  const [optionsTab, setOptionsTab] = useState(false);
 
-  const handleSaveReview = () => {
-    onSaveReview(review.id, updatedBody);
+  const handleSaveReview = (updatedPrivate: boolean = review.private) => {
+    onSaveReview(review.id, updatedBody, updatedPrivate);
     setEditMode(false);
   };
 
@@ -75,13 +84,13 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
                 />
               </button>
               <button
-                onClick={() => downloadMarkdown(review.title, updatedBody)}
-                title='Download as Markdown'
+                onClick={() => setOptionsTab(!optionsTab)}
+                title='More Options'
               >
-                <AiOutlineDownload size={24} />
-              </button>
-              <button onClick={() => onDelete(review.id)} title='Delete'>
-                <AiOutlineDelete size={24} />
+                <AiOutlineEllipsis
+                  size={24}
+                  color={optionsTab ? 'green' : 'black'}
+                />
               </button>
             </>
           )}
@@ -97,12 +106,41 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           </button>
         </div>
       </div>
+      {optionsTab && (
+        <div className='my-4 rounded border bg-white p-4'>
+          <h2 className='mb-4 text-xl font-bold'>Options</h2>
+          <div className='flex gap-4'>
+            <button
+              onClick={() => downloadMarkdown(review.title, review.body)}
+              title='Download as Markdown'
+            >
+              <AiOutlineDownload size={24} />
+              Download
+            </button>
+            <button
+              onClick={() => handleSaveReview(!review.private)}
+              title={review.private ? 'Make Public' : 'Make Private'}
+            >
+              {review.private ? (
+                <AiFillLock size={24} />
+              ) : (
+                <AiFillUnlock size={24} />
+              )}
+              {review.private ? 'Make Public' : 'Make Private'}
+            </button>
+            <button onClick={() => onDelete(review.id)} title='Delete'>
+              <AiOutlineDelete size={24} />
+              Delete
+            </button>
+          </div>
+        </div>
+      )}
       <div className='my-3 flex gap-2'>
         {editMode && (
           <>
             <button
               className='rounded bg-green-600 px-2 py-1 text-white'
-              onClick={handleSaveReview}
+              onClick={() => handleSaveReview()}
             >
               Save
             </button>
