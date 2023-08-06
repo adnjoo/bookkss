@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
+import { MdOutlineUnarchive } from 'react-icons/md';
 
 import { Review } from '@/components/ReviewComponent';
 import { saveReview } from '@/app/utils/saveReview';
@@ -36,8 +37,16 @@ export const ReviewPublic = ({
         <h3 className='text-xl font-bold'>
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
-        <div className='flex items-center gap-2'>
-          {archive && <button onClick={handleUnarchive}>Unarchive</button>}
+        <div className='flex flex-row items-center gap-4'>
+          {archive && (
+            <button
+              onClick={handleUnarchive}
+              className='mb-4 mt-4 flex items-center rounded bg-blue-500 p-2 text-white'
+            >
+              Unarchive
+              <MdOutlineUnarchive className='ml-2 inline' />
+            </button>
+          )}
           <button
             onClick={() => setExpanded(!expanded)}
             title={expanded ? 'Collapse' : 'Expand'}

@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LoadingBar from 'react-top-loading-bar';
-import { BsArchive } from 'react-icons/bs';
 
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
 import { saveReview } from '@/app/utils/saveReview';
@@ -106,10 +105,6 @@ const ServerProtectedPage = () => {
               <h2 className='mt-4 font-medium'>
                 You are logged in as: {session?.user?.name}
               </h2>
-              <a href='/archive' className='my-4'>
-                Access Archive
-                <BsArchive className='ml-2 inline' color='black' />
-              </a>
               <button
                 className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
                 onClick={() => {
