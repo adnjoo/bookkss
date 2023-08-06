@@ -11,6 +11,37 @@ interface EditModeState {
   [reviewId: string]: boolean;
 }
 
+export interface onSaveReviewProps {
+  userId: string;
+  reviewId: string;
+  title: string;
+  updatedBody: string;
+  setPrivate: boolean;
+  setArchive: boolean;
+}
+
+export const saveReview = async ({
+  userId,
+  reviewId,
+  title,
+  updatedBody,
+  setPrivate,
+  setArchive,
+}: onSaveReviewProps) => {
+  let { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`,
+    {
+      id: reviewId,
+      title,
+      body: updatedBody,
+      userId,
+      setPrivate,
+      setArchive,
+    }
+  );
+  return data;
+};
+
 const ServerProtectedPage = () => {
   const { data: session }: { data: any } = useSession();
   const [loading, setLoading] = useState(false);
@@ -20,14 +51,12 @@ const ServerProtectedPage = () => {
   const [editMode, setEditMode] = useState<EditModeState>({});
   const [showAddReview, setShowAddReview] = useState(false);
 
-  // console.log('session', session);
-
   const getReviews = async () => {
     setLoading(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/get-user-reviews?userId=${session?.user?.id}`
     );
-    // console.log(res.data);
+    res.data = res.data.filter((review: Review) => !review.archive);
     setReviews(res.data);
     setLoading(false);
   };
@@ -75,22 +104,20 @@ const ServerProtectedPage = () => {
     setPrivate: boolean,
     setArchive: boolean
   ) => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
-        id: reviewId,
-        title: reviews.find((review) => review.id === reviewId)?.title, // Keep the existing title
-        body: updatedBody,
-        userId: session?.user?.id,
-        setPrivate,
-        setArchive,
-      })
-      .then(() => {
-        getReviews();
-        setEditMode((prevEditMode) => ({
-          ...prevEditMode,
-          [reviewId]: false, // Turn off edit mode after saving
-        }));
-      });
+    saveReview({
+      userId: session?.user?.id,
+      reviewId,
+      title: reviews.find((review) => review.id === reviewId)?.title as string, // Keep the existing title
+      updatedBody,
+      setPrivate,
+      setArchive,
+    }).then(() => {
+      getReviews();
+      setEditMode((prevEditMode) => ({
+        ...prevEditMode,
+        [reviewId]: false, // Turn off edit mode after saving
+      }));
+    });
   };
 
   return (
@@ -108,6 +135,7 @@ const ServerProtectedPage = () => {
               <h2 className='mt-4 font-medium'>
                 You are logged in as: {session?.user?.name}
               </h2>
+              <a href='/archive'>Archive</a>
               <button
                 className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
                 onClick={() => {
