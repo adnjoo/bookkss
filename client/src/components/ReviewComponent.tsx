@@ -14,12 +14,13 @@ import {
 import { BsArchive } from 'react-icons/bs';
 
 export interface Review {
-  id: string;
-  title: string;
+  archive: boolean;
   body: string;
   createdAt: string;
+  id: string;
   private: boolean;
-  archive: boolean;
+  title: string;
+  userId: string;
 }
 
 export interface ReviewProps {
@@ -141,14 +142,11 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
               {review.private ? 'Make Public' : 'Make Private'}
             </button>
             <button
-              onClick={() => handleSaveReview(!review.archive)}
-              title={review.archive ? 'Unarchive' : 'Archive'}
+              onClick={() => handleSaveReview(review.private, !review.archive)}
+              title='Archive'
             >
-              <BsArchive
-                size={24}
-                color={review.archive ? 'orange' : 'black'}
-              />
-              {review.archive ? 'Unarchive' : 'Archive'}
+              <BsArchive size={24} color={'black'} />
+              Archive
             </button>
             <button onClick={() => onDelete(review.id)} title='Delete'>
               <AiOutlineDelete size={24} />

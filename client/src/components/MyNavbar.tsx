@@ -13,7 +13,7 @@ export const MyNavbar = async () => {
             <a href='/'>
               <img src='/logo-long.png' className='w-24' />
             </a>
-            <a href='/dashboard'>Dashboard</a>
+            {/* <a href='/dashboard'>Home</a> */}
             <a href='/discover'>Discover</a>
           </div>
           <a href='/api/auth/signout'>
