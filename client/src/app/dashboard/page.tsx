@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import LoadingBar from 'react-top-loading-bar';
 
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
+import { saveReview } from '@/app/utils/saveReview';
 
 interface EditModeState {
   [reviewId: string]: boolean;
@@ -20,14 +21,12 @@ const ServerProtectedPage = () => {
   const [editMode, setEditMode] = useState<EditModeState>({});
   const [showAddReview, setShowAddReview] = useState(false);
 
-  // console.log('session', session);
-
   const getReviews = async () => {
     setLoading(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/get-user-reviews?userId=${session?.user?.id}`
     );
-    // console.log(res.data);
+    res.data = res.data.filter((review: Review) => !review.archive);
     setReviews(res.data);
     setLoading(false);
   };
@@ -72,23 +71,23 @@ const ServerProtectedPage = () => {
   const onSaveReview = (
     reviewId: string,
     updatedBody: string,
-    setPrivate: boolean
+    setPrivate: boolean,
+    setArchive: boolean
   ) => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
-        id: reviewId,
-        title: reviews.find((review) => review.id === reviewId)?.title, // Keep the existing title
-        body: updatedBody,
-        userId: session?.user?.id,
-        setPrivate,
-      })
-      .then(() => {
-        getReviews();
-        setEditMode((prevEditMode) => ({
-          ...prevEditMode,
-          [reviewId]: false, // Turn off edit mode after saving
-        }));
-      });
+    saveReview({
+      userId: session?.user?.id,
+      reviewId,
+      title: reviews.find((review) => review.id === reviewId)?.title as string, // Keep the existing title
+      updatedBody,
+      setPrivate,
+      setArchive,
+    }).then(() => {
+      getReviews();
+      setEditMode((prevEditMode) => ({
+        ...prevEditMode,
+        [reviewId]: false, // Turn off edit mode after saving
+      }));
+    });
   };
 
   return (

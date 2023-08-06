@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { pool } from '../db';
 
 export const upsertReview = async (req: Request, res: Response) => {
-  const { id, title, body, userId, setPrivate } = req.body;
+  const { id, title, body, userId, setPrivate, setArchive } = req.body;
 
   if (!title || !body || !userId) {
     res.status(400).json({ error: 'Missing required fields.' });
@@ -35,10 +35,10 @@ export const upsertReview = async (req: Request, res: Response) => {
     pool.query(
       `
       UPDATE "Review"
-      SET title = $1, body = $2, private = $5
+      SET title = $1, body = $2, private = $5, archive = $6
       WHERE "userId" = $3 AND id = $4 
       `,
-      [title, body, userId, id, setPrivate],
+      [title, body, userId, id, setPrivate, setArchive],
       (error: any, result: any) => {
         if (error) {
           console.error('Error updating review in PostgreSQL database:', error);
