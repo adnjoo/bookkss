@@ -17,7 +17,6 @@ export const ReviewPublic = ({
   getReviews = () => {},
 }: ReviewPublicProps) => {
   const [expanded, setExpanded] = useState(false);
-  console.log(review);
 
   const handleUnarchive = async () => {
     await saveReview({

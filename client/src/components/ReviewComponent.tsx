@@ -45,7 +45,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   editMode,
   setEditMode,
 }) => {
-  console.log(review);
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
   const [optionsTab, setOptionsTab] = useState(false);
