@@ -38,7 +38,7 @@ export const upsertReview = async (req: Request, res: Response) => {
       SET title = $1, body = $2, private = $5, archive = $6
       WHERE "userId" = $3 AND id = $4 
       `,
-      [title, body, userId, id, setPrivate],
+      [title, body, userId, id, setPrivate, setArchive],
       (error: any, result: any) => {
         if (error) {
           console.error('Error updating review in PostgreSQL database:', error);
