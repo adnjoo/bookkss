@@ -11,6 +11,7 @@ import {
   AiFillUnlock,
   AiOutlineEllipsis,
 } from 'react-icons/ai';
+import { BsArchive } from 'react-icons/bs';
 
 export interface Review {
   id: string;
@@ -18,6 +19,7 @@ export interface Review {
   body: string;
   createdAt: string;
   private: boolean;
+  archive: boolean;
 }
 
 export interface ReviewProps {
@@ -25,7 +27,8 @@ export interface ReviewProps {
   onSaveReview: (
     reviewId: string,
     updatedBody: string,
-    setPrivate: boolean
+    setPrivate: boolean,
+    setArchive: boolean
   ) => void;
   onDelete: (id: string) => void;
   toggleEditMode: (reviewId: string) => void;
@@ -41,12 +44,16 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   editMode,
   setEditMode,
 }) => {
+  console.log(review);
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
   const [optionsTab, setOptionsTab] = useState(false);
 
-  const handleSaveReview = (updatedPrivate: boolean = review.private) => {
-    onSaveReview(review.id, updatedBody, updatedPrivate);
+  const handleSaveReview = (
+    updatedPrivate: boolean = review.private,
+    archive: boolean = review.archive
+  ) => {
+    onSaveReview(review.id, updatedBody, updatedPrivate, archive);
     setEditMode(false);
   };
 
@@ -127,11 +134,21 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
               title={review.private ? 'Make Public' : 'Make Private'}
             >
               {review.private ? (
-                <AiFillLock size={24} />
+                <AiFillLock size={24} color={'red'} />
               ) : (
                 <AiFillUnlock size={24} />
               )}
               {review.private ? 'Make Public' : 'Make Private'}
+            </button>
+            <button
+              onClick={() => handleSaveReview(!review.archive)}
+              title={review.archive ? 'Unarchive' : 'Archive'}
+            >
+              <BsArchive
+                size={24}
+                color={review.archive ? 'orange' : 'black'}
+              />
+              {review.archive ? 'Unarchive' : 'Archive'}
             </button>
             <button onClick={() => onDelete(review.id)} title='Delete'>
               <AiOutlineDelete size={24} />

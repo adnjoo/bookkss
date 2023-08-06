@@ -72,7 +72,8 @@ const ServerProtectedPage = () => {
   const onSaveReview = (
     reviewId: string,
     updatedBody: string,
-    setPrivate: boolean
+    setPrivate: boolean,
+    setArchive: boolean
   ) => {
     axios
       .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
@@ -81,6 +82,7 @@ const ServerProtectedPage = () => {
         body: updatedBody,
         userId: session?.user?.id,
         setPrivate,
+        setArchive,
       })
       .then(() => {
         getReviews();
