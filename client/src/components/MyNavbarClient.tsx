@@ -25,7 +25,9 @@ export const MyNavbarClient = () => {
             <AiOutlineMenu className='flex h-6 w-6 sm:hidden' color='black' />
           </button>
         </div>
-        <img src='/logo.png' className='flex w-12 sm:hidden' />
+        <a href='/'>
+          <img src='/logo.png' className='flex w-12 sm:hidden' />
+        </a>
         <div id='right' className='flex'>
           <a href='/api/auth/signout' className='flex items-center'>
             <AiOutlineLogout className='flex h-6 w-6 sm:hidden' />
