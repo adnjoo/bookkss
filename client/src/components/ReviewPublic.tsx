@@ -3,18 +3,18 @@ import MDEditor from '@uiw/react-md-editor';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
 
 import { Review } from '@/components/ReviewComponent';
-import { saveReview } from '@/app/dashboard/page';
+import { saveReview } from '@/app/utils/saveReview';
 
 export interface ReviewPublicProps {
   review: Review;
   archive?: boolean;
-  getReviews: () => void;
+  getReviews?: () => void;
 }
 
 export const ReviewPublic = ({
   review,
   archive = false,
-  getReviews,
+  getReviews = () => {},
 }: ReviewPublicProps) => {
   const [expanded, setExpanded] = useState(false);
   console.log(review);

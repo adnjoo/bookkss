@@ -7,41 +7,11 @@ import LoadingBar from 'react-top-loading-bar';
 import { BsArchive } from 'react-icons/bs';
 
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
+import { saveReview } from '@/app/utils/saveReview';
 
 interface EditModeState {
   [reviewId: string]: boolean;
 }
-
-export interface onSaveReviewProps {
-  userId: string;
-  reviewId: string;
-  title: string;
-  updatedBody: string;
-  setPrivate: boolean;
-  setArchive: boolean;
-}
-
-export const saveReview = async ({
-  userId,
-  reviewId,
-  title,
-  updatedBody,
-  setPrivate,
-  setArchive,
-}: onSaveReviewProps) => {
-  let { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`,
-    {
-      id: reviewId,
-      title,
-      body: updatedBody,
-      userId,
-      setPrivate,
-      setArchive,
-    }
-  );
-  return data;
-};
 
 const ServerProtectedPage = () => {
   const { data: session }: { data: any } = useSession();
