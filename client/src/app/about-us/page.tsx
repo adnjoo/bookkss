@@ -1,5 +1,4 @@
 import React from 'react';
-import profilePicture from './andrew_njoo.jpg';
 
 function AboutUs() {
   return (
@@ -7,16 +6,7 @@ function AboutUs() {
       <div className='mb-10 text-center'>
         <h1 className='text-4xl font-semibold'>About Bookkss</h1>
       </div>
-      <div className='mb-10 text-center'>
-        <p className='text-lg text-gray-800'>
-          Bookkss is an innovative app designed to help you write, share, and
-          save your book reviews effortlessly.
-        </p>
-      </div>
       <div className='mb-4 flex flex-col justify-center gap-4'>
-        <h2 className='mx-auto flex justify-center text-2xl font-semibold'>
-          Meet the Founder
-        </h2>
         <img
           src='/founder.jpg'
           alt='founder'
@@ -25,21 +15,22 @@ function AboutUs() {
       </div>
       <div className='mb-10 text-center'>
         <p className='text-lg text-gray-800'>
-          Bookkss was founded by Andrew Njoo, an ex-Amazon engineer with a
-          passion for books. Inspired by his love for books, Andrew set out to
-          create an app that enhances the way readers share their opinions and
-          engage in meaningful discussions about literature.
+          Bookkss was founded by Andrew Njoo, an ex-Amazon engineer. Inspired by
+          his love for books, Andrew set out to create an app that helps people
+          to write and share their book reviews.
         </p>
       </div>
       <div className='mb-10 text-center'>
-        <h2 className='text-2xl font-semibold'>Why Choose Bookkss?</h2>
+        <h2 className='text-2xl font-semibold'>Why Use Bookkss?</h2>
       </div>
-      <div className='mb-10 text-center'>
-        <p className='text-lg text-gray-800'>
+      <div className='mb-10 text-center text-lg text-gray-800'>
+        <p className=''>
           - Seamlessly write and save book reviews with our user-friendly
           interface.
-          <br />- Connect with fellow readers who share your interests and
-          discover new books to add to your reading list.
+        </p>
+        <p>
+          - Connect with fellow readers who share your interests and discover
+          new books to add to your reading list.
         </p>
       </div>
       <div className='mb-10 text-center'>
@@ -47,7 +38,8 @@ function AboutUs() {
       </div>
       <div className='mb-10 text-center'>
         <p className='text-lg text-gray-800'>
-          Become a part of the Bookkss community and learn from other readers.
+          Keep track of your reading progress, and improve your writing skills
+          today for free!
         </p>
       </div>
     </div>

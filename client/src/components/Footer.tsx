@@ -11,7 +11,7 @@ export const Footer = () => {
             <p className='mt-2 hidden sm:flex'>
               Helping you write and share book reviews.
             </p>
-            <a href='/about-us' className='mt-2 hidden sm:flex'>
+            <a href='/about-us' className='mt-2'>
               About Us
             </a>
           </div>
