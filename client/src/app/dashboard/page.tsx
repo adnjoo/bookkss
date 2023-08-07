@@ -112,12 +112,13 @@ const ServerProtectedPage = () => {
               <button
                 className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
                 onClick={() => {
+                  if (showAddReview) return;
                   setShowAddReview(!showAddReview);
                   setTitle('');
                   setBody('');
                 }}
               >
-                {showAddReview ? 'Cancel' : 'Add Review'}
+                Add review
               </button>
             </div>
             {showAddReview && (
@@ -144,6 +145,12 @@ const ServerProtectedPage = () => {
                     onClick={onAddReview}
                   >
                     Add review
+                  </button>
+                  <button
+                    className='mt-4 w-[100px] rounded bg-red-500 p-2 text-white'
+                    onClick={() => setShowAddReview(false)}
+                  >
+                    Cancel
                   </button>
                 </div>
               </div>
