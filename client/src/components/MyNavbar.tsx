@@ -22,7 +22,7 @@ export const MyNavbar = async () => {
             <a href='/discover'>Discover</a>
           </div>
           <div className='flex items-center'>
-            <a href='/signin'>
+            <a href='/api/auth/signin'>
               <AiOutlineLogin className='flex h-6 w-6 sm:hidden' />
               <span className='hidden sm:flex'>Sign in</span>
             </a>
