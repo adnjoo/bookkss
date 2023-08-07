@@ -7,10 +7,13 @@ export const Footer = () => {
       <div className='container mx-auto px-4'>
         <div className='flex justify-between'>
           <div>
-            <h3 className='text-lg font-bold'>Bookkss</h3>
+            <h3 className='text-lg font-bold'>bookkss</h3>
             <p className='mt-2 hidden sm:flex'>
               Helping you write and share book reviews.
             </p>
+            <a href='/about-us' className='mt-2 hidden sm:flex'>
+              About Us
+            </a>
           </div>
           <div>
             <h3 className='text-lg font-bold'>Links</h3>
