@@ -36,7 +36,7 @@ export const MyNavbarClient = () => {
         </div>
       </div>
       {expanded && (
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 sm:hidden'>
           <a href='/dashboard'>Dashboard</a>
           <a href='/archive'>Archive</a>
           <a href='/discover'>Discover</a>
