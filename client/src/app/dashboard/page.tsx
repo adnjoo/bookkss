@@ -7,6 +7,7 @@ import LoadingBar from 'react-top-loading-bar';
 
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
 import { saveReview } from '@/app/utils/saveReview';
+import { AddReview } from '@/components/AddReview';
 
 interface EditModeState {
   [reviewId: string]: boolean;
@@ -46,6 +47,7 @@ const ServerProtectedPage = () => {
         getReviews();
         setTitle('');
         setBody('');
+        setShowAddReview(false);
       });
   };
 
@@ -122,38 +124,14 @@ const ServerProtectedPage = () => {
               </button>
             </div>
             {showAddReview && (
-              <div className='mx-4 mb-12 mt-12 border p-4'>
-                <div>
-                  <div className='mb-2'>Title</div>
-                  <input
-                    className='w-full border p-4'
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
-                  />
-                </div>
-                <div>
-                  <div className='mb-2'>Body</div>
-                  <textarea
-                    className='w-full border p-6'
-                    onChange={(e) => setBody(e.target.value)}
-                    value={body}
-                  />
-                </div>
-                <div className='flex gap-2'>
-                  <button
-                    className='mt-4 w-[100px] rounded bg-gray-500 p-2 text-white'
-                    onClick={onAddReview}
-                  >
-                    Add review
-                  </button>
-                  <button
-                    className='mt-4 w-[100px] rounded bg-red-500 p-2 text-white'
-                    onClick={() => setShowAddReview(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
+              <AddReview
+                setTitle={setTitle}
+                setBody={setBody}
+                setShowAddReview={setShowAddReview}
+                onAddReview={onAddReview}
+                title={title}
+                body={body}
+              />
             )}
             <div className='mt-4'>
               <div className='mb-6 mt-2 text-3xl font-bold'>My Reviews</div>
