@@ -22,13 +22,10 @@ export const Footer = () => {
                 <a href='/'>Home</a>
               </span>
               <span className='mb-1'>
-                <a href='/discover'>Discover</a>
-              </span>
-              <span className='mb-1'>
-                <a href='/signin'>Sign In</a>
-              </span>
-              <span className='mb-1'>
                 <a href='/dashboard'>Dashboard</a>
+              </span>
+              <span className='mb-1'>
+                <a href='/discover'>Discover</a>
               </span>
             </ul>
           </div>
