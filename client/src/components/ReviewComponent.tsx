@@ -78,8 +78,11 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   };
 
   return (
-    <div key={review.id} className='mb-4 cursor-pointer rounded border p-4'>
-      <div className='flex justify-between' onClick={() => handleSetExpanded()}>
+    <div key={review.id} className='mb-4 rounded border p-4'>
+      <div
+        className='flex cursor-pointer justify-between'
+        onClick={() => handleSetExpanded()}
+      >
         <h3 className='text-xl font-bold'>
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
