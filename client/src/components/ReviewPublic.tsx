@@ -33,7 +33,10 @@ export const ReviewPublic = ({
 
   return (
     <div key={review.id} className='mb-4 rounded border p-4'>
-      <div className='flex justify-between'>
+      <div
+        className='flex cursor-pointer justify-between'
+        onClick={() => setExpanded(!expanded)}
+      >
         <h3 className='text-xl font-bold'>
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
