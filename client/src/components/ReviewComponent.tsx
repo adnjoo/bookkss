@@ -34,32 +34,29 @@ export interface ReviewProps {
     setArchive: boolean
   ) => void;
   onDelete: (id: string) => void;
-  toggleEditMode: (reviewId: string) => void;
-  editMode: boolean;
 }
 
 export const ReviewComponent: React.FC<ReviewProps> = ({
   review,
   onSaveReview,
   onDelete,
-  toggleEditMode,
-  editMode,
 }) => {
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
   const [optionsTab, setOptionsTab] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   const handleSaveReview = (
     updatedPrivate: boolean = review.private,
     archive: boolean = review.archive
   ) => {
     onSaveReview(review.id, updatedBody, updatedPrivate, archive);
-    toggleEditMode(review.id);
+    setEditMode(!editMode);
   };
 
   const handleCancelEdit = () => {
     setUpdatedBody(review.body);
-    toggleEditMode(review.id);
+    setEditMode(!editMode);
   };
 
   const handleSetExpanded = () => {
@@ -77,7 +74,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           {expanded && (
             <>
               <button
-                onClick={() => toggleEditMode(review.id)}
+                onClick={() => setEditMode(!editMode)}
                 title={editMode ? 'Cancel Edit' : 'Edit'}
               >
                 <AiOutlineEdit

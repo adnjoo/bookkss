@@ -9,17 +9,12 @@ import { Review, ReviewComponent } from '@/components/ReviewComponent';
 import { saveReview } from '@/app/utils/saveReview';
 import { AddReview } from '@/components/AddReview';
 
-interface EditModeState {
-  [reviewId: string]: boolean;
-}
-
 const ServerProtectedPage = () => {
   const { data: session }: { data: any } = useSession();
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [editMode, setEditMode] = useState<EditModeState>({});
   const [showAddReview, setShowAddReview] = useState(false);
 
   const getReviews = async () => {
@@ -85,10 +80,6 @@ const ServerProtectedPage = () => {
       setArchive,
     }).then(() => {
       getReviews();
-      setEditMode((prevEditMode) => ({
-        ...prevEditMode,
-        [reviewId]: false, // Turn off edit mode after saving
-      }));
     });
   };
 
@@ -141,8 +132,6 @@ const ServerProtectedPage = () => {
                   review={review}
                   onSaveReview={onSaveReview}
                   onDelete={onDelete}
-                  toggleEditMode={toggleEditMode}
-                  editMode={editMode[review.id]}
                 />
               ))}
             </div>
