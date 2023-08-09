@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, use } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
 import {
@@ -45,13 +45,33 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   const [expanded, setExpanded] = useState(false);
   const [optionsTab, setOptionsTab] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<any>(review.body);
+
+  function handleBodyChange(e: any) {
+    setUpdatedBody(e);
+    bodyRef.current = e;
+  }
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        handleSaveReview();
+      }
+    };
+
+    document.addEventListener('mousedown', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside);
+    };
+  }, [containerRef]);
 
   const handleSaveReview = (
     updatedPrivate: boolean = review.private,
     archive: boolean = review.archive
   ) => {
-    onSaveReview(review.id, updatedBody, updatedPrivate, archive);
-    setEditMode(!editMode);
+    onSaveReview(review.id, bodyRef.current, updatedPrivate, archive);
+    setEditMode(false);
   };
 
   const handleCancelEdit = () => {
@@ -73,7 +93,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
         <div className='flex items-center gap-2'>
           {expanded && (
             <>
-              <button
+              {/* <button
                 onClick={() => setEditMode(!editMode)}
                 title={editMode ? 'Cancel Edit' : 'Edit'}
               >
@@ -81,7 +101,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
                   size={24}
                   color={editMode ? 'orange' : 'black'}
                 />
-              </button>
+              </button> */}
               <button
                 onClick={() => setOptionsTab(!optionsTab)}
                 title='More Options'
@@ -141,7 +161,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           </div>
         </div>
       )}
-      <div className='my-3 flex gap-2'>
+      {/* <div className='my-3 flex gap-2'>
         {editMode && (
           <>
             <button
@@ -158,22 +178,26 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             </button>
           </>
         )}
-      </div>
+      </div> */}
       {editMode ? (
-        <MDEditor
-          height={600}
-          data-color-mode='light'
-          value={updatedBody}
-          onChange={setUpdatedBody}
-          previewOptions={{
-            rehypePlugins: [[rehypeSanitize]],
-          }}
-        />
+        <div ref={containerRef}>
+          <MDEditor
+            height={600}
+            data-color-mode='light'
+            value={updatedBody}
+            onChange={handleBodyChange}
+            previewOptions={{
+              rehypePlugins: [[rehypeSanitize]],
+            }}
+          />
+        </div>
       ) : (
-        <MDEditor.Markdown
-          source={expanded ? review.body : review.body.slice(0, 10) + '...'}
-          wrapperElement={{ 'data-color-mode': 'light' } as any}
-        />
+        <div onClick={() => setEditMode(!editMode)}>
+          <MDEditor.Markdown
+            source={expanded ? updatedBody : updatedBody.slice(0, 10) + '...'}
+            wrapperElement={{ 'data-color-mode': 'light' } as any}
+          />
+        </div>
       )}
     </div>
   );
