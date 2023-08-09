@@ -13,6 +13,8 @@ import {
 } from 'react-icons/ai';
 import { BsArchive } from 'react-icons/bs';
 
+import { downloadMarkdown } from '@/app/utils/downloadMarkdown';
+
 export interface Review {
   archive: boolean;
   body: string;
@@ -63,16 +65,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   const handleSetExpanded = () => {
     setExpanded(!expanded);
     setOptionsTab(false);
-  };
-
-  const downloadMarkdown = (title: string, body: string) => {
-    const content = `# ${title}\n\n${body}`;
-    const blob = new Blob([content], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${title}.md`;
-    link.click();
   };
 
   return (
@@ -184,12 +176,10 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           }}
         />
       ) : (
-        <>
-          <MDEditor.Markdown
-            source={expanded ? review.body : review.body.slice(0, 10) + '...'}
-            wrapperElement={{ 'data-color-mode': 'light' } as any}
-          />
-        </>
+        <MDEditor.Markdown
+          source={expanded ? review.body : review.body.slice(0, 10) + '...'}
+          wrapperElement={{ 'data-color-mode': 'light' } as any}
+        />
       )}
     </div>
   );
