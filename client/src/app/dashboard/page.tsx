@@ -58,13 +58,6 @@ const ServerProtectedPage = () => {
         .then(() => getReviews());
   };
 
-  const toggleEditMode = (reviewId: string) => {
-    setEditMode((prevEditMode) => ({
-      ...prevEditMode,
-      [reviewId]: !prevEditMode[reviewId],
-    }));
-  };
-
   const onSaveReview = (
     reviewId: string,
     updatedBody: string,
@@ -80,6 +73,7 @@ const ServerProtectedPage = () => {
       setArchive,
     }).then(() => {
       getReviews();
+      console.log('Review saved', updatedBody);
     });
   };
 
