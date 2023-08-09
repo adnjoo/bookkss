@@ -34,7 +34,6 @@ export interface ReviewProps {
   onDelete: (id: string) => void;
   toggleEditMode: (reviewId: string) => void;
   editMode: boolean;
-  setEditMode: any;
 }
 
 export const ReviewComponent: React.FC<ReviewProps> = ({
@@ -43,7 +42,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   onDelete,
   toggleEditMode,
   editMode,
-  setEditMode,
 }) => {
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
@@ -54,12 +52,12 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
     archive: boolean = review.archive
   ) => {
     onSaveReview(review.id, updatedBody, updatedPrivate, archive);
-    setEditMode(false);
+    toggleEditMode(review.id);
   };
 
   const handleCancelEdit = () => {
     setUpdatedBody(review.body);
-    setEditMode(false);
+    toggleEditMode(review.id);
   };
 
   const handleSetExpanded = () => {
