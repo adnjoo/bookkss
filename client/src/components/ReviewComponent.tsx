@@ -74,11 +74,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
     setEditMode(false);
   };
 
-  const handleCancelEdit = () => {
-    setUpdatedBody(review.body);
-    setEditMode(!editMode);
-  };
-
   const handleSetExpanded = () => {
     setExpanded(!expanded);
     setOptionsTab(false);
@@ -91,17 +86,8 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
         <div className='flex items-center gap-2'>
-          {expanded && (
+          {expanded && !editMode && (
             <>
-              {/* <button
-                onClick={() => setEditMode(!editMode)}
-                title={editMode ? 'Cancel Edit' : 'Edit'}
-              >
-                <AiOutlineEdit
-                  size={24}
-                  color={editMode ? 'orange' : 'black'}
-                />
-              </button> */}
               <button
                 onClick={() => setOptionsTab(!optionsTab)}
                 title='More Options'
@@ -161,24 +147,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
           </div>
         </div>
       )}
-      {/* <div className='my-3 flex gap-2'>
-        {editMode && (
-          <>
-            <button
-              className='rounded bg-green-600 px-2 py-1 text-white'
-              onClick={() => handleSaveReview()}
-            >
-              Save
-            </button>
-            <button
-              className='rounded bg-slate-600 px-2 py-1 text-white'
-              onClick={handleCancelEdit}
-            >
-              Cancel
-            </button>
-          </>
-        )}
-      </div> */}
       {editMode ? (
         <div ref={containerRef}>
           <MDEditor
