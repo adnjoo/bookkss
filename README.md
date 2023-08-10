@@ -43,4 +43,4 @@ npm install
 npm run dev
 ```
 
-SLOC: 1083
+SLOC: 1173
