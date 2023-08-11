@@ -10,7 +10,7 @@ import { saveReview } from '@/app/utils/saveReview';
 import { AddReview } from '@/components/AddReview';
 
 const ServerProtectedPage = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session, status }: { data: any; status: any } = useSession();
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
@@ -26,6 +26,10 @@ const ServerProtectedPage = () => {
     setReviews(res.data);
     setLoading(false);
   };
+
+  useEffect(() => {
+    console.log('status', status, new Date().toISOString());
+  }, [status]);
 
   useEffect(() => {
     if (session) getReviews();
