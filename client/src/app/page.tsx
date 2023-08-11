@@ -21,7 +21,10 @@ export default async function Home() {
             for future reference.
           </p>
           <div className='mt-10 flex justify-center'>
-            <a href='/signin' className='rounded-xl bg-gray-500 p-3 text-white'>
+            <a
+              href='/api/auth/signin'
+              className='rounded-xl bg-gray-500 p-3 text-white'
+            >
               Get started
             </a>
           </div>
