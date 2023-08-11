@@ -2,7 +2,7 @@ Bookkss provides a platform for users to write and share book reviews.
 
 [@FE](https://bookkss.com) Vercel
 
-[@DB](https://vercel.com/storage/postgres) Vercel x Postgres
+[@DB](https://supabase.com/dashboard) Supabase x Postgres
 
 [@BE](https://bookkss.fly.dev) Fly
 
