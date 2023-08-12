@@ -8,9 +8,9 @@ export const MyNavbar = async () => {
   const session = await getServerSession(authOptions);
   return (
     <>
-      <div className='rounded bg-yellow-400 text-xs'>
+      {/* <div className='rounded bg-yellow-400 text-xs'>
         Currently in Alpha Mode - there may be bugs!
-      </div>
+      </div> */}
       {session ? (
         <nav className='mx-4 mt-6'>
           <MyNavbarClient />
