@@ -11,6 +11,7 @@ import { AddReview } from '@/components/AddReview';
 
 const ServerProtectedPage = () => {
   const { data: session, status }: { data: any; status: any } = useSession();
+  console.log('session', session);
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
