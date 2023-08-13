@@ -19,11 +19,11 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <Provider>
-          <MyNavbar />
-          {children}
-          <Footer />
-        </Provider>
+        {/* <Provider> */}
+        <MyNavbar />
+        {children}
+        <Footer />
+        {/* </Provider> */}
       </body>
     </html>
   );

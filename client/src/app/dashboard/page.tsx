@@ -10,8 +10,8 @@ import { saveReview } from '@/app/utils/saveReview';
 import { AddReview } from '@/components/AddReview';
 
 const ServerProtectedPage = () => {
-  const { data: session, status }: { data: any; status: any } = useSession();
-  console.log('session', session);
+  // const { data: session, status }: { data: any; status: any } = useSession();
+  // console.log('session', session);
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
@@ -32,9 +32,9 @@ const ServerProtectedPage = () => {
     console.log('status', status, new Date().toISOString());
   }, [status]);
 
-  useEffect(() => {
-    if (session) getReviews();
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) getReviews();
+  // }, [session]);
 
   const onAddReview = () => {
     axios
@@ -84,7 +84,7 @@ const ServerProtectedPage = () => {
 
   return (
     <>
-      {session ? (
+      {/* {session ? (
         <section className='pb-64 pt-12'>
           <LoadingBar
             color='#3b82f6'
@@ -136,9 +136,15 @@ const ServerProtectedPage = () => {
             </div>
           </div>
         </section>
-      ) : (
-        <div className='mx-auto mb-[600px] mt-24 text-center'></div>
-      )}
+      ) : ( */}
+      <div className='mx-auto mb-[600px] mt-24 text-center'>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+        voluptatum, quibusdam, quia, quae voluptates voluptatem quod quos
+        voluptatibus quidem doloribus voluptas. Quisquam voluptatum, quibusdam,
+        quia, quae voluptates voluptatem quod quos voluptatibus quidem doloribus
+        voluptas.
+      </div>
+      {/* )} */}
     </>
   );
 };
