@@ -18,15 +18,15 @@ const ServerProtectedPage = () => {
   const [body, setBody] = useState('');
   const [showAddReview, setShowAddReview] = useState(false);
 
-  const getReviews = async () => {
-    setLoading(true);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/get-user-reviews?userId=${session?.user?.id}`
-    );
-    res.data = res.data.filter((review: Review) => !review.archive);
-    setReviews(res.data);
-    setLoading(false);
-  };
+  // const getReviews = async () => {
+  //   setLoading(true);
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/get-user-reviews?userId=${session?.user?.id}`
+  //   );
+  //   res.data = res.data.filter((review: Review) => !review.archive);
+  //   setReviews(res.data);
+  //   setLoading(false);
+  // };
 
   useEffect(() => {
     console.log('status', status, new Date().toISOString());
@@ -36,51 +36,51 @@ const ServerProtectedPage = () => {
   //   if (session) getReviews();
   // }, [session]);
 
-  const onAddReview = () => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
-        title,
-        body,
-        userId: session?.user?.id,
-      })
-      .then(() => {
-        getReviews();
-        setTitle('');
-        setBody('');
-        setShowAddReview(false);
-      });
-  };
+  // const onAddReview = () => {
+  //   axios
+  //     .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/upsert-review`, {
+  //       title,
+  //       body,
+  //       userId: session?.user?.id,
+  //     })
+  //     .then(() => {
+  //       getReviews();
+  //       setTitle('');
+  //       setBody('');
+  //       setShowAddReview(false);
+  //     });
+  // };
 
-  const onDelete = (id: string) => {
-    window.confirm('Are you sure you want to delete this review?') &&
-      axios
-        .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/delete-review`, {
-          data: {
-            id,
-            userId: session?.user?.id,
-          },
-        })
-        .then(() => getReviews());
-  };
+  // const onDelete = (id: string) => {
+  //   window.confirm('Are you sure you want to delete this review?') &&
+  //     axios
+  //       .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/delete-review`, {
+  //         data: {
+  //           id,
+  //           userId: session?.user?.id,
+  //         },
+  //       })
+  //       .then(() => getReviews());
+  // };
 
-  const onSaveReview = (
-    reviewId: string,
-    updatedBody: string,
-    setPrivate: boolean,
-    setArchive: boolean
-  ) => {
-    saveReview({
-      userId: session?.user?.id,
-      reviewId,
-      title: reviews.find((review) => review.id === reviewId)?.title as string, // Keep the existing title
-      updatedBody,
-      setPrivate,
-      setArchive,
-    }).then(() => {
-      getReviews();
-      console.log('Review saved', updatedBody);
-    });
-  };
+  // const onSaveReview = (
+  //   reviewId: string,
+  //   updatedBody: string,
+  //   setPrivate: boolean,
+  //   setArchive: boolean
+  // ) => {
+  //   saveReview({
+  //     userId: session?.user?.id,
+  //     reviewId,
+  //     title: reviews.find((review) => review.id === reviewId)?.title as string, // Keep the existing title
+  //     updatedBody,
+  //     setPrivate,
+  //     setArchive,
+  //   }).then(() => {
+  //     getReviews();
+  //     console.log('Review saved', updatedBody);
+  //   });
+  // };
 
   return (
     <>
