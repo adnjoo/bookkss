@@ -87,7 +87,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const isAuth = async (req: Request, res: Response) => {
   try {
-    const token = req.body.token;
+    const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
       return res.status(401).json({ message: 'Not authenticated' });

@@ -4,10 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 import App from "./App.tsx";
 import "./index.css";
-import Login from "./components/Login";
-import Navbar from "./components/Navbar";
-import { Footer } from "./components/Footer.tsx";
-import AboutUs from "./components/AboutUs.tsx";
+import { Dashboard, Login, AboutUs, Footer, Navbar } from "./components";
 
 const NavbarWrapper = () => {
   return (
@@ -35,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },

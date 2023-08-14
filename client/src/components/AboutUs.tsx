@@ -1,6 +1,4 @@
-// import React from "react";
-
-function AboutUs() {
+export function AboutUs() {
   return (
     <div className="mx-4 my-10">
       <div className="mb-10 text-center">
@@ -45,5 +43,3 @@ function AboutUs() {
     </div>
   );
 }
-
-export default AboutUs;

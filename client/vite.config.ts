@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/auth": "http://localhost:3001",
+      "/users/login": "http://localhost:3001",
     },
   },
 });

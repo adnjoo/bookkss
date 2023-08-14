@@ -1,37 +1,55 @@
-// Login.jsx
+import { useState } from "react";
+import axios from "axios";
 
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { serverUrl } from "../lib/helpers";
 
-function Login() {
-  const [user, setUser] = useState<any>(null);
+export function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
-  useEffect(() => {
-    // Make a request to check if the user is authenticated
-    fetch("/auth/isauth")
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .catch((error) => console.error("Error:", error));
-  }, []);
+  const login = async () => {
+    const res = await axios.post(`${serverUrl}/users/login`, {
+      email,
+      password,
+    });
+    if (res.data) {
+      localStorage.setItem("token", res.data.token);
+      window.location.href = "/";
+    }
+  };
 
   return (
     <div className="my-64 mx-auto flex justify-center">
-      {user ? (
-        <div>
-          Welcome, {user?.displayName}!<br />
-          Email: {user?.email}
-          <br />
-          <img src={user?.picture} alt="Profile" />
+      <div className="w-1/3">
+        <h1 className="text-4xl font-bold mb-8">Login</h1>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Email
+          </label>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="email"
+            placeholder="Email"
+          />
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Password
+          </label>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="password"
+            placeholder="Password"
+          />
+          <button
+            onClick={login}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+            type="button"
+          >
+            Login
+          </button>
         </div>
-      ) : (
-        <a href="/auth/google">Login with Google</a>
-      )}
+      </div>
     </div>
   );
 }
-
-export default Login;
