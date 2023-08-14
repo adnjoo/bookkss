@@ -9,4 +9,9 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  server: {
+    proxy: {
+      "/auth": "http://localhost:3001",
+    },
+  },
 });

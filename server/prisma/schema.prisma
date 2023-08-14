@@ -13,6 +13,7 @@ model User {
     username  String?  @unique
     email     String   @unique
     reviews   Review[] // Connecting users to their reviews
+    password  String
 }
 
 model Review {
