@@ -7,6 +7,7 @@ import "./index.css";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import { Footer } from "./components/Footer.tsx";
+import AboutUs from "./components/AboutUs.tsx";
 
 const NavbarWrapper = () => {
   return (
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
       },
     ],
   },

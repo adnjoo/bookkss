@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { AiFillLinkedin } from "react-icons/ai";
 
 export const Footer = () => {
@@ -6,25 +7,27 @@ export const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between">
           <div>
-            <h3 className="text-lg font-bold">bookkss</h3>
+            <Link to="/">
+              <h3 className="text-lg font-bold">bookkss</h3>
+            </Link>
             <p className="mt-2 hidden sm:flex">
               Helping you write and share book reviews.
             </p>
-            <a href="/about-us" className="mt-2">
+            <Link to="/about-us" className="mt-2">
               About Us
-            </a>
+            </Link>
           </div>
           <div>
             <h3 className="text-lg font-bold">Links</h3>
             <ul className="mt-2 flex flex-col">
               <span className="mb-1">
-                <a href="/">Home</a>
+                <Link to="/">Home</Link>
               </span>
               <span className="mb-1">
-                <a href="/dashboard">Dashboard</a>
+                <Link to="/dashboard">Dashboard</Link>
               </span>
               <span className="mb-1">
-                <a href="/discover">Discover</a>
+                <Link to="/discover">Discover</Link>
               </span>
             </ul>
           </div>
@@ -36,6 +39,7 @@ export const Footer = () => {
                   href="https://linkedin.com/company/bookkssco"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="text-white hover:text-gray-400 transition duration-150 ease-in-out"
                 >
                   <AiFillLinkedin size={24} />
                 </a>
