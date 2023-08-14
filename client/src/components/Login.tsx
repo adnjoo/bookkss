@@ -1,5 +1,5 @@
 function Login() {
-  return <div>login</div>;
+  return <div className="my-64">login</div>;
 }
 
 export default Login;

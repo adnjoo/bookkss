@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineLogout } from "react-icons/ai";
 
 function Navbar() {
@@ -36,12 +37,9 @@ function Navbar() {
             <img src="/logo.png" className="flex w-12 sm:hidden" />
           </a>
           <div id="right" className="flex">
-            <a
-              // href={user === null ? "/login" : "/logout"}
-              className="flex items-center"
-            >
+            <Link to="/login" className="hidden sm:flex">
               <AiOutlineLogout className="flex h-6 w-6" />
-            </a>
+            </Link>
           </div>
         </div>
         {expanded && (
