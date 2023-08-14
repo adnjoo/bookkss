@@ -5,14 +5,15 @@ import axios from "axios";
 
 import { logOut, serverUrl } from "../lib/helpers";
 import Banner from "./Banner";
+import { useUserStore } from "../zustand/store";
 
 export function Navbar() {
-  const [user, setUser] = useState({});
   const [expanded, setExpanded] = useState(false);
+  const setUser = useUserStore((state) => state.setUser);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(token);
+    // console.log(token);
     if (token) {
       axios
         .get(`${serverUrl}/users/is-auth`, {
@@ -22,7 +23,7 @@ export function Navbar() {
         })
         .then((res) => {
           console.log(res.data);
-          setUser(res.data);
+          setUser(res.data.user);
         });
     }
   }, []);
@@ -31,18 +32,19 @@ export function Navbar() {
     <nav>
       <div>
         <Banner />
+        {/* <button onClick={increasePopulation}>Increase Population</button> */}
         <div className="mt-4 flex justify-between lg:mx-64">
           <div id="left" className="flex flex-row gap-4">
             <button onClick={() => setExpanded(!expanded)}>
               <img src="/logo-long.png" className="hidden w-24 sm:flex" />
             </button>
-            {user && (
+            {/* {user && (
               <div className="flex hidden gap-2 sm:flex">
                 <a href="/dashboard">Dashboard</a>
                 <a href="/archive">Archive</a>
                 <a href="/discover">Discover</a>
               </div>
-            )}
+            )} */}
             <button onClick={() => setExpanded(!expanded)}>
               <AiOutlineMenu className="flex h-6 w-6 sm:hidden" color="black" />
             </button>
@@ -51,7 +53,7 @@ export function Navbar() {
             <img src="/logo.png" className="flex w-12 sm:hidden" />
           </a>
           <div id="right" className="flex">
-            {!user && (
+            {/* {!user && (
               <Link to="/login" className="hidden sm:flex">
                 <AiOutlineLogin className="flex h-6 w-6" />
               </Link>
@@ -60,7 +62,7 @@ export function Navbar() {
               <button onClick={logOut} className="hidden sm:flex">
                 <AiOutlineLogout className="flex h-6 w-6" />
               </button>
-            )}
+            )} */}
           </div>
         </div>
         {expanded && (

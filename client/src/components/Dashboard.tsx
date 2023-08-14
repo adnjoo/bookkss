@@ -1,3 +1,8 @@
+import { useUserStore } from "../zustand/store";
+
 export function Dashboard() {
-  return <>Hello user</>;
+  const userName = useUserStore((state) => state.user.email);
+  console.log(userName);
+
+  return <>Hello {userName}</>;
 }
