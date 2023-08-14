@@ -1,0 +1,28 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id        String   @id
+    createdAt DateTime @default(now())
+    username  String?  @unique
+    email     String   @unique
+    password  String? // You should handle password hashing and security
+    reviews   Review[] // Connecting users to their reviews
+}
+
+model Review {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    title     String
+    body      String
+    private   Boolean  @default(true)
+    userId    String? // Connecting the review to the user
+    archive   Boolean  @default(false)
+    user      User?    @relation(fields: [userId], references: [id]) // Creating a relation to the User model
+}
