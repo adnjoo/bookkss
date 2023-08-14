@@ -22,6 +22,10 @@ export default function MyNavbar() {
 
   return (
     <div>
+      <div className='fixed bottom-0 left-0 flex h-8 w-full items-center justify-center bg-black text-white'>
+        Currently in Alpha mode - please report any bugs to{' '}
+        linkedin.com/in/adnjoo
+      </div>
       <div className='mt-4 flex justify-between lg:mx-64'>
         <div id='left' className='flex flex-row gap-4'>
           <button onClick={() => setExpanded(!expanded)}>
