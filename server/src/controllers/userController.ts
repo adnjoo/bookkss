@@ -97,6 +97,8 @@ export const isAuth = async (req: Request, res: Response) => {
       userId: number;
     };
 
+    // console.log(decodedToken);
+
     if (!decodedToken) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
@@ -111,7 +113,14 @@ export const isAuth = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Not authenticated' });
     }
 
-    return res.status(200).json({ message: 'Authenticated' });
+    return res.status(200).json({
+      message: 'Authenticated',
+      user: {
+        id: user.id,
+        createdAt: user.createdAt,
+        email: user.email,
+      },
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
