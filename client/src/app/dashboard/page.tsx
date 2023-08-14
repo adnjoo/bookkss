@@ -1,17 +1,15 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LoadingBar from 'react-top-loading-bar';
 
+import { supabase } from '@/lib/supabase';
 import { Review, ReviewComponent } from '@/components/ReviewComponent';
 import { saveReview } from '@/app/utils/saveReview';
 import { AddReview } from '@/components/AddReview';
 
-const ServerProtectedPage = () => {
-  // const { data: session, status }: { data: any; status: any } = useSession();
-  // console.log('session', session);
+const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
@@ -27,10 +25,6 @@ const ServerProtectedPage = () => {
   //   setReviews(res.data);
   //   setLoading(false);
   // };
-
-  useEffect(() => {
-    console.log('status', status, new Date().toISOString());
-  }, [status]);
 
   // useEffect(() => {
   //   if (session) getReviews();
@@ -137,16 +131,10 @@ const ServerProtectedPage = () => {
           </div>
         </section>
       ) : ( */}
-      <div className='mx-auto mb-[600px] mt-24 text-center'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-        voluptatum, quibusdam, quia, quae voluptates voluptatem quod quos
-        voluptatibus quidem doloribus voluptas. Quisquam voluptatum, quibusdam,
-        quia, quae voluptates voluptatem quod quos voluptatibus quidem doloribus
-        voluptas.
-      </div>
+      <div className='mx-auto mb-[600px] mt-24 text-center'>Lorem ipsum</div>
       {/* )} */}
     </>
   );
 };
 
-export default ServerProtectedPage;
+export default Dashboard;

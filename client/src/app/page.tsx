@@ -1,14 +1,8 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../lib/auth';
-import { redirect } from 'next/navigation';
+'use client';
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
+import { handleGoogleSignIn } from '@/lib/supabase';
 
-  if (session) {
-    redirect('/dashboard');
-  }
-
+export default function Home() {
   return (
     <div>
       <div className='mb-10 mt-20'>
@@ -21,12 +15,12 @@ export default async function Home() {
             for future reference.
           </p>
           <div className='mt-10 flex justify-center'>
-            <a
-              href='/api/auth/signin'
+            <button
+              onClick={handleGoogleSignIn}
               className='rounded-xl bg-gray-500 p-3 text-white'
             >
-              Get started
-            </a>
+              Login with Google
+            </button>
           </div>
         </div>
       </div>
@@ -47,19 +41,19 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className='my-20 bg-gray-100 py-10'>
+      <div className='my-4 bg-gray-100 py-10'>
         <div className='mx-auto flex max-w-3xl flex-col-reverse px-4 sm:flex-row'>
-          <div className='flex justify-center sm:w-1/2'>
-            <img src='/landing-section2.png' alt='discover preview' />
-          </div>
           <div className='sm:w-1/2'>
             <h2 className='mb-4 text-center text-3xl font-bold text-gray-800'>
               Discover New Books
             </h2>
             <p className='mx-4 my-6 text-lg text-gray-600'>
-              Bookkss allows you to discover book reviews by other users, and
+              Bookkss helps you to discover book reviews by other users, and
               learn from their experiences.
             </p>
+          </div>
+          <div className='flex justify-center sm:w-1/2'>
+            <img src='/landing-section2.png' alt='discover preview' />
           </div>
         </div>
       </div>
