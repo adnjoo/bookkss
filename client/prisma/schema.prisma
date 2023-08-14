@@ -12,7 +12,6 @@ model User {
     createdAt DateTime @default(now())
     username  String?  @unique
     email     String   @unique
-    password  String? // You should handle password hashing and security
     reviews   Review[] // Connecting users to their reviews
 }
 

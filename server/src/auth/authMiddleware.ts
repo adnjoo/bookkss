@@ -7,7 +7,6 @@ const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   req.user ? next() : res.sendStatus(401);
 };
 
-// Routes
 router.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
@@ -21,8 +20,13 @@ router.get(
   })
 );
 
-router.get('/protected', isLoggedIn, (req: any, res: any) => {
-  res.send(`Hello ${req.user.displayName}`);
+router.get('/isauth', isLoggedIn, (req: any, res: any) => {
+  res.send({
+    id: req.user.id,
+    displayName: req.user.displayName,
+    email: req.user.email,
+    picture: req.user.picture,
+  });
 });
 
 export { router as authMiddleWare };

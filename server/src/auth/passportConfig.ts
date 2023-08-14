@@ -20,15 +20,15 @@ passport.use(
       profile: any,
       done: any
     ) {
-      const { id, displayName, emails } = profile;
+      const { id, displayName, email } = profile;
       // console.log('profile', profile);
       pool.query(
         `
-        INSERT INTO "User" (id, email)
-        VALUES ($1, $2)
+        INSERT INTO "User" (id, email, username)
+        VALUES ($1, $2, $3)
         ON CONFLICT (id) DO NOTHING
         `,
-        [id, emails[0].value],
+        [id, email, displayName],
         (error: any, result: any) => {
           if (error) {
             console.error(
