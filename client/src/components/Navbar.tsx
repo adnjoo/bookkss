@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { AiOutlineMenu, AiOutlineLogout, AiOutlineLogin } from "react-icons/ai";
+import { useState } from "react";
+import { AiOutlineMenu, AiOutlineLogout } from "react-icons/ai";
 
 function Navbar() {
-  const [user, setUser] = useState<any>(null);
+  // const [user, setUser] = useState<any>(null);
   const [expanded, setExpanded] = useState(false);
   return (
     <nav>
@@ -16,7 +16,7 @@ function Navbar() {
             <button onClick={() => setExpanded(!expanded)}>
               <img src="/logo-long.png" className="hidden w-24 sm:flex" />
             </button>
-            {expanded && user && (
+            {/* {expanded && user && (
               <div className="flex hidden gap-2 sm:flex">
                 <a href="/dashboard">Dashboard</a>
                 <a href="/archive">Archive</a>
@@ -27,7 +27,7 @@ function Navbar() {
               <div className="flex hidden gap-2 sm:flex">
                 <a href="/discover">Discover</a>
               </div>
-            )}
+            )} */}
             <button onClick={() => setExpanded(!expanded)}>
               <AiOutlineMenu className="flex h-6 w-6 sm:hidden" color="black" />
             </button>
@@ -37,7 +37,7 @@ function Navbar() {
           </a>
           <div id="right" className="flex">
             <a
-              href={user === null ? "/login" : "/logout"}
+              // href={user === null ? "/login" : "/logout"}
               className="flex items-center"
             >
               <AiOutlineLogout className="flex h-6 w-6" />
