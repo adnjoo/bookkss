@@ -1,9 +1,9 @@
+import { Link } from "react-router-dom";
 // import { useState } from "react";
+
 import "./App.css";
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
     <div>
       <div className="mb-10 mt-20">
@@ -16,12 +16,9 @@ function App() {
             for future reference.
           </p>
           <div className="mt-10 flex justify-center">
-            <button
-              // onClick={handleGoogleSignIn}
-              className="rounded-xl bg-gray-500 p-3 text-white"
-            >
-              Login with Google
-            </button>
+            <Link to="/login" className="rounded-xl bg-gray-500 p-3 text-white">
+              Login
+            </Link>
           </div>
         </div>
       </div>
