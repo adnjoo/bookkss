@@ -35,7 +35,6 @@ export function Navbar() {
     <nav>
       <div>
         <Banner />
-        {/* <button onClick={increasePopulation}>Increase Population</button> */}
         <div className="mt-4 flex justify-between lg:mx-64">
           <div id="left" className="flex flex-row gap-4">
             <button onClick={() => setExpanded(!expanded)}>
@@ -43,9 +42,9 @@ export function Navbar() {
             </button>
             {user && (
               <div className="flex hidden gap-2 sm:flex">
-                <a href="/dashboard">Dashboard</a>
-                <a href="/archive">Archive</a>
-                <a href="/discover">Discover</a>
+                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/archive">Archive</Link>
+                <Link to="/discover">Discover</Link>
               </div>
             )}
             <button onClick={() => setExpanded(!expanded)}>
@@ -71,9 +70,9 @@ export function Navbar() {
         </div>
         {expanded && (
           <div className="flex flex-col gap-2 sm:hidden">
-            <a href="/dashboard">Dashboard</a>
-            <a href="/archive">Archive</a>
-            <a href="/discover">Discover</a>
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/archive">Archive</Link>
+            <Link to="/discover">Discover</Link>
           </div>
         )}
       </div>
