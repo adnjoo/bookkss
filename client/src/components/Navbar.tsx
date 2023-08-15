@@ -38,7 +38,7 @@ export function Navbar() {
       <div>
         <Banner />
         <div className='mt-4 flex items-center justify-between lg:mx-64'>
-          <div id='left' className='ml-4 flex flex-row'>
+          <div id='left' className='ml-4 flex flex-row items-center gap-2'>
             <Link to='/'>
               <img src='/logo-long.png' className='hidden w-24 sm:flex' />
             </Link>
@@ -58,7 +58,7 @@ export function Navbar() {
           </a>
           <div id='right' className='flex'>
             {!user ? (
-              <Link to='/login' className='mr-4 gap-2'>
+              <Link to='/login' className='mr-4 flex gap-2'>
                 <span className='hidden sm:flex'>Login&nbsp;</span>
                 <AiOutlineLogin className='flex h-6 w-6' />
               </Link>
