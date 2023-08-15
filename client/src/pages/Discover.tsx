@@ -13,16 +13,19 @@ export function Discover() {
   const user = useUserStore((state: any) => state?.user);
 
   useEffect(() => {
-    if (!user) return;
     setLoading(true);
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
           `${SERVER_URL}/reviews/get-public-reviews`
         );
-        setReviews(
-          response.data.filter((review: Review) => review.userId !== user?.id)
-        );
+        if (user) {
+          setReviews(
+            response.data.filter((review: Review) => review.userId !== user?.id)
+          );
+        } else {
+          setReviews(response.data);
+        }
         setLoading(false);
       } catch (error) {
         console.error('Error fetching reviews:', error);
