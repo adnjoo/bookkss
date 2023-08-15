@@ -5,26 +5,31 @@ import LoadingBar from 'react-top-loading-bar';
 import type { Review } from '../components/ReviewComponent';
 import { ReviewPublic } from '../components/ReviewPublic';
 import { SERVER_URL } from '../lib/helpers';
+import { useUserStore } from '../zustand/store';
 
 export function Discover() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const user = useUserStore((state: any) => state?.user);
 
   useEffect(() => {
+    if (!user) return;
     setLoading(true);
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
           `${SERVER_URL}/reviews/get-public-reviews`
         );
-        setReviews(response.data);
+        setReviews(
+          response.data.filter((review: Review) => review.userId !== user?.id)
+        );
         setLoading(false);
       } catch (error) {
         console.error('Error fetching reviews:', error);
       }
     };
     fetchReviews();
-  }, []);
+  }, [user]);
 
   return (
     <div className='mx-4 pb-64 pt-12 sm:mx-20'>
