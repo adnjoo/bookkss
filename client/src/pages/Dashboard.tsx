@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import LoadingBar from 'react-top-loading-bar';
 
-import { useUserStore } from '../zustand/store';
+import { useLoadingStore, useUserStore } from '../zustand/store';
 import { Review, ReviewComponent } from '../components/ReviewComponent';
 import { AddReview } from '../components/AddReview';
 import { saveReview, SERVER_URL } from '../lib/helpers';
 
 export function Dashboard() {
-  const [loading, setLoading] = useState(false);
+  const setLoading = useLoadingStore((state: any) => state.setLoading);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -83,11 +82,6 @@ export function Dashboard() {
     <>
       {user ? (
         <section className='pb-64 pt-12'>
-          <LoadingBar
-            color='#3b82f6'
-            progress={loading ? 50 : 100}
-            height={5}
-          />
           <div className='container mx-auto flex flex-col px-4'>
             <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
             <div className='flex flex-col justify-between'>
