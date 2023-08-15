@@ -122,6 +122,10 @@ export const isAuth = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ message: 'Token has expired' });
+    }
+
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }

@@ -4,7 +4,14 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 import App from "./App.tsx";
 import "./index.css";
-import { Dashboard, Login, AboutUs, Footer, Navbar } from "./components";
+import {
+  Dashboard,
+  Login,
+  AboutUs,
+  Footer,
+  Navbar,
+  Register,
+} from "./components";
 
 const NavbarWrapper = () => {
   return (
@@ -28,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "/about-us",

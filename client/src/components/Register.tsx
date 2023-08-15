@@ -4,25 +4,38 @@ import { Link } from "react-router-dom";
 
 import { serverUrl } from "../lib/helpers";
 
-export function Login() {
+export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const login = async () => {
-    const res = await axios.post(`${serverUrl}/users/login`, {
-      email,
-      password,
-    });
-    if (res.data) {
-      localStorage.setItem("token", res.data.token);
-      window.location.href = "/";
+  const register = async () => {
+    try {
+      const res = await axios.post(`${serverUrl}/users/register`, {
+        email,
+        password,
+      });
+
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        window.location.href = "/";
+      }
+    } catch (error: any) {
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage("An error occurred. Please try again later.");
+      }
     }
   };
 
   return (
     <div className="my-64 mx-auto flex justify-center">
       <div className="w-1/3">
-        <h1 className="text-4xl font-bold mb-8">Login</h1>
+        <h1 className="text-4xl font-bold mb-8">Register</h1>
+        {errorMessage && (
+          <div className="text-red-500 mb-4">{errorMessage}</div>
+        )}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Email
@@ -43,16 +56,16 @@ export function Login() {
             placeholder="Password"
           />
           <button
-            onClick={login}
+            onClick={register}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
             type="button"
           >
-            Login
+            Register
           </button>
           <div className="mt-4">
-            Don't have an account?{" "}
-            <Link to="/register" className="text-blue-500 hover:underline">
-              Register
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-500 hover:text-blue-700">
+              Login
             </Link>
           </div>
         </div>
