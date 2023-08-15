@@ -5,7 +5,7 @@ import LoadingBar from "react-top-loading-bar";
 import { useUserStore } from "../zustand/store";
 import { Review, ReviewComponent } from "../components/ReviewComponent";
 import { AddReview } from "../components/AddReview";
-import { saveReview, serverUrl } from "../lib/helpers";
+import { saveReview, SERVER_URL } from "../lib/helpers";
 
 export function Dashboard() {
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ export function Dashboard() {
   const getReviews = async () => {
     setLoading(true);
     const res = await axios.get(
-      `${serverUrl}/reviews/get-user-reviews?userId=${user?.id}`
+      `${SERVER_URL}/reviews/get-user-reviews?userId=${user?.id}`
     );
     res.data = res.data.filter((review: Review) => !review.archive);
     setReviews(res.data);
@@ -31,7 +31,7 @@ export function Dashboard() {
 
   const onAddReview = () => {
     axios
-      .post(`${serverUrl}/reviews/upsert-review`, {
+      .post(`${SERVER_URL}/reviews/upsert-review`, {
         title,
         body,
         userId: user?.id,

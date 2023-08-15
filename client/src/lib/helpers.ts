@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { useUserStore } from "../zustand/store";
 
-export const serverUrl = import.meta.env.VITE_SERVER_URL;
+export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const logOut = () => {
   localStorage.removeItem("token");
@@ -39,7 +39,7 @@ export const saveReview = async ({
   setArchive,
 }: onSaveReviewProps) => {
   let { data } = await axios.post(
-    `${process.env.SERVER_URL}/reviews/upsert-review`,
+    `${SERVER_URL}/reviews/upsert-review`,
     {
       id: reviewId,
       title,

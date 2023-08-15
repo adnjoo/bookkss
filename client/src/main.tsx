@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
-import App from "./App.tsx";
-import "./index.css";
-import { Dashboard } from "./pages";
-import { Login, AboutUs, Footer, Navbar, Register } from "./components";
+import App from './App.tsx';
+import './index.css';
+import { Dashboard, Archive, Discover } from './pages';
+import { Login, AboutUs, Footer, Navbar, Register } from './components';
 
 const NavbarWrapper = () => {
   return (
@@ -19,34 +19,46 @@ const NavbarWrapper = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <NavbarWrapper />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <App />,
       },
       {
-        path: "/login",
+        path: '/login',
         element: <Login />,
       },
       {
-        path: "/register",
+        path: '/register',
         element: <Register />,
       },
       {
-        path: "/about-us",
+        path: '/about-us',
         element: <AboutUs />,
       },
       {
-        path: "/dashboard",
+        path: '/dashboard',
         element: <Dashboard />,
+      },
+      {
+        path: '/archive',
+        element: <Archive />,
+      },
+      {
+        path: 'discover',
+        element: <Discover />,
+      },
+      {
+        path: '*',
+        element: <h1>404</h1>,
       },
     ],
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>

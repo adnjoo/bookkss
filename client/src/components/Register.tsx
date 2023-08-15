@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import { serverUrl } from "../lib/helpers";
+import { SERVER_URL } from "../lib/helpers";
 
 export function Register() {
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ export function Register() {
 
   const register = async () => {
     try {
-      const res = await axios.post(`${serverUrl}/users/register`, {
+      const res = await axios.post(`${SERVER_URL}/users/register`, {
         email,
         password,
       });

@@ -3,7 +3,7 @@ import { AiOutlineMenu, AiOutlineLogout, AiOutlineLogin } from "react-icons/ai";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import { logOut, serverUrl } from "../lib/helpers";
+import { logOut, SERVER_URL } from "../lib/helpers";
 import Banner from "./Banner";
 import { useUserStore } from "../zustand/store";
 
@@ -17,7 +17,7 @@ export function Navbar() {
     // console.log(token);
     if (token) {
       axios
-        .get(`${serverUrl}/users/is-auth`, {
+        .get(`${SERVER_URL}/users/is-auth`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

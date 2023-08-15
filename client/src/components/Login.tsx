@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import { serverUrl } from "../lib/helpers";
+import { SERVER_URL } from "../lib/helpers";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -10,14 +10,14 @@ export function Login() {
 
   const login = async () => {
     try {
-      const res = await axios.post(`${serverUrl}/users/login`, {
+      const res = await axios.post(`${SERVER_URL}/users/login`, {
         email,
         password,
       });
       if (res.data) {
         console.log(res.data);
         localStorage.setItem("token", res.data.token);
-        // window.location.href = "/";
+        window.location.href = "/";
       }
     } catch (err: any) {
       alert(err.response.data.message);
