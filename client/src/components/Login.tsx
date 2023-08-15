@@ -9,13 +9,17 @@ export function Login() {
   const [password, setPassword] = useState("");
 
   const login = async () => {
-    const res = await axios.post(`${serverUrl}/users/login`, {
-      email,
-      password,
-    });
-    if (res.data) {
-      localStorage.setItem("token", res.data.token);
-      window.location.href = "/";
+    try {
+      const res = await axios.post(`${serverUrl}/users/login`, {
+        email,
+        password,
+      });
+      if (res.data) {
+        localStorage.setItem("token", res.data.token);
+        window.location.href = "/";
+      }
+    } catch (err: any) {
+      alert(err.response.data.message);
     }
   };
 

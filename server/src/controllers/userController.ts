@@ -55,7 +55,9 @@ export const login = async (req: Request, res: Response) => {
     });
 
     if (!existingUser) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res
+        .status(401)
+        .json({ message: 'Invalid credentials - user not found' });
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -64,7 +66,9 @@ export const login = async (req: Request, res: Response) => {
     );
 
     if (!isPasswordCorrect) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res
+        .status(401)
+        .json({ message: 'Invalid credentials - password is incorrect' });
     }
 
     const token = jwt.sign(
