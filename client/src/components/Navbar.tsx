@@ -37,11 +37,11 @@ export function Navbar() {
     <nav>
       <div>
         <Banner />
-        <div className='mt-4 flex justify-between lg:mx-64'>
+        <div className='mt-4 flex items-center justify-between lg:mx-64'>
           <div id='left' className='flex flex-row gap-4'>
-            <button onClick={() => setExpanded(!expanded)}>
+            <Link to='/'>
               <img src='/logo-long.png' className='hidden w-24 sm:flex' />
-            </button>
+            </Link>
             {user && (
               <div className='flex hidden gap-2 sm:flex'>
                 <Link to='/dashboard'>Dashboard</Link>
@@ -63,8 +63,8 @@ export function Navbar() {
                 <AiOutlineLogin className='flex h-6 w-6' />
               </Link>
             ) : (
-              <button onClick={logOut} className='hidden sm:flex'>
-                Logout&nbsp;
+              <button onClick={logOut} className='flex gap-2'>
+                <span className='hidden sm:flex'>Logout&nbsp;</span>
                 <AiOutlineLogout className='flex h-6 w-6' />
               </button>
             )}
