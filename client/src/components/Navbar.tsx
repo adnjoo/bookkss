@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { AiOutlineMenu, AiOutlineLogout, AiOutlineLogin } from "react-icons/ai";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { AiOutlineMenu, AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-import { logOut, SERVER_URL } from "../lib/helpers";
-import Banner from "./Banner";
-import { useUserStore } from "../zustand/store";
+import { logOut, SERVER_URL } from '../lib/helpers';
+import Banner from './Banner';
+import { useUserStore } from '../zustand/store';
 
 export function Navbar() {
   const [expanded, setExpanded] = useState(false);
@@ -13,7 +13,7 @@ export function Navbar() {
   const setUser = useUserStore((state: any) => state.setUser);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     // console.log(token);
     if (token) {
       axios
@@ -37,44 +37,47 @@ export function Navbar() {
     <nav>
       <div>
         <Banner />
-        <div className="mt-4 flex justify-between lg:mx-64">
-          <div id="left" className="flex flex-row gap-4">
+        <div className='mt-4 flex justify-between lg:mx-64'>
+          <div id='left' className='flex flex-row gap-4'>
             <button onClick={() => setExpanded(!expanded)}>
-              <img src="/logo-long.png" className="hidden w-24 sm:flex" />
+              <img src='/logo-long.png' className='hidden w-24 sm:flex' />
             </button>
             {user && (
-              <div className="flex hidden gap-2 sm:flex">
-                <Link to="/dashboard">Dashboard</Link>
-                <Link to="/archive">Archive</Link>
-                <Link to="/discover">Discover</Link>
+              <div className='flex hidden gap-2 sm:flex'>
+                <Link to='/dashboard'>Dashboard</Link>
+                <Link to='/archive'>Archive</Link>
+                <Link to='/discover'>Discover</Link>
               </div>
             )}
             <button onClick={() => setExpanded(!expanded)}>
-              <AiOutlineMenu className="flex h-6 w-6 sm:hidden" color="black" />
+              <AiOutlineMenu className='flex h-6 w-6 sm:hidden' color='black' />
             </button>
           </div>
-          <a href="/">
-            <img src="/logo.png" className="flex w-12 sm:hidden" />
+          <a href='/'>
+            <img src='/logo.png' className='flex w-12 sm:hidden' />
           </a>
-          <div id="right" className="flex">
+          <div id='right' className='flex'>
             {!user ? (
-              <Link to="/login" className="hidden sm:flex">
+              <Link to='/login' className='hidden sm:flex'>
                 Login&nbsp;
-                <AiOutlineLogin className="flex h-6 w-6" />
+                <AiOutlineLogin className='flex h-6 w-6' />
               </Link>
             ) : (
-              <button onClick={logOut} className="hidden sm:flex">
+              <button onClick={logOut} className='hidden sm:flex'>
                 Logout&nbsp;
-                <AiOutlineLogout className="flex h-6 w-6" />
+                <AiOutlineLogout className='flex h-6 w-6' />
               </button>
             )}
           </div>
         </div>
         {expanded && (
-          <div className="flex flex-col gap-2 sm:hidden">
-            <Link to="/dashboard">Dashboard</Link>
-            <Link to="/archive">Archive</Link>
-            <Link to="/discover">Discover</Link>
+          <div className='flex flex-col gap-2 sm:hidden'>
+            <Link to='/dashboard'>Dashboard</Link>
+            <Link to='/archive'>Archive</Link>
+            <Link to='/discover'>Discover</Link>
+            <button className='text-start' onClick={logOut}>
+              Logout
+            </button>
           </div>
         )}
       </div>
