@@ -12,8 +12,6 @@ export function Navbar() {
   const user = useUserStore((state: any) => state.user);
   const setUser = useUserStore((state: any) => state.setUser);
 
-  console.log(user);
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     // console.log(token);
@@ -25,8 +23,11 @@ export function Navbar() {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // alert(res.status);
           setUser(res.data.user);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   }, []);

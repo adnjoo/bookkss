@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 
 function App() {
-  if (localStorage.getItem("token")) {
-    window.location.href = "/dashboard";
-  }
-
   return (
     <div>
       <div className="mb-10 mt-20">
