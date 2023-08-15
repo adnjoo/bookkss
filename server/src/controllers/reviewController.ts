@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 import { pool } from '../db';
 
@@ -84,20 +85,41 @@ export const deleteReview = async (req: Request, res: Response) => {
     return;
   }
 
-  pool.query(
-    'DELETE FROM "Review" WHERE id = $1 AND "userId" = $2',
-    [id, userId],
-    (error: any, result: any) => {
-      if (error) {
-        console.error('Error deleting review from PostgreSQL database:', error);
-        res
-          .status(500)
-          .json({ error: 'Error deleting review from the database' });
-        return;
-      }
-      res.json({ message: 'Review deleted successfully!' });
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized - Missing token.' });
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, process.env.SECRET as string) as {
+      userId: number;
+    };
+
+    if (decodedToken.userId !== userId) {
+      return res.status(403).json({ error: 'Forbidden - Unauthorized user.' });
     }
-  );
+
+    pool.query(
+      'DELETE FROM "Review" WHERE id = $1 AND "userId" = $2',
+      [id, userId],
+      (error: any, result: any) => {
+        if (error) {
+          console.error(
+            'Error deleting review from PostgreSQL database:',
+            error
+          );
+          res
+            .status(500)
+            .json({ error: 'Error deleting review from the database' });
+          return;
+        }
+        res.json({ message: 'Review deleted successfully!' });
+      }
+    );
+  } catch (error) {
+    console.error('Error verifying JWT token:', error);
+    res.status(401).json({ error: 'Unauthorized - Invalid token.' });
+  }
 };
 
 export const getPublicReviews = async (req: Request, res: Response) => {
