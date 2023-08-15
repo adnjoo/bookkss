@@ -4,14 +4,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 import App from "./App.tsx";
 import "./index.css";
-import {
-  Dashboard,
-  Login,
-  AboutUs,
-  Footer,
-  Navbar,
-  Register,
-} from "./components";
+import { Dashboard } from "./pages";
+import { Login, AboutUs, Footer, Navbar, Register } from "./components";
 
 const NavbarWrapper = () => {
   return (

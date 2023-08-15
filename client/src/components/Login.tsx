@@ -15,8 +15,9 @@ export function Login() {
         password,
       });
       if (res.data) {
+        console.log(res.data);
         localStorage.setItem("token", res.data.token);
-        window.location.href = "/";
+        // window.location.href = "/";
       }
     } catch (err: any) {
       alert(err.response.data.message);
