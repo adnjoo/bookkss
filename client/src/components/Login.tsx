@@ -17,7 +17,6 @@ export function Login() {
         email,
         password,
       });
-      setLoading(false);
       if (res.data) {
         console.log(res.data);
         localStorage.setItem('token', res.data.token);
@@ -26,6 +25,7 @@ export function Login() {
     } catch (err: any) {
       alert(err.response.data.message);
     }
+    setLoading(false);
   };
 
   return (

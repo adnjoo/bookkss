@@ -75,9 +75,6 @@ export function Navbar() {
             <Link to='/dashboard'>Dashboard</Link>
             <Link to='/archive'>Archive</Link>
             <Link to='/discover'>Discover</Link>
-            <button className='text-start' onClick={logOut}>
-              Logout
-            </button>
           </div>
         )}
       </div>
