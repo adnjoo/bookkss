@@ -42,13 +42,15 @@ export function Navbar() {
             <Link to='/'>
               <img src='/logo-long.png' className='hidden w-24 sm:flex' />
             </Link>
-            {user && (
-              <div className='flex hidden gap-2 sm:flex'>
-                <Link to='/dashboard'>Dashboard</Link>
-                <Link to='/archive'>Archive</Link>
-                <Link to='/discover'>Discover</Link>
-              </div>
-            )}
+            <div className='flex hidden gap-2 sm:flex'>
+              {user && (
+                <>
+                  <Link to='/dashboard'>Dashboard</Link>
+                  <Link to='/archive'>Archive</Link>
+                </>
+              )}
+              <Link to='/discover'>Discover</Link>
+            </div>
             <button onClick={() => setExpanded(!expanded)}>
               <AiOutlineMenu className='flex h-6 w-6 sm:hidden' color='black' />
             </button>
