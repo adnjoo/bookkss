@@ -135,3 +135,29 @@ export const getPublicReviews = async (req: Request, res: Response) => {
     }
   );
 };
+export const getPublicReview = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    pool.query(
+      'SELECT "createdAt", id, title, body, "userId", private from "Review" WHERE id = $1',
+      [id],
+      (error: any, result: any) => {
+        if (error) {
+          console.error('Error querying database:', error);
+          res.status(500).json({ error: 'Error querying the database' });
+          return;
+        }
+
+        if (result.rows.length === 0 || result.rows[0].private) {
+          res.status(404).json({ error: 'Review not found' });
+          return;
+        }
+
+        res.json(result.rows);
+      }
+    );
+  } catch (error) {
+    console.error('Error querying database:', error);
+    res.status(500).json({ error: 'Error querying the database' });
+  }
+};
