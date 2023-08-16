@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useLoadingStore, useUserStore } from '../zustand/store';
 import { Review, ReviewComponent } from '../components/ReviewComponent';
@@ -128,7 +129,11 @@ export function Dashboard() {
           </div>
         </section>
       ) : (
-        <div className='mx-auto mb-[600px] mt-24 text-center'>Lorem ipsum</div>
+        <div className='mx-auto mb-[600px] mt-24 text-center'>
+          <Link to='/login' className='rounded-xl bg-gray-500 p-3 text-white'>
+            Login to see your dashboard
+          </Link>
+        </div>
       )}
     </>
   );

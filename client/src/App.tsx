@@ -81,7 +81,7 @@ function App() {
               <img
                 src='/seuss.jpg'
                 alt='seuss'
-                className='mx-auto mt-2 w-16 rounded-full'
+                className='mx-auto mt-2 w-14 rounded-full'
               />
             </p>
             <p className='mt-4 text-lg text-gray-600'>
@@ -92,7 +92,7 @@ function App() {
             <img
               src='/munger.png'
               alt='munger'
-              className='mx-auto mt-2 w-16 rounded-full'
+              className='mx-auto mt-2 w-14 rounded-full'
             />
           </div>
         </div>
