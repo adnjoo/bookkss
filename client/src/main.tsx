@@ -11,6 +11,7 @@ import {
   Archive,
   Discover,
   Login,
+  PublicReview,
   Register,
 } from './pages';
 import { Footer, Navbar } from './components';
@@ -58,8 +59,12 @@ const router = createBrowserRouter([
         element: <Archive />,
       },
       {
-        path: 'discover',
+        path: '/discover',
         element: <Discover />,
+      },
+      {
+        path: '/review/:id',
+        element: <PublicReview />,
       },
       {
         path: '*',
