@@ -5,8 +5,15 @@ import LoadingBar from 'react-top-loading-bar';
 
 import App from './App.tsx';
 import './index.css';
-import { Dashboard, Archive, Discover } from './pages';
-import { Login, AboutUs, Footer, Navbar, Register } from './components';
+import {
+  Dashboard,
+  AboutUs,
+  Archive,
+  Discover,
+  Login,
+  Register,
+} from './pages';
+import { Footer, Navbar } from './components';
 import { useLoadingStore } from './zustand/store.ts';
 
 const NavbarWrapper = () => {
