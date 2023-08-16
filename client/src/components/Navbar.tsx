@@ -1,59 +1,36 @@
-import { useEffect, useState } from 'react';
-import { AiOutlineMenu, AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
-import axios from 'axios';
+import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-import { logOut, SERVER_URL } from '../lib/helpers';
+import { MobileMenu } from './MobileMenu';
+import { logOut } from '../lib/helpers';
 import Banner from './Banner';
 import { useUserStore } from '../zustand/store';
 
 export function Navbar() {
-  const [expanded, setExpanded] = useState(false);
   const user = useUserStore((state: any) => state.user);
-  const setUser = useUserStore((state: any) => state.setUser);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    // console.log(token);
-    if (token) {
-      axios
-        .get(`${SERVER_URL}/users/is-auth`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          // alert(res.status);
-          setUser(res.data.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
-
   return (
     <nav>
       <div>
         <Banner />
         <div className='mt-4 flex items-center justify-between lg:mx-64'>
           <div id='left' className='ml-4 flex flex-row items-center gap-2'>
-            <Link to='/'>
-              <img src='/logo-long.png' className='hidden w-24 sm:flex' />
+            <MobileMenu />
+            {user && (
+              <>
+                <Link
+                  to='/dashboard'
+                  className='mx-4 flex hidden gap-2 sm:flex'
+                >
+                  Dashboard&nbsp;
+                </Link>
+                <Link to='/archive' className='mx-4 flex hidden gap-2 sm:flex'>
+                  Archive&nbsp;
+                </Link>
+              </>
+            )}
+            <Link to='/discover' className='mx-4 flex hidden gap-2 sm:flex'>
+              Discover&nbsp;
             </Link>
-            <div className='flex hidden gap-2 sm:flex'>
-              {user && (
-                <>
-                  <Link to='/dashboard'>Dashboard</Link>
-                  <Link to='/archive'>Archive</Link>
-                </>
-              )}
-              <Link to='/discover'>Discover</Link>
-            </div>
-            <button onClick={() => setExpanded(!expanded)}>
-              <AiOutlineMenu className='flex h-6 w-6 sm:hidden' color='black' />
-            </button>
           </div>
           <a href='/'>
             <img src='/logo.png' className='flex w-12 sm:hidden' />
@@ -72,13 +49,6 @@ export function Navbar() {
             )}
           </div>
         </div>
-        {expanded && (
-          <div className='flex flex-col gap-2 sm:hidden'>
-            <Link to='/dashboard'>Dashboard</Link>
-            <Link to='/archive'>Archive</Link>
-            <Link to='/discover'>Discover</Link>
-          </div>
-        )}
       </div>
     </nav>
   );
