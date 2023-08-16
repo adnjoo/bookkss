@@ -72,10 +72,18 @@ function App() {
       <div className='my-4 bg-gray-100 py-10'>
         <div className='mx-auto max-w-3xl'>
           <h2 className='mb-4 text-center text-3xl font-bold text-gray-800'>
-            Why Read
+            ❤️ Books
           </h2>
           <div className='text-center'>
-            <p className='text-lg text-gray-600'>
+            <p className='my-4 text-lg text-gray-600'>
+              A room without books is like a body without a soul - Cicero
+              <img
+                src='/cicero.jpg'
+                alt='cicero'
+                className='mx-auto mt-2 w-14 rounded-full'
+              />
+            </p>
+            <p className='my-4 text-lg text-gray-600'>
               "The more that you read, the more things you will know. The more
               that you learn, the more places you'll go." - Dr. Seuss (Author)
               <img
@@ -84,16 +92,6 @@ function App() {
                 className='mx-auto mt-2 w-14 rounded-full'
               />
             </p>
-            <p className='mt-4 text-lg text-gray-600'>
-              "In my whole life, I have known no wise people (over a broad
-              subject matter area) who didn't read all the time -- none, zero."
-              - Charlie Munger (Billionaire)
-            </p>
-            <img
-              src='/munger.png'
-              alt='munger'
-              className='mx-auto mt-2 w-14 rounded-full'
-            />
           </div>
         </div>
       </div>
