@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
 
-import { pool } from '../db';
+const prisma = new PrismaClient();
 
 export const upsertReview = async (req: Request, res: Response) => {
   const { id, title, body, userId, setPrivate, setArchive } = req.body;
@@ -11,51 +12,41 @@ export const upsertReview = async (req: Request, res: Response) => {
     return;
   }
 
-  if (!id) {
-    pool.query(
-      `
-      INSERT INTO "Review" (title, body, "userId")
-      VALUES ($1, $2, $3)
-      `,
-      [title, body, userId],
-      (error: any, result: any) => {
-        if (error) {
-          console.error(
-            'Error inserting review into PostgreSQL database:',
-            error
-          );
-          res
-            .status(500)
-            .json({ error: 'Error inserting review into the database' });
-          return;
-        }
-        res.json({ message: 'Review inserted successfully!' });
-      }
-    );
-  } else {
-    pool.query(
-      `
-      UPDATE "Review"
-      SET title = $1, body = $2, private = $5, archive = $6
-      WHERE "userId" = $3 AND id = $4 
-      `,
-      [title, body, userId, id, setPrivate, setArchive],
-      (error: any, result: any) => {
-        if (error) {
-          console.error('Error updating review in PostgreSQL database:', error);
-          res
-            .status(500)
-            .json({ error: 'Error updating review in the database' });
-          return;
-        }
-        res.json({ message: 'Review updated successfully!' });
-      }
-    );
+  try {
+    if (!id) {
+      await prisma.review.create({
+        data: {
+          title,
+          body,
+          userId,
+        },
+      });
+
+      res.json({ message: 'Review inserted successfully!' });
+    } else {
+      await prisma.review.update({
+        where: {
+          id: Number(id),
+          userId: Number(userId),
+        },
+        data: {
+          title,
+          body,
+          private: setPrivate,
+          archive: setArchive,
+        },
+      });
+
+      res.json({ message: 'Review updated successfully!' });
+    }
+  } catch (error) {
+    console.error('Error performing database operation:', error);
+    res.status(500).json({ error: 'Error performing database operation' });
   }
 };
 
 export const getUserReviews = async (req: Request, res: Response) => {
-  const userId = req.query.userId as string;
+  const userId = Number(req.query.userId);
 
   if (!userId) {
     res.status(400).send('Missing userId parameter');
@@ -63,14 +54,13 @@ export const getUserReviews = async (req: Request, res: Response) => {
   }
 
   try {
-    const query = {
-      text: 'SELECT * FROM "Review" WHERE "userId" = $1',
-      values: [userId],
-    };
+    const reviews = await prisma.review.findMany({
+      where: {
+        userId: userId,
+      },
+    });
 
-    const result = await pool.query(query);
-
-    res.json(result.rows);
+    res.json(reviews);
   } catch (error) {
     console.error('Error querying database:', error);
     res.status(500).json({ error: 'Error querying the database' });
@@ -99,23 +89,21 @@ export const deleteReview = async (req: Request, res: Response) => {
       return res.status(403).json({ error: 'Forbidden - Unauthorized user.' });
     }
 
-    pool.query(
-      'DELETE FROM "Review" WHERE id = $1 AND "userId" = $2',
-      [id, userId],
-      (error: any, result: any) => {
-        if (error) {
-          console.error(
-            'Error deleting review from PostgreSQL database:',
-            error
-          );
-          res
-            .status(500)
-            .json({ error: 'Error deleting review from the database' });
-          return;
-        }
-        res.json({ message: 'Review deleted successfully!' });
-      }
-    );
+    const deletedReview = await prisma.review.delete({
+      where: {
+        id: Number(id),
+        userId: Number(userId),
+      },
+    });
+
+    if (!deletedReview) {
+      res
+        .status(500)
+        .json({ error: 'Error deleting review from the database' });
+      return;
+    }
+
+    res.json({ message: 'Review deleted successfully!' });
   } catch (error) {
     console.error('Error verifying JWT token:', error);
     res.status(401).json({ error: 'Unauthorized - Invalid token.' });
@@ -123,39 +111,50 @@ export const deleteReview = async (req: Request, res: Response) => {
 };
 
 export const getPublicReviews = async (req: Request, res: Response) => {
-  pool.query(
-    'SELECT "createdAt", id, title, body, "userId" from "Review" WHERE private = false',
-    (error: any, result: any) => {
-      if (error) {
-        console.error('Error querying database:', error);
-        res.status(500).json({ error: 'Error querying the database' });
-        return;
-      }
-      res.json(result.rows);
-    }
-  );
+  try {
+    const publicReviews = await prisma.review.findMany({
+      where: {
+        private: false,
+      },
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        body: true,
+        userId: true,
+      },
+    });
+    res.json(publicReviews);
+  } catch (error) {
+    console.error('Error querying database:', error);
+    res.status(500).json({ error: 'Error querying the database' });
+  }
 };
+
 export const getPublicReview = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    pool.query(
-      'SELECT "createdAt", id, title, body, "userId", private from "Review" WHERE id = $1',
-      [id],
-      (error: any, result: any) => {
-        if (error) {
-          console.error('Error querying database:', error);
-          res.status(500).json({ error: 'Error querying the database' });
-          return;
-        }
+    const review = await prisma.review.findFirst({
+      where: {
+        id: Number(id),
+        private: false,
+      },
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        body: true,
+        userId: true,
+        private: true,
+      },
+    });
 
-        if (result.rows.length === 0 || result.rows[0].private) {
-          res.status(404).json({ error: 'Review not found' });
-          return;
-        }
+    if (!review) {
+      res.status(404).json({ error: 'Review not found' });
+      return;
+    }
 
-        res.json(result.rows);
-      }
-    );
+    res.json([review]);
   } catch (error) {
     console.error('Error querying database:', error);
     res.status(500).json({ error: 'Error querying the database' });
