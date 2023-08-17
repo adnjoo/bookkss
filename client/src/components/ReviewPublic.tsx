@@ -33,14 +33,13 @@ export const ReviewPublic = ({
   };
 
   return (
-    <div key={review.id} className='mb-4 rounded border p-4'>
-      <div className='flex justify-between'>
-        <h3
-          className='cursor-pointer text-xl font-bold'
-          onClick={() => setExpanded(!expanded)}
-        >
-          {review.title} {new Date(review.createdAt).toLocaleDateString()}
-        </h3>
+    <div key={review.id} className='mb-4 max-w-[600px] rounded border p-4'>
+      <div className='flex items-center justify-between'>
+        <Link to={`/review/${review.id}`}>
+          <h3 className='cursor-pointer text-xl font-bold'>
+            {review.title} {new Date(review.createdAt).toLocaleDateString()}
+          </h3>
+        </Link>
         <div className='flex flex-row items-center gap-4'>
           {archive && (
             <button
@@ -51,10 +50,6 @@ export const ReviewPublic = ({
               <MdOutlineUnarchive className='ml-2 inline' />
             </button>
           )}
-          <Link to={`/review/${review.id}`} className='flex gap-2'>
-            View
-            <GrLinkNext size={24} color='green' />
-          </Link>
         </div>
       </div>
       <MDEditor.Markdown
