@@ -44,7 +44,7 @@ export const ReviewPublic = ({
             </h3>
           </Link>
           <Link to={`/profile/${review.userId}`}>
-            <p>by {review.userId}</p>
+            <p>by user: {review.userId}</p>
           </Link>
         </span>
         <div className='flex flex-row items-center gap-4'>

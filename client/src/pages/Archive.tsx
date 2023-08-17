@@ -7,18 +7,15 @@ import type { Review } from '../components/ReviewComponent';
 import { useUserStore } from '../zustand/store';
 
 export function Archive() {
-  // const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const user = useUserStore((state: any) => state?.user);
 
   const getReviews = async () => {
-    // setLoading(true);
     const res = await axios.get(
       `${SERVER_URL}/reviews/get-user-reviews?userId=${user?.id}`
     );
     res.data = res.data.filter((review: Review) => review.archive);
     setReviews(res.data);
-    // setLoading(false);
   };
 
   useEffect(() => {

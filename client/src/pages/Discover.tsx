@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import LoadingBar from 'react-top-loading-bar';
 
 import type { Review } from '../components/ReviewComponent';
 import { ReviewPublic } from '../components/ReviewPublic';
 import { SERVER_URL } from '../lib/helpers';
-import { useUserStore } from '../zustand/store';
+import { useUserStore, useLoadingStore } from '../zustand/store';
 
 export function Discover() {
   const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const setLoading = useLoadingStore((state: any) => state.setLoading);
   const user = useUserStore((state: any) => state?.user);
 
   useEffect(() => {
@@ -36,7 +35,6 @@ export function Discover() {
 
   return (
     <div className='mx-4 flex flex-col items-center pb-64 pt-12 sm:mx-20'>
-      <LoadingBar color='#3b82f6' progress={loading ? 50 : 100} height={5} />
       <h1 className='text-bold mx-auto mb-9  text-2xl'>Discover Reviews</h1>
       <ul className='flex w-full flex-col items-center'>
         {reviews.map((review: Review) => (
