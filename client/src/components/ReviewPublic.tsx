@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
-import { GrLinkNext } from 'react-icons/gr';
 import { MdOutlineUnarchive } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
@@ -33,7 +32,7 @@ export const ReviewPublic = ({
   };
 
   return (
-    <div key={review.id} className='mb-4 max-w-[600px] rounded border p-4'>
+    <div key={review.id} className='mb-4 max-w-[800px] rounded border p-4'>
       <div className='flex items-center justify-between'>
         <Link to={`/review/${review.id}`}>
           <h3 className='cursor-pointer text-xl font-bold'>
@@ -50,10 +49,18 @@ export const ReviewPublic = ({
               <MdOutlineUnarchive className='ml-2 inline' />
             </button>
           )}
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className='mb-4 mt-4 flex items-center rounded bg-blue-500 p-2 text-white'
+          >
+            {expanded ? 'Hide' : 'Show'}
+          </button>
         </div>
       </div>
       <MDEditor.Markdown
-        source={review.body.slice(0, 50).replace(/\n/g, ' ') + '...'}
+        source={
+          expanded ? review.body : review.body.slice(0, 50).replace(/\n/g, ' ')
+        }
         wrapperElement={{ 'data-color-mode': 'light' } as any}
       />
     </div>

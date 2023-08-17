@@ -1,0 +1,35 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { ReviewPublic, type Review } from '../components';
+import { SERVER_URL } from '../lib/helpers';
+import { useUserStore } from '../zustand/store';
+
+export function Profile() {
+  const { id } = useParams();
+  const user = useUserStore((state: any) => state.user);
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    axios.get(`${SERVER_URL}/reviews/get-public-reviews`).then((res) => {
+      let temp = res.data.filter(
+        (review: Review) => review.userId === user?.id
+      );
+      setReviews(temp);
+    });
+  }, [user]);
+
+  return (
+    <div className='mb-[380px] mt-16'>
+      <div className='mx-auto flex flex-col items-center justify-center'>
+        <h1 className='mb-8'>Profile {id}</h1>
+        <div className='mx-auto flex w-[800px] flex-col items-center'>
+          {reviews.map((review) => (
+            <ReviewPublic review={review} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

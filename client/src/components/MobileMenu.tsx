@@ -34,6 +34,7 @@ export function MobileMenu() {
         });
     }
   }, []);
+
   return (
     <Menu as='div' className=''>
       <div className='flex items-center'>

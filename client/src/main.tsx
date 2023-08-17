@@ -11,6 +11,7 @@ import {
   Archive,
   Discover,
   Login,
+  Profile,
   PublicReview,
   Register,
 } from './pages';
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: '/review/:id',
         element: <PublicReview />,
+      },
+      {
+        path: '/profile/:id',
+        element: <Profile />,
       },
       {
         path: '*',
