@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import MDEditor from "@uiw/react-md-editor";
-import rehypeSanitize from "rehype-sanitize";
+import { useState, useRef, useEffect } from 'react';
+import MDEditor from '@uiw/react-md-editor';
+import rehypeSanitize from 'rehype-sanitize';
 import {
   AiOutlinePlusSquare,
   AiOutlineMinusSquare,
@@ -9,19 +9,19 @@ import {
   AiFillLock,
   AiFillUnlock,
   AiOutlineEllipsis,
-} from "react-icons/ai";
-import { BsArchive } from "react-icons/bs";
+} from 'react-icons/ai';
+import { BsArchive } from 'react-icons/bs';
 
-import { downloadMarkdown } from "../lib/helpers";
+import { downloadMarkdown } from '../lib/helpers';
 
 export interface Review {
   archive: boolean;
   body: string;
   createdAt: string;
-  id: string;
+  id: number;
   private: boolean;
   title: string;
-  userId: string;
+  userId: number;
 }
 
 export interface ReviewProps {
@@ -59,9 +59,9 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
       }
     };
 
-    document.addEventListener("mousedown", checkIfClickedOutside);
+    document.addEventListener('mousedown', checkIfClickedOutside);
     return () => {
-      document.removeEventListener("mousedown", checkIfClickedOutside);
+      document.removeEventListener('mousedown', checkIfClickedOutside);
     };
   }, [containerRef]);
 
@@ -79,34 +79,34 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   };
 
   return (
-    <div key={review.id} className="mb-4 rounded border p-4">
-      <div className="flex justify-between">
+    <div key={review.id} className='mb-4 rounded border p-4'>
+      <div className='flex justify-between'>
         <h3
-          className="cursor-pointer text-xl font-bold"
+          className='cursor-pointer text-xl font-bold'
           onClick={handleSetExpanded}
         >
           {review.title} {new Date(review.createdAt).toLocaleDateString()}
         </h3>
-        <div className="flex items-center gap-2">
+        <div className='flex items-center gap-2'>
           {expanded && !editMode && (
             <>
               <button
                 onClick={() => setOptionsTab(!optionsTab)}
-                title="More Options"
+                title='More Options'
               >
                 <AiOutlineEllipsis
                   size={24}
-                  color={optionsTab ? "green" : "black"}
+                  color={optionsTab ? 'green' : 'black'}
                 />
               </button>
             </>
           )}
           <button
             onClick={handleSetExpanded}
-            title={expanded ? "Collapse" : "Expand"}
+            title={expanded ? 'Collapse' : 'Expand'}
           >
             {expanded ? (
-              <AiOutlineMinusSquare size={24} color="green" />
+              <AiOutlineMinusSquare size={24} color='green' />
             ) : (
               <AiOutlinePlusSquare size={24} />
             )}
@@ -114,35 +114,35 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
         </div>
       </div>
       {optionsTab && (
-        <div className="my-4 rounded border bg-white p-4">
-          <h2 className="mb-4 text-xl font-bold">Options</h2>
-          <div className="flex gap-4">
+        <div className='my-4 rounded border bg-white p-4'>
+          <h2 className='mb-4 text-xl font-bold'>Options</h2>
+          <div className='flex gap-4'>
             <button
               onClick={() => downloadMarkdown(review.title, review.body)}
-              title="Download as Markdown"
+              title='Download as Markdown'
             >
               <AiOutlineDownload size={24} />
               Download
             </button>
             <button
               onClick={() => handleSaveReview(!review.private)}
-              title={review.private ? "Make Public" : "Make Private"}
+              title={review.private ? 'Make Public' : 'Make Private'}
             >
               {review.private ? (
-                <AiFillLock size={24} color={"red"} />
+                <AiFillLock size={24} color={'red'} />
               ) : (
                 <AiFillUnlock size={24} />
               )}
-              {review.private ? "Make Public" : "Make Private"}
+              {review.private ? 'Make Public' : 'Make Private'}
             </button>
             <button
               onClick={() => handleSaveReview(review.private, !review.archive)}
-              title="Archive"
+              title='Archive'
             >
-              <BsArchive size={24} color={"black"} />
+              <BsArchive size={24} color={'black'} />
               Archive
             </button>
-            <button onClick={() => onDelete(review.id)} title="Delete">
+            <button onClick={() => onDelete(review.id)} title='Delete'>
               <AiOutlineDelete size={24} />
               Delete
             </button>
@@ -153,7 +153,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
         <div ref={containerRef}>
           <MDEditor
             height={600}
-            data-color-mode="light"
+            data-color-mode='light'
             value={updatedBody}
             onChange={handleBodyChange}
             previewOptions={{
@@ -164,8 +164,8 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
       ) : (
         <div onClick={() => setEditMode(!editMode)}>
           <MDEditor.Markdown
-            source={expanded ? updatedBody : updatedBody.slice(0, 10) + "..."}
-            wrapperElement={{ "data-color-mode": "light" } as any}
+            source={expanded ? updatedBody : updatedBody.slice(0, 10) + '...'}
+            wrapperElement={{ 'data-color-mode': 'light' } as any}
           />
         </div>
       )}

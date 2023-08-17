@@ -32,13 +32,21 @@ export const ReviewPublic = ({
   };
 
   return (
-    <div key={review.id} className='mb-4 max-w-[800px] rounded border p-4'>
+    <div
+      key={review.id}
+      className='mb-4 w-full max-w-[1000px] rounded border p-4'
+    >
       <div className='flex items-center justify-between'>
-        <Link to={`/review/${review.id}`}>
-          <h3 className='cursor-pointer text-xl font-bold'>
-            {review.title} {new Date(review.createdAt).toLocaleDateString()}
-          </h3>
-        </Link>
+        <span>
+          <Link to={`/review/${review.id}`}>
+            <h3 className='cursor-pointer text-xl font-bold'>
+              {review.title} {new Date(review.createdAt).toLocaleDateString()}{' '}
+            </h3>
+          </Link>
+          <Link to={`/profile/${review.userId}`}>
+            <p>by {review.userId}</p>
+          </Link>
+        </span>
         <div className='flex flex-row items-center gap-4'>
           {archive && (
             <button
@@ -53,11 +61,12 @@ export const ReviewPublic = ({
             onClick={() => setExpanded(!expanded)}
             className='mb-4 mt-4 flex items-center rounded bg-blue-500 p-2 text-white'
           >
-            {expanded ? 'Hide' : 'Show'}
+            {expanded ? 'Hide' : 'Expand'}
           </button>
         </div>
       </div>
       <MDEditor.Markdown
+        className='max-w-[1000px] overflow-hidden'
         source={
           expanded ? review.body : review.body.slice(0, 50).replace(/\n/g, ' ')
         }

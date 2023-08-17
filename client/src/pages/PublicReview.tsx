@@ -5,6 +5,7 @@ import MDEditor from '@uiw/react-md-editor';
 import { FaShareSquare } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 import { SERVER_URL } from '../lib/helpers';
 
@@ -36,24 +37,25 @@ export function PublicReview() {
   }, [id]);
 
   return (
-    <div className='mx-auto my-12 max-w-xl rounded border p-6 shadow'>
+    <div className='mx-6 mb-48 mt-12 flex items-center justify-center rounded border p-4 lg:mx-64'>
       {review ? (
         <div>
           <h2 className='text-xl font-semibold'>{review.title}</h2>
-          <p className='mb-4 text-gray-600'>
+          <p className='my-2 mb-4 flex items-center text-gray-600'>
             Posted on {new Date(review.createdAt).toLocaleDateString()}
             <button
-              className='ml-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
+              className='ml-4 rounded bg-blue-500 p-1 text-sm text-white hover:bg-blue-600'
               onClick={handleCopy}
             >
               <FaShareSquare className='mr-2 inline-block' />
               Share Link
             </button>
           </p>
-          <p>
-            More reviews by
-            <a href={`/profile/${review.userId}`}> {review.userId}</a>
-          </p>
+          <Link to={`/profile/${review.userId}`}>
+            <p className='mb-4 cursor-pointer text-xl text-gray-600 hover:text-blue-500'>
+              More reviews by user: {review.userId}
+            </p>
+          </Link>
           <MDEditor.Markdown
             source={review.body}
             wrapperElement={{ 'data-color-mode': 'light' } as any}

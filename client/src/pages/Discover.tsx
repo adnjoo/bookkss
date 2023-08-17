@@ -35,10 +35,10 @@ export function Discover() {
   }, [user]);
 
   return (
-    <div className='mx-4 pb-64 pt-12 sm:mx-20'>
+    <div className='mx-4 flex flex-col items-center pb-64 pt-12 sm:mx-20'>
       <LoadingBar color='#3b82f6' progress={loading ? 50 : 100} height={5} />
-      <h1 className='text-bold mb-9 text-2xl'>Discover Reviews</h1>
-      <ul>
+      <h1 className='text-bold mx-auto mb-9  text-2xl'>Discover Reviews</h1>
+      <ul className='flex w-full flex-col items-center'>
         {reviews.map((review: Review) => (
           <ReviewPublic review={review} />
         ))}
