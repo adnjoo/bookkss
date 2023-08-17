@@ -39,7 +39,7 @@ export const upsertReview = async (req: Request, res: Response) => {
       `
       UPDATE "Review"
       SET title = $1, body = $2, private = $5, archive = $6
-      WHERE "userId" = $3 AND id = $4 
+      WHERE "userId" = $3 AND id = $4
       `,
       [title, body, userId, id, setPrivate, setArchive],
       (error: any, result: any) => {
@@ -148,24 +148,27 @@ export const getPublicReviews = async (req: Request, res: Response) => {
 export const getPublicReview = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    pool.query(
-      'SELECT "createdAt", id, title, body, "userId", private from "Review" WHERE id = $1',
-      [id],
-      (error: any, result: any) => {
-        if (error) {
-          console.error('Error querying database:', error);
-          res.status(500).json({ error: 'Error querying the database' });
-          return;
-        }
+    const review = await prisma.review.findFirst({
+      where: {
+        id: Number(id),
+        private: false,
+      },
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        body: true,
+        userId: true,
+        private: true,
+      },
+    });
 
-        if (result.rows.length === 0 || result.rows[0].private) {
-          res.status(404).json({ error: 'Review not found' });
-          return;
-        }
+    if (!review) {
+      res.status(404).json({ error: 'Review not found' });
+      return;
+    }
 
-        res.json(result.rows);
-      }
-    );
+    res.json([review]);
   } catch (error) {
     console.error('Error querying database:', error);
     res.status(500).json({ error: 'Error querying the database' });
