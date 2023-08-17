@@ -14,6 +14,7 @@ model User {
     email     String   @unique
     reviews   Review[] // Connecting users to their reviews
     password  String
+    likes     Like[] // Connecting users to their likes
 }
 
 model Review {
@@ -25,4 +26,14 @@ model Review {
     userId    Int? // Connecting the review to the user
     archive   Boolean  @default(false)
     user      User?    @relation(fields: [userId], references: [id]) // Creating a relation to the User model
+    likes     Like[] // Connecting reviews to their likes
+}
+
+model Like {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    userId    Int
+    reviewId  Int
+    user      User     @relation(fields: [userId], references: [id])
+    review    Review   @relation(fields: [reviewId], references: [id])
 }
