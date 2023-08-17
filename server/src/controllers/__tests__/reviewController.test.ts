@@ -2,7 +2,7 @@ const request = require('supertest');
 
 const { app } = require('../../app');
 
-describe('Public Reviews API', () => {
+describe('getPublicReviews', () => {
   it('should get public reviews', async () => {
     const response = await request(app).get('/reviews/get-public-reviews');
 
