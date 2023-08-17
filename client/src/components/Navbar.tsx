@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { MobileMenu } from './MobileMenu';
 import { logOut } from '../lib/helpers';
-import Banner from './Banner';
 import { useUserStore } from '../zustand/store';
 
 export function Navbar() {
@@ -11,7 +10,7 @@ export function Navbar() {
   return (
     <nav>
       <div>
-        <Banner />
+        {/* <Banner /> */}
         <div className='mt-4 flex items-center justify-between lg:mx-64'>
           <div id='left' className='ml-4 flex flex-row items-center gap-2'>
             <MobileMenu />
