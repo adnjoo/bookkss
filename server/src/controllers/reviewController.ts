@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
 
-import { pool } from '../db';
+const prisma = new PrismaClient();
+import { pool } from '../db'; // delete this line
 
 export const upsertReview = async (req: Request, res: Response) => {
   const { id, title, body, userId, setPrivate, setArchive } = req.body;
@@ -123,18 +125,26 @@ export const deleteReview = async (req: Request, res: Response) => {
 };
 
 export const getPublicReviews = async (req: Request, res: Response) => {
-  pool.query(
-    'SELECT "createdAt", id, title, body, "userId" from "Review" WHERE private = false',
-    (error: any, result: any) => {
-      if (error) {
-        console.error('Error querying database:', error);
-        res.status(500).json({ error: 'Error querying the database' });
-        return;
-      }
-      res.json(result.rows);
-    }
-  );
+  try {
+    const publicReviews = await prisma.review.findMany({
+      where: {
+        private: false,
+      },
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        body: true,
+        userId: true,
+      },
+    });
+    res.json(publicReviews);
+  } catch (error) {
+    console.error('Error querying database:', error);
+    res.status(500).json({ error: 'Error querying the database' });
+  }
 };
+
 export const getPublicReview = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
