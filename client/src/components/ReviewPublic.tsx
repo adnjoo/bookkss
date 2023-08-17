@@ -10,12 +10,14 @@ export interface ReviewPublicProps {
   review: Review;
   archive?: boolean;
   getReviews?: () => void;
+  noExpand?: boolean;
 }
 
 export const ReviewPublic = ({
   review,
   archive = false,
   getReviews = () => {},
+  noExpand = false,
 }: ReviewPublicProps) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -57,12 +59,14 @@ export const ReviewPublic = ({
               <MdOutlineUnarchive className='ml-2 inline' />
             </button>
           )}
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className='mb-4 mt-4 flex items-center rounded bg-blue-500 p-2 text-white'
-          >
-            {expanded ? 'Hide' : 'Expand'}
-          </button>
+          {!noExpand && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className='mb-4 mt-4 flex items-center rounded bg-blue-500 p-2 text-white'
+            >
+              {expanded ? 'Hide' : 'Expand'}
+            </button>
+          )}
         </div>
       </div>
       <MDEditor.Markdown
