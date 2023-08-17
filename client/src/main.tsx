@@ -5,8 +5,16 @@ import LoadingBar from 'react-top-loading-bar';
 
 import App from './App.tsx';
 import './index.css';
-import { Dashboard, Archive, Discover } from './pages';
-import { Login, AboutUs, Footer, Navbar, Register } from './components';
+import {
+  Dashboard,
+  AboutUs,
+  Archive,
+  Discover,
+  Login,
+  PublicReview,
+  Register,
+} from './pages';
+import { Footer, Navbar } from './components';
 import { useLoadingStore } from './zustand/store.ts';
 
 const NavbarWrapper = () => {
@@ -51,8 +59,12 @@ const router = createBrowserRouter([
         element: <Archive />,
       },
       {
-        path: 'discover',
+        path: '/discover',
         element: <Discover />,
+      },
+      {
+        path: '/review/:id',
+        element: <PublicReview />,
       },
       {
         path: '*',
