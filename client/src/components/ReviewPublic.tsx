@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
+import { GrLinkNext } from 'react-icons/gr';
 import { MdOutlineUnarchive } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
@@ -51,32 +51,16 @@ export const ReviewPublic = ({
               <MdOutlineUnarchive className='ml-2 inline' />
             </button>
           )}
-          <Link to={`/review/${review.id}`}>View</Link>
-          <button
-            onClick={() => setExpanded(!expanded)}
-            title={expanded ? 'Collapse' : 'Expand'}
-          >
-            {expanded ? (
-              <AiOutlineMinusSquare size={24} color='green' />
-            ) : (
-              <AiOutlinePlusSquare size={24} />
-            )}
-          </button>
+          <Link to={`/review/${review.id}`} className='flex gap-2'>
+            View
+            <GrLinkNext size={24} color='green' />
+          </Link>
         </div>
       </div>
-      {expanded ? (
-        <MDEditor.Markdown
-          source={review.body}
-          wrapperElement={{ 'data-color-mode': 'light' } as any}
-        />
-      ) : (
-        <>
-          <MDEditor.Markdown
-            source={review.body.slice(0, 10) + '...'}
-            wrapperElement={{ 'data-color-mode': 'light' } as any}
-          />
-        </>
-      )}
+      <MDEditor.Markdown
+        source={review.body.slice(0, 50).replace(/\n/g, ' ') + '...'}
+        wrapperElement={{ 'data-color-mode': 'light' } as any}
+      />
     </div>
   );
 };
