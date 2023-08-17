@@ -27,12 +27,12 @@ export interface Review {
 export interface ReviewProps {
   review: Review;
   onSaveReview: (
-    reviewId: string,
+    reviewId: number,
     updatedBody: string,
     setPrivate: boolean,
     setArchive: boolean
   ) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
 }
 
 export const ReviewComponent: React.FC<ReviewProps> = ({

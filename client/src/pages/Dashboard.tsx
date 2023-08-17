@@ -44,7 +44,7 @@ export function Dashboard() {
       });
   };
 
-  const onDelete = (id: string) => {
+  const onDelete = (id: number) => {
     const token = localStorage.getItem('token');
     window.confirm('Are you sure you want to delete this review?') &&
       axios
@@ -61,7 +61,7 @@ export function Dashboard() {
   };
 
   const onSaveReview = (
-    reviewId: string,
+    reviewId: number,
     updatedBody: string,
     setPrivate: boolean,
     setArchive: boolean
@@ -69,7 +69,8 @@ export function Dashboard() {
     saveReview({
       userId: user?.id,
       reviewId,
-      title: reviews.find((review) => review.id === reviewId)?.title as string, // Keep the existing title
+      title: reviews.find((review: Review) => review.id === reviewId)
+        ?.title as string,
       updatedBody,
       setPrivate,
       setArchive,
