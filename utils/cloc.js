@@ -1,6 +1,6 @@
-const fs = require('fs');
+const fs = require("fs");
 
-const exclude = ['node_modules', '.next', '.git', '.vscode', '.vercel'];
+const exclude = ["node_modules", ".next", ".git", ".vscode", ".vercel"];
 
 const countLinesOfCode = (path, extensions) => {
   try {
@@ -11,44 +11,46 @@ const countLinesOfCode = (path, extensions) => {
       const filePath = `${path}/${file}`;
       const stats = fs.statSync(filePath);
 
-      if (stats.isDirectory() && !file.startsWith('node_modules')) {
+      if (stats.isDirectory() && !file.startsWith("node_modules")) {
         totalLines += countLinesOfCode(filePath, extensions);
       } else if (extensions.some((ext) => file.endsWith(ext))) {
-        const content = fs.readFileSync(filePath, 'utf-8');
+        const content = fs.readFileSync(filePath, "utf-8");
         const lines = content
-          .split('\n')
-          .filter((line) => line.trim() !== '').length;
+          .split("\n")
+          .filter((line) => line.trim() !== "").length;
         totalLines += lines;
       }
     });
 
     return totalLines;
   } catch (err) {
-    console.error('Error:', err);
+    console.error("Error:", err);
     return 0;
   }
 };
 
-const srcPath = '../client/src/';
-const srcPath2 = '../server/';
-const extensionsToCount = ['.ts', '.tsx', '.js'];
-const linesOfCode = countLinesOfCode(srcPath, extensionsToCount) + countLinesOfCode(srcPath2, extensionsToCount);
+const srcPath = "../client/src/";
+const srcPath2 = "../server/src/";
+const extensionsToCount = [".ts", ".tsx", ".js"];
+const linesOfCode =
+  countLinesOfCode(srcPath, extensionsToCount) +
+  countLinesOfCode(srcPath2, extensionsToCount);
 
-const readmeFile = '../README.md';
-fs.readFile(readmeFile, 'utf-8', function (err, data) {
+const readmeFile = "../README.md";
+fs.readFile(readmeFile, "utf-8", function (err, data) {
   if (err) {
     return console.log(err);
   }
 
-  const replace = 'SLOC:';
+  const replace = "SLOC:";
   const newContent = `${replace} ${linesOfCode}`;
 
   const result = data.replace(
-    new RegExp('^' + replace + '.*', 'm'),
+    new RegExp("^" + replace + ".*", "m"),
     newContent
   );
 
-  fs.writeFile(readmeFile, result, 'utf-8', function (err) {
+  fs.writeFile(readmeFile, result, "utf-8", function (err) {
     if (err) return console.log(err);
     console.log(`Updated ${readmeFile} with SLOC: ${linesOfCode}`);
   });
