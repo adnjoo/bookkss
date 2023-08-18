@@ -15,3 +15,7 @@ set fly secrets
 ```
 fly secrets set DATABASE_URL=***
 ```
+
+### Testing
+
+currently using local db for testing

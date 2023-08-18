@@ -14,7 +14,7 @@ export const upsertReview = async (req: Request, res: Response) => {
 
   try {
     if (!id) {
-      await prisma.review.create({
+      const newReview = await prisma.review.create({
         data: {
           title,
           body,
@@ -22,12 +22,12 @@ export const upsertReview = async (req: Request, res: Response) => {
         },
       });
 
-      res.json({ message: 'Review inserted successfully!' });
+      res.json({ message: 'Review inserted successfully!', id: newReview.id });
     } else {
-      await prisma.review.update({
+      const updatedReview = await prisma.review.update({
         where: {
-          id: Number(id),
-          userId: Number(userId),
+          id: +id,
+          userId: +userId,
         },
         data: {
           title,
@@ -37,7 +37,7 @@ export const upsertReview = async (req: Request, res: Response) => {
         },
       });
 
-      res.json({ message: 'Review updated successfully!' });
+      res.json({ message: 'Review updated successfully!', updatedReview });
     }
   } catch (error) {
     console.error('Error performing database operation:', error);
