@@ -18,7 +18,7 @@ Front-end
 
 Middleware
 
-- Next-Auth 4.x
+- jwt 9.x
 
 Back-end
 
