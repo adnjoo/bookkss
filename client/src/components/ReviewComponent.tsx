@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
 import {
-  AiOutlinePlusSquare,
-  AiOutlineMinusSquare,
   AiOutlineDelete,
   AiOutlineDownload,
   AiFillLock,
@@ -11,6 +9,7 @@ import {
   AiOutlineEllipsis,
 } from 'react-icons/ai';
 import { BsArchive } from 'react-icons/bs';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 
 import { downloadMarkdown } from '../lib/helpers';
 import { MyDateCalendar } from './MyDateCalendar';
@@ -85,12 +84,12 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   };
 
   return (
-    <div key={review.id} className='mb-4 rounded border p-4'>
-      <div className='flex justify-between'>
+    <div key={review.id} className='mb-4 items-center rounded border p-4'>
+      <div className='flex items-center justify-between'>
         <span className='mb-2 flex items-center gap-4'>
           <h3
-            className='cursor-pointer text-xl font-bold'
-            onClick={handleSetExpanded}
+            className='text-xl font-bold'
+            // onClick={handleSetExpanded}
           >
             {review.title}
           </h3>
@@ -116,11 +115,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             onClick={handleSetExpanded}
             title={expanded ? 'Collapse' : 'Expand'}
           >
-            {expanded ? (
-              <AiOutlineMinusSquare size={24} color='green' />
-            ) : (
-              <AiOutlinePlusSquare size={24} />
-            )}
+            <OpenInFullIcon />
           </button>
         </div>
       </div>
