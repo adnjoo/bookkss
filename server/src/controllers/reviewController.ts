@@ -5,7 +5,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const upsertReview = async (req: Request, res: Response) => {
-  const { id, title, body, userId, setPrivate, setArchive } = req.body;
+  const { id, title, body, userId, setPrivate, setArchive, reviewDate } =
+    req.body;
 
   if (!title || !body || !userId) {
     res.status(400).json({ error: 'Missing required fields.' });
@@ -34,6 +35,7 @@ export const upsertReview = async (req: Request, res: Response) => {
           body,
           private: setPrivate,
           archive: setArchive,
+          reviewDate,
         },
       });
 
@@ -118,6 +120,7 @@ export const getPublicReviews = async (req: Request, res: Response) => {
       },
       select: {
         createdAt: true,
+        reviewDate: true,
         id: true,
         title: true,
         body: true,

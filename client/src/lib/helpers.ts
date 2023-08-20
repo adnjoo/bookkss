@@ -21,13 +21,14 @@ export const downloadMarkdown = (title: string, body: string) => {
   link.click();
 };
 
-export interface onSaveReviewProps {
+export interface saveReviewProps {
   userId: number;
   reviewId: number;
   title: string;
   updatedBody: string;
   setPrivate: boolean;
   setArchive: boolean;
+  reviewDate: string;
 }
 
 export const saveReview = async ({
@@ -37,7 +38,8 @@ export const saveReview = async ({
   updatedBody,
   setPrivate,
   setArchive,
-}: onSaveReviewProps) => {
+  reviewDate,
+}: saveReviewProps) => {
   let { data } = await axios.post(`${SERVER_URL}/reviews/upsert-review`, {
     id: reviewId,
     title,
@@ -45,6 +47,7 @@ export const saveReview = async ({
     userId,
     setPrivate,
     setArchive,
+    reviewDate,
   });
   return data;
 };

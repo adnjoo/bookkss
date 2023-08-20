@@ -33,9 +33,10 @@ describe('upsertReview', () => {
       title: 'Test Review',
       body: 'This is a modification.',
       userId: testUserId,
+      reviewDate: new Date(),
     };
 
-    console.log(reviewData);
+    // console.log(reviewData);
 
     const response = await request(app)
       .post('/reviews/upsert-review')

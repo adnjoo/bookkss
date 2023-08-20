@@ -13,6 +13,8 @@ import {
 import { BsArchive } from 'react-icons/bs';
 
 import { downloadMarkdown } from '../lib/helpers';
+import { MyDateCalendar } from './MyDateCalendar';
+import { onSaveReviewProps } from '../pages';
 
 export interface Review {
   archive: boolean;
@@ -22,16 +24,12 @@ export interface Review {
   private: boolean;
   title: string;
   userId: number;
+  reviewDate: string;
 }
 
 export interface ReviewProps {
   review: Review;
-  onSaveReview: (
-    reviewId: number,
-    updatedBody: string,
-    setPrivate: boolean,
-    setArchive: boolean
-  ) => void;
+  onSaveReview: (props: onSaveReviewProps) => void;
   onDelete: (id: number) => void;
 }
 
@@ -69,7 +67,13 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
     updatedPrivate: boolean = review.private,
     archive: boolean = review.archive
   ) => {
-    onSaveReview(review.id, bodyRef.current, updatedPrivate, archive);
+    onSaveReview({
+      reviewId: review.id,
+      updatedBody: bodyRef.current,
+      setPrivate: updatedPrivate,
+      setArchive: archive,
+      reviewDate: review.reviewDate,
+    });
     setEditMode(false);
   };
 
@@ -81,12 +85,17 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   return (
     <div key={review.id} className='mb-4 rounded border p-4'>
       <div className='flex justify-between'>
-        <h3
-          className='cursor-pointer text-xl font-bold'
-          onClick={handleSetExpanded}
-        >
-          {review.title} {new Date(review.createdAt).toLocaleDateString()}
-        </h3>
+        <span className='mb-2 flex items-center gap-4'>
+          <h3
+            className='cursor-pointer text-xl font-bold'
+            onClick={handleSetExpanded}
+          >
+            {review.title}
+          </h3>
+
+          <MyDateCalendar review={review} onSaveReview={onSaveReview} />
+        </span>
+
         <div className='flex items-center gap-2'>
           {expanded && !editMode && (
             <>

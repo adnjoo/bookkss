@@ -29,6 +29,7 @@ export const ReviewPublic = ({
       updatedBody: review.body,
       setPrivate: review.private,
       setArchive: false,
+      reviewDate: review.reviewDate,
     });
     getReviews();
   };
@@ -42,7 +43,7 @@ export const ReviewPublic = ({
         <span>
           <Link to={`/review/${review.id}`}>
             <h3 className='cursor-pointer text-xl font-bold'>
-              {review.title} {new Date(review.createdAt).toLocaleDateString()}{' '}
+              {review.title} {new Date(review.reviewDate).toLocaleDateString()}{' '}
             </h3>
           </Link>
           <Link to={`/profile/${review.userId}`}>
