@@ -21,6 +21,7 @@ export const MyDateCalendar = ({
   const modalRef = useRef<any>(null);
 
   const closeDatePicker = () => {
+    setReviewDate(dayjs(review.reviewDate));
     setShowDatePicker(false);
   };
 
@@ -38,6 +39,7 @@ export const MyDateCalendar = ({
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setReviewDate(dayjs(review.reviewDate));
         setShowDatePicker(false);
       }
     };
