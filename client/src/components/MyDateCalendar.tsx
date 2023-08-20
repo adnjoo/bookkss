@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
@@ -18,6 +18,7 @@ export const MyDateCalendar = ({
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [reviewDate, setReviewDate] = useState(dayjs(review.reviewDate));
+  const modalRef = useRef<any>(null);
 
   const closeDatePicker = () => {
     setShowDatePicker(false);
@@ -33,6 +34,24 @@ export const MyDateCalendar = ({
     });
     setShowDatePicker(false);
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event: any) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setShowDatePicker(false);
+      }
+    };
+
+    if (showDatePicker) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [showDatePicker]);
 
   return (
     <>
@@ -67,7 +86,7 @@ export const MyDateCalendar = ({
           leaveTo='translate-y-4 opacity-0'
           className='relative z-10'
         >
-          <div className='rounded-lg bg-white p-4'>
+          <div className='rounded-lg bg-white p-4' ref={modalRef}>
             <button
               className='absolute right-0 top-0 p-2'
               onClick={closeDatePicker}
