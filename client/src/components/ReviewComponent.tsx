@@ -10,6 +10,7 @@ import {
 } from 'react-icons/ai';
 import { BsArchive } from 'react-icons/bs';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import { Button } from '@mui/material';
 
 import { downloadMarkdown } from '../lib/helpers';
 import { MyDateCalendar } from './MyDateCalendar';
@@ -43,6 +44,8 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   const [editMode, setEditMode] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<any>(review.body);
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(review.title);
 
   // console.log('review', review);
 
@@ -83,16 +86,55 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
     setOptionsTab(false);
   };
 
+  const handleSaveTitle = () => {
+    onSaveReview({
+      reviewId: review.id,
+      updatedTitle: editedTitle,
+      updatedBody: bodyRef.current,
+      setPrivate: review.private,
+      setArchive: review.archive,
+      reviewDate: review.reviewDate,
+    });
+    setIsEditingTitle(false);
+  };
+
   return (
     <div key={review.id} className='mb-4 items-center rounded border p-4'>
       <div className='flex items-center justify-between'>
         <span className='mb-2 flex items-center gap-4'>
-          <h3
+          {/* <h3
             className='text-xl font-bold'
             // onClick={handleSetExpanded}
           >
             {review.title}
-          </h3>
+          </h3> */}
+          {isEditingTitle ? (
+            <div className='flex gap-2'>
+              <input
+                className='rounded border p-1'
+                type='text'
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+              />
+              <Button variant='contained' onClick={handleSaveTitle}>
+                Save
+              </Button>
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={() => setIsEditingTitle(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          ) : (
+            <h3
+              className='text-xl font-bold'
+              onClick={() => setIsEditingTitle(true)}
+            >
+              {review.title}
+            </h3>
+          )}
 
           <MyDateCalendar review={review} onSaveReview={onSaveReview} />
         </span>

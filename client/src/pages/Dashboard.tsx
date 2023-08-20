@@ -13,6 +13,7 @@ export interface onSaveReviewProps {
   setPrivate: boolean;
   setArchive: boolean;
   reviewDate: string;
+  updatedTitle?: string;
 }
 
 export function Dashboard() {
@@ -74,12 +75,15 @@ export function Dashboard() {
     setPrivate,
     setArchive,
     reviewDate,
+    updatedTitle,
   }: onSaveReviewProps) => {
     saveReview({
       userId: user?.id,
       reviewId,
-      title: reviews.find((review: Review) => review.id === reviewId)
-        ?.title as string,
+      title:
+        updatedTitle ||
+        (reviews.find((review: Review) => review.id === reviewId)
+          ?.title as string),
       updatedBody,
       setPrivate,
       setArchive,
