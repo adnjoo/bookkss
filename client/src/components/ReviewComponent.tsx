@@ -45,6 +45,8 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<any>(review.body);
 
+  // console.log('review', review);
+
   function handleBodyChange(e: any) {
     setUpdatedBody(e);
     bodyRef.current = e;

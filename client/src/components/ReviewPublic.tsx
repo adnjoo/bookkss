@@ -2,6 +2,7 @@ import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { MdOutlineUnarchive } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 import { Review } from './ReviewComponent';
 import { saveReview } from '../lib/helpers';
@@ -34,6 +35,8 @@ export const ReviewPublic = ({
     getReviews();
   };
 
+  // console.log('reviewPublic', review);
+
   return (
     <div
       key={review.id}
@@ -43,7 +46,7 @@ export const ReviewPublic = ({
         <span>
           <Link to={`/review/${review.id}`}>
             <h3 className='cursor-pointer text-xl font-bold'>
-              {review.title} {new Date(review.reviewDate).toLocaleDateString()}{' '}
+              {review.title} {dayjs(review.reviewDate).format('YYYY-MM-DD')}
             </h3>
           </Link>
           <Link to={`/profile/${review.userId}`}>

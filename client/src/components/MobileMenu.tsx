@@ -25,7 +25,7 @@ export function MobileMenu() {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // alert(res.status);
           setUser(res.data.user);
         })

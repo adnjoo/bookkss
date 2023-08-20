@@ -100,10 +100,6 @@ export function Dashboard() {
               <h2 className='mt-4 font-medium'>
                 You are logged in as: user: {user?.id}, email: {user?.email}
               </h2>
-              {/* <img
-            className='my-2 h-8 w-8 rounded-full'
-            src={user?.image}
-          /> */}
               <button
                 className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
                 onClick={() => {
