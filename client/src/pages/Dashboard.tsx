@@ -7,6 +7,14 @@ import { Review, ReviewComponent } from '../components/ReviewComponent';
 import { AddReview } from '../components/AddReview';
 import { saveReview, SERVER_URL } from '../lib/helpers';
 
+export interface onSaveReviewProps {
+  reviewId: number;
+  updatedBody: string;
+  setPrivate: boolean;
+  setArchive: boolean;
+  reviewDate: string;
+}
+
 export function Dashboard() {
   const setLoading = useLoadingStore((state: any) => state.setLoading);
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -60,12 +68,13 @@ export function Dashboard() {
         .then(() => getReviews());
   };
 
-  const onSaveReview = (
-    reviewId: number,
-    updatedBody: string,
-    setPrivate: boolean,
-    setArchive: boolean
-  ) => {
+  const onSaveReview = ({
+    reviewId,
+    updatedBody,
+    setPrivate,
+    setArchive,
+    reviewDate,
+  }: onSaveReviewProps) => {
     saveReview({
       userId: user?.id,
       reviewId,
@@ -74,6 +83,7 @@ export function Dashboard() {
       updatedBody,
       setPrivate,
       setArchive,
+      reviewDate,
     }).then(() => {
       getReviews();
       console.log('Review saved', updatedBody);
@@ -88,7 +98,7 @@ export function Dashboard() {
             <h1 className='text-2xl font-bold'>Welcome to your dashboard</h1>
             <div className='flex flex-col justify-between'>
               <h2 className='mt-4 font-medium'>
-                You are logged in as: {user?.email}
+                You are logged in as: user: {user?.id}, email: {user?.email}
               </h2>
               {/* <img
             className='my-2 h-8 w-8 rounded-full'
