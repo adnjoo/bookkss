@@ -1,5 +1,6 @@
 export * from './AboutUs';
 export * from './Archive';
+export * from './Blog';
 export * from './Dashboard';
 export * from './Discover';
 export * from './Login';
