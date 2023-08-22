@@ -30,6 +30,9 @@ export function Navbar() {
             <Link to='/discover' className='mx-4 flex hidden gap-2 sm:flex'>
               Discover&nbsp;
             </Link>
+            <Link to='/blog' className='mx-4 flex hidden gap-2 sm:flex'>
+              Blog&nbsp;
+            </Link>
           </div>
           <a href='/'>
             <img src='/logo.png' className='flex w-12 sm:hidden' />
