@@ -29,6 +29,9 @@ export const Footer = () => {
               <span className='mb-1'>
                 <Link to='/discover'>Discover</Link>
               </span>
+              <span className='mb-1'>
+                <Link to='/blog'>Blog</Link>
+              </span>
             </ul>
           </div>
           <div>

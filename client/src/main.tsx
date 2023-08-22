@@ -9,6 +9,7 @@ import {
   Dashboard,
   AboutUs,
   Archive,
+  Blog,
   Discover,
   Login,
   Profile,
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: '/profile/:id',
         element: <Profile />,
+      },
+      {
+        path: '/blog',
+        element: <Blog />,
       },
       {
         path: '*',

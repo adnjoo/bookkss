@@ -25,8 +25,6 @@ export function MobileMenu() {
           },
         })
         .then((res) => {
-          // console.log(res);
-          // alert(res.status);
           setUser(res.data.user);
         })
         .catch((err) => {
@@ -101,15 +99,26 @@ export function MobileMenu() {
             )}
             <Menu.Item>
               {({ active }: { active: boolean }) => (
-                <Link
-                  to='/discover'
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Discover
-                </Link>
+                <>
+                  <Link
+                    to='/discover'
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    Discover
+                  </Link>
+                  <Link
+                    to='/blog'
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    Blog
+                  </Link>
+                </>
               )}
             </Menu.Item>
           </div>
