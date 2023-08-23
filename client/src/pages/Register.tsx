@@ -36,7 +36,7 @@ export function Register() {
         {errorMessage && (
           <div className='mb-4 text-red-500'>{errorMessage}</div>
         )}
-        <div className='mb-4'>
+        <form className='mb-4'>
           <label className='mb-2 block text-sm font-bold text-gray-700'>
             Email
           </label>
@@ -70,7 +70,7 @@ export function Register() {
               Login
             </Link>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
