@@ -96,18 +96,18 @@ export function Navbar() {
               }}
             >
               {(user ? authPages : nonAuthPages).map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ display: 'flex', flexDirection: 'col' }}
+                <Link
+                  to={`/${page.toLowerCase()}`}
+                  style={{ textDecoration: 'none' }}
                 >
-                  <Link
-                    to={`/${page.toLowerCase()}`}
-                    style={{ textDecoration: 'none' }}
+                  <MenuItem
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ display: 'flex', flexDirection: 'col' }}
                   >
                     <Typography textAlign='center'>{page}</Typography>
-                  </Link>
-                </MenuItem>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
