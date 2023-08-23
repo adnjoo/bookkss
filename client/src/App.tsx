@@ -4,6 +4,7 @@ import axios from 'axios';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import { Button } from '@mui/material';
 
 import { useUserStore } from './zustand/store';
 import { SERVER_URL } from './lib/helpers';
@@ -37,9 +38,9 @@ function App() {
         </p>
         <div className='mt-10 flex justify-center'>
           {!user && (
-            <Link to='/login' className='rounded-xl bg-gray-500 p-3 text-white'>
+            <Button variant='contained' component={Link} to='/login'>
               Login
-            </Link>
+            </Button>
           )}
           {user && (
             <Link
