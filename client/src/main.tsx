@@ -24,7 +24,7 @@ const NavbarWrapper = () => {
   return (
     <>
       <Navbar />
-      <LoadingBar color='#3b82f6' progress={loading ? 50 : 100} height={5} />
+      <LoadingBar color='#333333' progress={loading ? 50 : 100} height={5} />
       <Outlet />
       <Footer />
     </>

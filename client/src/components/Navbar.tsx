@@ -1,57 +1,166 @@
-import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
+import { useState, useEffect } from 'react';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Tooltip,
+  MenuItem,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import LoginIcon from '@mui/icons-material/Login';
+import axios from 'axios';
+
+import { logOut } from '../lib/helpers';
+import { SERVER_URL } from '../lib/helpers';
+import { useUserStore } from '../zustand/store';
 import { Link } from 'react-router-dom';
 
-import { MobileMenu } from './MobileMenu';
-import { logOut } from '../lib/helpers';
-import { useUserStore } from '../zustand/store';
+const nonAuthPages = ['Discover', 'Blog'];
+const authPages = ['Dashboard', 'Archive', 'Blog'];
 
 export function Navbar() {
   const user = useUserStore((state: any) => state.user);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
+  const setUser = useUserStore((state: any) => state.setUser);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios
+        .get(`${SERVER_URL}/users/is-auth`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUser(res.data.user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
   return (
-    <nav>
-      <div>
-        {/* <Banner /> */}
-        <div className='mt-4 flex items-center justify-between lg:mx-64'>
-          <div id='left' className='ml-4 flex flex-row items-center gap-2'>
-            <MobileMenu />
-            {user && (
-              <>
-                <Link
-                  to='/dashboard'
-                  className='mx-4 flex hidden gap-2 sm:flex'
+    <AppBar position='static' color='primary'>
+      <Container maxWidth='xl'>
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+          <Typography
+            component='a'
+            href='/'
+            variant='h4'
+            sx={{
+              mr: 2,
+              color: 'black',
+              display: {
+                xs: 'none',
+                md: 'block',
+              },
+            }}
+          >
+            bookkss
+          </Typography>
+
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton size='large' onClick={handleOpenNavMenu}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id='menu-appbar'
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {(user ? authPages : nonAuthPages).map((page) => (
+                <MenuItem
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ display: 'flex', flexDirection: 'col' }}
                 >
-                  Dashboard&nbsp;
-                </Link>
-                <Link to='/archive' className='mx-4 flex hidden gap-2 sm:flex'>
-                  Archive&nbsp;
-                </Link>
-              </>
-            )}
-            <Link to='/discover' className='mx-4 flex hidden gap-2 sm:flex'>
-              Discover&nbsp;
-            </Link>
-            <Link to='/blog' className='mx-4 flex hidden gap-2 sm:flex'>
-              Blog&nbsp;
-            </Link>
-          </div>
-          <a href='/'>
-            <img src='/logo.png' className='flex w-12 sm:hidden' />
-          </a>
-          <div id='right' className='flex'>
-            {!user ? (
-              <Link to='/login' className='mr-4 flex gap-2'>
-                <span className='hidden sm:flex'>Login&nbsp;</span>
-                <AiOutlineLogin className='flex h-6 w-6' />
+                  <Link
+                    to={`/${page.toLowerCase()}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Typography textAlign='center'>{page}</Typography>
+                  </Link>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Typography
+            id='mobile logo'
+            variant='h3'
+            noWrap
+            component='a'
+            href='/'
+            sx={{
+              color: 'black',
+              fontWeight: 800,
+              display: {
+                xs: 'flex',
+                md: 'none',
+              },
+            }}
+          >
+            B
+          </Typography>
+          <Box
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+            id='desktop-menu'
+          >
+            {(user ? authPages : nonAuthPages).map((page) => (
+              <Link
+                key={page}
+                to={`/${page.toLowerCase()}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <Typography
+                  noWrap
+                  sx={{ color: 'black', fontWeight: 800, mr: 2 }}
+                >
+                  {page}
+                </Typography>
               </Link>
-            ) : (
-              <button onClick={logOut} className='mr-2 flex gap-2'>
-                <span className='hidden sm:flex'>Logout&nbsp;</span>
-                <AiOutlineLogout className='flex h-6 w-6' />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </nav>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }} id='right'>
+            <Tooltip title={user ? 'Logout' : 'Login'} arrow={true}>
+              <IconButton
+                onClick={() => {
+                  user ? logOut() : (window.location.href = '/login');
+                }}
+              >
+                <LoginIcon sx={{ color: 'black' }} />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
