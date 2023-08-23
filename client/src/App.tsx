@@ -43,12 +43,9 @@ function App() {
             </Button>
           )}
           {user && (
-            <Link
-              to='/dashboard'
-              className='rounded-xl bg-gray-500 p-3 text-white'
-            >
+            <Button variant='contained' component={Link} to='/dashboard'>
               Go to Dashboard
-            </Link>
+            </Button>
           )}
         </div>
       </div>
