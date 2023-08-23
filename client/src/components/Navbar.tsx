@@ -20,7 +20,7 @@ import { useUserStore } from '../zustand/store';
 import { Link } from 'react-router-dom';
 
 const nonAuthPages = ['Discover', 'Blog'];
-const authPages = ['Dashboard', 'Archive', 'Blog'];
+const authPages = ['Dashboard', 'Archive', 'Discover'];
 
 export function Navbar() {
   const user = useUserStore((state: any) => state.user);
