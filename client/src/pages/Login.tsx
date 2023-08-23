@@ -32,7 +32,7 @@ export function Login() {
     <div className='mx-auto mb-64 mt-16 flex justify-center'>
       <div className='mx-4 max-w-[400px]'>
         <h1 className='mb-8 text-4xl font-bold'>Login</h1>
-        <div className='mb-4'>
+        <form className='mb-4'>
           <label className='mb-2 block text-sm font-bold text-gray-700'>
             Email
           </label>
@@ -66,7 +66,7 @@ export function Login() {
               Register
             </Link>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
