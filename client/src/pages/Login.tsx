@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 import { SERVER_URL } from '../lib/helpers';
 import { useLoadingStore } from '../zustand/store';
@@ -53,13 +54,9 @@ export function Login() {
             placeholder='Password'
             autoComplete='on'
           />
-          <button
-            onClick={login}
-            className='focus:shadow-outline mt-4 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none'
-            type='button'
-          >
+          <Button onClick={login} variant='contained' sx={{ mt: 4 }}>
             Login
-          </button>
+          </Button>
           <div className='mt-4'>
             Don't have an account?{' '}
             <Link to='/register' className='text-blue-500 hover:underline'>
