@@ -54,7 +54,7 @@ export function Navbar() {
   };
 
   return (
-    <AppBar position='static' color='primary'>
+    <AppBar position='static' color='transparent'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Typography
