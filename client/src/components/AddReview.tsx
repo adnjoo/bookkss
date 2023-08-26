@@ -1,5 +1,6 @@
-import rehypeSanitize from "rehype-sanitize";
-import MDEditor from "@uiw/react-md-editor";
+import rehypeSanitize from 'rehype-sanitize';
+import MDEditor from '@uiw/react-md-editor';
+import { Button } from '@mui/material';
 
 export interface AddReviewProps {
   setTitle: any;
@@ -19,20 +20,20 @@ export function AddReview({
   body,
 }: AddReviewProps) {
   return (
-    <div className="mx-4 mb-12 mt-12 border p-4">
+    <div className='mx-4 mb-12 mt-12 border p-4'>
       <div>
-        <div className="mb-2">Title</div>
+        <div className='mb-2'>Title</div>
         <input
-          className="w-full border p-4"
+          className='w-full border p-4'
           onChange={(e) => setTitle(e.target.value)}
           value={title}
         />
       </div>
       <div>
-        <div className="mb-2">Body</div>
+        <div className='mb-2'>Body</div>
         <MDEditor
           height={600}
-          data-color-mode="light"
+          data-color-mode='light'
           value={body}
           onChange={setBody}
           previewOptions={{
@@ -40,19 +41,18 @@ export function AddReview({
           }}
         />
       </div>
-      <div className="flex gap-2">
-        <button
-          className="mt-4 w-[100px] rounded bg-gray-500 p-2 text-white"
-          onClick={onAddReview}
-        >
+      <div className='flex gap-2'>
+        <Button variant='contained' onClick={onAddReview} sx={{ mt: 2 }}>
           Add review
-        </button>
-        <button
-          className="mt-4 w-[100px] rounded bg-red-500 p-2 text-white"
+        </Button>
+        <Button
+          variant='contained'
+          color='error'
           onClick={() => setShowAddReview(false)}
+          sx={{ mt: 2 }}
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </div>
   );

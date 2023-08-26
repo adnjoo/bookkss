@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 import { useLoadingStore, useUserStore } from '../zustand/store';
 import { Review, ReviewComponent } from '../components/ReviewComponent';
@@ -104,17 +105,18 @@ export function Dashboard() {
               <h2 className='mt-4 font-medium'>
                 You are logged in as: user: {user?.id}, email: {user?.email}
               </h2>
-              <button
-                className='mt-4 w-[120px] rounded bg-blue-500 p-2 text-white'
+              <Button
+                variant='contained'
                 onClick={() => {
                   if (showAddReview) return;
                   setShowAddReview(!showAddReview);
                   setTitle('');
                   setBody('');
                 }}
+                sx={{ width: 'fit-content', mt: 2 }}
               >
                 Add review
-              </button>
+              </Button>
             </div>
             {showAddReview && (
               <AddReview
