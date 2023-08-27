@@ -7,19 +7,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { Button, Tooltip } from '@mui/material';
 import { Share } from '@mui/icons-material';
+import type { Review } from '../components/ReviewComponent';
 
 import { SERVER_URL } from '../lib/helpers';
 
 export function PublicReview() {
   const { id } = useParams();
-  const [review, setReview] = useState<any>(null);
+  const [review, setReview] = useState<Review | null>(null);
 
   const handleCopy = () => {
     const url = `${window.location.origin}/review/${id}`;
     navigator.clipboard
       .writeText(url)
       .then(() => {
-        toast.success(`Copied link to ${review.title} to clipboard!`);
+        toast.success(`Copied link to ${review?.title} to clipboard!`);
       })
       .catch((error) => {
         console.error('Error copying to clipboard:', error);
@@ -38,12 +39,12 @@ export function PublicReview() {
   }, [id]);
 
   return (
-    <div className='mx-6 mb-48 mt-12 flex items-center justify-center rounded border p-4 lg:mx-64'>
+    <div className='mx-2 mb-48 mt-12 flex items-center justify-center rounded border p-4 lg:mx-64'>
       {review ? (
         <div>
           <h2 className='text-xl font-semibold'>{review.title}</h2>
           <p className='my-2 mb-4 flex items-center text-gray-600'>
-            Posted on {new Date(review.createdAt).toLocaleDateString()}
+            Review date: {new Date(review?.reviewDate).toLocaleDateString()}
             <Tooltip title='Copy link to review' arrow sx={{ ml: 2 }}>
               <Button onClick={handleCopy} color='inherit'>
                 <Share />

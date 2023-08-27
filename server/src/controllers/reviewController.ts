@@ -149,6 +149,7 @@ export const getPublicReview = async (req: Request, res: Response) => {
         body: true,
         userId: true,
         private: true,
+        reviewDate: true,
       },
     });
 
