@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
-import { MdOutlineUnarchive } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { ExpandMore, ExpandLess, Unarchive } from '@mui/icons-material';
+import { Button, Tooltip } from '@mui/material';
 
 import { Review } from './ReviewComponent';
 import { saveReview } from '../lib/helpers';
@@ -55,21 +56,26 @@ export const ReviewPublic = ({
         </span>
         <div className='flex flex-row items-center gap-4'>
           {archive && (
-            <button
-              onClick={handleUnarchive}
-              className='mb-4 mt-4 flex items-center rounded bg-blue-500 p-2 text-white'
-            >
-              Unarchive
-              <MdOutlineUnarchive className='ml-2 inline' />
-            </button>
+            <Tooltip title='Unarchive' color='inherit' arrow>
+              <Button onClick={handleUnarchive} variant='text'>
+                <Unarchive />
+              </Button>
+            </Tooltip>
           )}
           {!noExpand && (
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className='mb-4 mt-4 flex items-center rounded bg-blue-500 p-2 text-white'
+            <Tooltip
+              title={expanded ? 'Collapse' : 'Expand'}
+              color='inherit'
+              arrow
             >
-              {expanded ? 'Hide' : 'Expand'}
-            </button>
+              <Button
+                onClick={() => setExpanded(!expanded)}
+                variant='text'
+                color='inherit'
+              >
+                {expanded ? <ExpandLess /> : <ExpandMore />}
+              </Button>
+            </Tooltip>
           )}
         </div>
       </div>
