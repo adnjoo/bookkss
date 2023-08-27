@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
+import { Button, Tooltip } from '@mui/material';
 import {
-  AiOutlineDelete,
-  AiOutlineDownload,
-  AiFillLock,
-  AiFillUnlock,
-  AiOutlineEllipsis,
-} from 'react-icons/ai';
-import { BsArchive } from 'react-icons/bs';
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import { Button } from '@mui/material';
+  Archive,
+  Delete,
+  Download,
+  ExpandMore,
+  ExpandLess,
+  Lock,
+  LockOpen,
+  Settings,
+} from '@mui/icons-material';
 
 import { downloadMarkdown } from '../lib/helpers';
 import { MyDateCalendar } from './MyDateCalendar';
@@ -102,12 +103,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
     <div key={review.id} className='mb-4 items-center rounded border p-4'>
       <div className='flex items-center justify-between'>
         <span className='mb-2 flex items-center gap-4'>
-          {/* <h3
-            className='text-xl font-bold'
-            // onClick={handleSetExpanded}
-          >
-            {review.title}
-          </h3> */}
           {isEditingTitle ? (
             <div className='flex gap-2'>
               <input
@@ -142,58 +137,66 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
         <div className='flex items-center gap-2'>
           {expanded && !editMode && (
             <>
-              <button
+              <Button
                 onClick={() => setOptionsTab(!optionsTab)}
                 title='More Options'
+                color='inherit'
               >
-                <AiOutlineEllipsis
-                  size={24}
-                  color={optionsTab ? 'green' : 'black'}
-                />
-              </button>
+                <Settings />
+              </Button>
             </>
           )}
-          <button
-            onClick={handleSetExpanded}
+          <Tooltip
             title={expanded ? 'Collapse' : 'Expand'}
+            color='inherit'
+            arrow
           >
-            <OpenInFullIcon />
-          </button>
+            <Button onClick={handleSetExpanded} color='inherit'>
+              {expanded ? <ExpandMore /> : <ExpandLess />}
+            </Button>
+          </Tooltip>
         </div>
       </div>
       {optionsTab && (
         <div className='my-4 rounded border bg-white p-4'>
           <h2 className='mb-4 text-xl font-bold'>Options</h2>
           <div className='flex gap-4'>
-            <button
+            <Button
               onClick={() => downloadMarkdown(review.title, review.body)}
               title='Download as Markdown'
+              sx={{ gap: 1 }}
+              color='inherit'
             >
-              <AiOutlineDownload size={24} />
+              <Download />
               Download
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleSaveReview(!review.private)}
               title={review.private ? 'Make Public' : 'Make Private'}
+              sx={{ gap: 1 }}
+              color='inherit'
             >
-              {review.private ? (
-                <AiFillLock size={24} color={'red'} />
-              ) : (
-                <AiFillUnlock size={24} />
-              )}
+              {review.private ? <Lock /> : <LockOpen />}
               {review.private ? 'Make Public' : 'Make Private'}
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleSaveReview(review.private, !review.archive)}
               title='Archive'
+              sx={{ gap: 1 }}
+              color='inherit'
             >
-              <BsArchive size={24} color={'black'} />
+              <Archive />
               Archive
-            </button>
-            <button onClick={() => onDelete(review.id)} title='Delete'>
-              <AiOutlineDelete size={24} />
+            </Button>
+            <Button
+              onClick={() => onDelete(review.id)}
+              title='Delete'
+              sx={{ gap: 1 }}
+              color='inherit'
+            >
+              <Delete />
               Delete
-            </button>
+            </Button>
           </div>
         </div>
       )}

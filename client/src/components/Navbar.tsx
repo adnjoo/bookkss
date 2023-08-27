@@ -149,7 +149,7 @@ export function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }} id='right'>
-            <Tooltip title={user ? 'Logout' : 'Login'} arrow={true}>
+            <Tooltip title={user ? 'Logout' : 'Login'} arrow>
               <IconButton
                 onClick={() => {
                   user ? logOut() : (window.location.href = '/login');

@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import MDEditor from '@uiw/react-md-editor';
-import { FaShareSquare } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import { Button, Tooltip } from '@mui/material';
+import { Share } from '@mui/icons-material';
 
 import { SERVER_URL } from '../lib/helpers';
 
@@ -43,13 +44,11 @@ export function PublicReview() {
           <h2 className='text-xl font-semibold'>{review.title}</h2>
           <p className='my-2 mb-4 flex items-center text-gray-600'>
             Posted on {new Date(review.createdAt).toLocaleDateString()}
-            <button
-              className='ml-4 rounded bg-blue-500 p-1 text-sm text-white hover:bg-blue-600'
-              onClick={handleCopy}
-            >
-              <FaShareSquare className='mr-2 inline-block' />
-              Share Link
-            </button>
+            <Tooltip title='Copy link to review' arrow sx={{ ml: 2 }}>
+              <Button onClick={handleCopy} color='inherit'>
+                <Share />
+              </Button>
+            </Tooltip>
           </p>
           <Link to={`/profile/${review.userId}`}>
             <p className='mb-4 cursor-pointer text-xl text-gray-600 hover:text-blue-500'>

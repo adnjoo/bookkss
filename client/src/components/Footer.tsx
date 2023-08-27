@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AiFillLinkedin } from 'react-icons/ai';
+import { LinkedIn } from '@mui/icons-material';
 
 export const Footer = () => {
   return (
@@ -44,7 +44,7 @@ export const Footer = () => {
                   rel='noopener noreferrer'
                   className='text-white transition duration-150 ease-in-out hover:text-gray-400'
                 >
-                  <AiFillLinkedin size={24} />
+                  <LinkedIn />
                 </a>
               </span>
             </ul>
