@@ -152,7 +152,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             arrow
           >
             <Button onClick={handleSetExpanded} color='inherit'>
-              {expanded ? <ExpandMore /> : <ExpandLess />}
+              {expanded ? <ExpandLess /> : <ExpandMore />}
             </Button>
           </Tooltip>
         </div>
