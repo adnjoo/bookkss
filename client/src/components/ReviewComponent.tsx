@@ -160,7 +160,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
       {optionsTab && (
         <div className='my-4 rounded border bg-white p-4'>
           <h2 className='mb-4 text-xl font-bold'>Options</h2>
-          <div className='flex gap-4'>
+          <div className='flex flex-col gap-4 sm:flex-row'>
             <Button
               onClick={() => downloadMarkdown(review.title, review.body)}
               title='Download as Markdown'
