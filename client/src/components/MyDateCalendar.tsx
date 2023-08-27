@@ -4,7 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import dayjs from 'dayjs';
 import { Transition } from '@headlessui/react';
-import { AiOutlineClose } from 'react-icons/ai';
+import { Close } from '@mui/icons-material';
 
 import type { Review } from './ReviewComponent';
 import { onSaveReviewProps } from '../pages';
@@ -93,7 +93,7 @@ export const MyDateCalendar = ({
               className='absolute right-0 top-0 p-2'
               onClick={closeDatePicker}
             >
-              <AiOutlineClose className='text-2xl' />
+              <Close />
             </button>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateCalendar

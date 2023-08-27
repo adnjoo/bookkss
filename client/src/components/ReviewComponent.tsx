@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
-import {
-  AiOutlineDelete,
-  AiOutlineDownload,
-  AiFillLock,
-  AiFillUnlock,
-  AiOutlineEllipsis,
-} from 'react-icons/ai';
 import { Button, Tooltip } from '@mui/material';
-import { Archive, ExpandMore, ExpandLess, Settings } from '@mui/icons-material';
+import {
+  Archive,
+  Delete,
+  Download,
+  ExpandMore,
+  ExpandLess,
+  Lock,
+  LockOpen,
+  Settings,
+} from '@mui/icons-material';
 
 import { downloadMarkdown } from '../lib/helpers';
 import { MyDateCalendar } from './MyDateCalendar';
@@ -165,7 +167,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
               sx={{ gap: 1 }}
               color='inherit'
             >
-              <AiOutlineDownload size={24} />
+              <Download />
               Download
             </Button>
             <Button
@@ -174,11 +176,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
               sx={{ gap: 1 }}
               color='inherit'
             >
-              {review.private ? (
-                <AiFillLock size={24} color={'red'} />
-              ) : (
-                <AiFillUnlock size={24} />
-              )}
+              {review.private ? <Lock /> : <LockOpen />}
               {review.private ? 'Make Public' : 'Make Private'}
             </Button>
             <Button
@@ -196,7 +194,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
               sx={{ gap: 1 }}
               color='inherit'
             >
-              <AiOutlineDelete size={24} />
+              <Delete />
               Delete
             </Button>
           </div>

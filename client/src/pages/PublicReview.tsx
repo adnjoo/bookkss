@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import MDEditor from '@uiw/react-md-editor';
-import { FaShareSquare } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { Button, Tooltip } from '@mui/material';
+import { Share } from '@mui/icons-material';
 
 import { SERVER_URL } from '../lib/helpers';
 
@@ -46,7 +46,7 @@ export function PublicReview() {
             Posted on {new Date(review.createdAt).toLocaleDateString()}
             <Tooltip title='Copy link to review' arrow sx={{ ml: 2 }}>
               <Button onClick={handleCopy} color='inherit'>
-                <FaShareSquare />
+                <Share />
               </Button>
             </Tooltip>
           </p>
