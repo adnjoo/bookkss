@@ -29,6 +29,7 @@ export interface saveReviewProps {
   setPrivate: boolean;
   setArchive: boolean;
   reviewDate: string;
+  rating: number;
 }
 
 export const saveReview = async ({
@@ -39,6 +40,7 @@ export const saveReview = async ({
   setPrivate,
   setArchive,
   reviewDate,
+  rating,
 }: saveReviewProps) => {
   let { data } = await axios.post(`${SERVER_URL}/reviews/upsert-review`, {
     id: reviewId,
@@ -48,6 +50,7 @@ export const saveReview = async ({
     setPrivate,
     setArchive,
     reviewDate,
+    rating,
   });
   return data;
 };
