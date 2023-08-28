@@ -17,6 +17,7 @@ import { useMediaQuery } from 'react-responsive';
 import { downloadMarkdown } from '../lib/helpers';
 import { MyDateCalendar } from './MyDateCalendar';
 import { onSaveReviewProps } from '../pages';
+import { Rating } from './Rating';
 
 export interface Review {
   archive: boolean;
@@ -27,6 +28,7 @@ export interface Review {
   title: string;
   userId: number;
   reviewDate: string;
+  rating: number;
 }
 
 export interface ReviewProps {
@@ -49,6 +51,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   const bodyRef = useRef<any>(review.body);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [editedTitle, setEditedTitle] = useState(review.title);
+  const [rating, setRating] = useState(review.rating);
 
   // console.log('review', review);
 
@@ -101,10 +104,22 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
     setIsEditingTitle(false);
   };
 
+  const handleRatingChange = (newRating: number) => {
+    setRating(newRating);
+    onSaveReview({
+      reviewId: review.id,
+      updatedBody: bodyRef.current,
+      setPrivate: review.private,
+      setArchive: review.archive,
+      reviewDate: review.reviewDate,
+      rating: newRating, // Save the updated rating to the review object
+    });
+  };
+
   return (
     <div key={review.id} className='mb-4 items-center rounded border p-4'>
-      <div className='flex items-center justify-between'>
-        <span className='mb-2 flex items-center gap-4'>
+      <div className='mb-4 flex justify-between border-b pb-6'>
+        <span className='flex flex-col gap-4 sm:flex-row'>
           {isEditingTitle ? (
             <div className='flex gap-2'>
               <input
@@ -132,11 +147,11 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
               {review.title}
             </h3>
           )}
-
           <MyDateCalendar review={review} onSaveReview={onSaveReview} />
+          <Rating rating={rating} onRatingChange={handleRatingChange} />
         </span>
 
-        <div className='flex items-center gap-2'>
+        <div className='gap-2'>
           {expanded && !editMode && (
             <>
               <Button

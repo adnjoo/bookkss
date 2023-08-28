@@ -6,6 +6,7 @@ import { Button, Tooltip } from '@mui/material';
 
 import { Review } from './ReviewComponent';
 import { saveReview } from '../lib/helpers';
+import { Rating } from './Rating';
 
 export interface ReviewPublicProps {
   review: Review;
@@ -31,11 +32,10 @@ export const ReviewPublic = ({
       setPrivate: review.private,
       setArchive: false,
       reviewDate: review.reviewDate,
+      rating: review.rating,
     });
     getReviews();
   };
-
-  // console.log('reviewPublic', review);
 
   return (
     <div
@@ -50,6 +50,9 @@ export const ReviewPublic = ({
           <Link to={`/profile/${review.userId}`}>
             <p>by user: {review.userId}</p>
           </Link>
+          {archive && (
+            <Rating rating={review.rating} onRatingChange={() => {}} />
+          )}
         </span>
         <div className='flex flex-row items-center gap-4'>
           {archive && (

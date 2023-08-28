@@ -15,6 +15,7 @@ export interface onSaveReviewProps {
   setArchive: boolean;
   reviewDate: string;
   updatedTitle?: string;
+  rating?: number;
 }
 
 export function Dashboard() {
@@ -77,6 +78,7 @@ export function Dashboard() {
     setArchive,
     reviewDate,
     updatedTitle,
+    rating,
   }: onSaveReviewProps) => {
     saveReview({
       userId: user?.id,
@@ -89,6 +91,7 @@ export function Dashboard() {
       setPrivate,
       setArchive,
       reviewDate,
+      rating,
     }).then(() => {
       getReviews();
       console.log('Review saved', updatedBody);

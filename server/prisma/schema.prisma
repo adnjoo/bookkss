@@ -28,6 +28,7 @@ model Review {
     archive    Boolean  @default(false)
     user       User?    @relation(fields: [userId], references: [id]) // Creating a relation to the User model
     likes      Like[] // Connecting reviews to their likes
+    rating     Int      @default(0)
 }
 
 model Like {
