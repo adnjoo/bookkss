@@ -91,7 +91,7 @@ export function Dashboard() {
       setPrivate,
       setArchive,
       reviewDate,
-      rating,
+      rating: rating || 0,
     }).then(() => {
       getReviews();
       console.log('Review saved', updatedBody);

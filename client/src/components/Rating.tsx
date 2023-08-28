@@ -13,7 +13,7 @@ export const Rating: React.FC<RatingProps> = ({ rating, onRatingChange }) => {
       <RatingMui
         name='rating'
         value={rating}
-        onChange={(event, newRating) => {
+        onChange={(_, newRating) => {
           if (newRating !== null) {
             onRatingChange(newRating);
           }
