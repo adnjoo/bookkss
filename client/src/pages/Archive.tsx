@@ -19,8 +19,8 @@ export function Archive() {
   };
 
   useEffect(() => {
-    getReviews();
-  }, []);
+    if (user) getReviews();
+  }, [user]);
 
   return (
     <div className='mx-4 mb-[400px] flex flex-col justify-center sm:mx-24'>

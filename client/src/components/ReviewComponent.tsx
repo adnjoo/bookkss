@@ -83,6 +83,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
       setPrivate: updatedPrivate,
       setArchive: archive,
       reviewDate: review.reviewDate,
+      rating: rating,
     });
     setEditMode(false);
   };
