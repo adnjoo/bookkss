@@ -12,6 +12,7 @@ import {
   LockOpen,
   Settings,
 } from '@mui/icons-material';
+import { useMediaQuery } from 'react-responsive';
 
 import { downloadMarkdown } from '../lib/helpers';
 import { MyDateCalendar } from './MyDateCalendar';
@@ -39,6 +40,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   onSaveReview,
   onDelete,
 }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
   const [updatedBody, setUpdatedBody] = useState<any>(review.body);
   const [expanded, setExpanded] = useState(false);
   const [optionsTab, setOptionsTab] = useState(false);
@@ -210,6 +212,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             previewOptions={{
               rehypePlugins: [[rehypeSanitize]],
             }}
+            preview={isMobile ? 'edit' : 'live'}
           />
         </div>
       ) : (
