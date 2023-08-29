@@ -7,11 +7,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { Button, Tooltip } from '@mui/material';
 import { Share } from '@mui/icons-material';
-import type { Review } from '../components/ReviewComponent';
 
+import type { Review } from '../components/ReviewComponent';
 import { SERVER_URL } from '../lib/helpers';
+import { useLoadingStore } from '../zustand/store';
 
 export function PublicReview() {
+  const [loading, setLoading] = useLoadingStore((state: any) => [
+    state.loading,
+    state.setLoading,
+  ]);
   const { id } = useParams();
   const [review, setReview] = useState<Review | null>(null);
 
@@ -28,6 +33,7 @@ export function PublicReview() {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${SERVER_URL}/reviews/get-public-review/${id}`)
       .then((response) => {
@@ -35,8 +41,16 @@ export function PublicReview() {
       })
       .catch((error) => {
         console.error('Error fetching review:', error);
+        setReview(null);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [id]);
+
+  if (loading) {
+    return <p>Loading review...</p>;
+  }
 
   return (
     <div className='mx-2 mb-48 mt-12 flex items-center justify-center rounded border p-4 lg:mx-64'>
@@ -51,7 +65,10 @@ export function PublicReview() {
               </Button>
             </Tooltip>
           </p>
-          <Link to={`/profile/${review.userId}`}>
+          <Link
+            to={`/profile/${review.userId}`}
+            title={`More reviews by user: ${review.userId}`}
+          >
             <p className='mb-4 cursor-pointer text-xl text-gray-600 hover:text-blue-500'>
               More reviews by user: {review.userId}
             </p>
@@ -62,7 +79,7 @@ export function PublicReview() {
           />
         </div>
       ) : (
-        <p>Loading review...</p>
+        <p>Review not found.</p>
       )}
       <ToastContainer position='bottom-left' autoClose={2000} />
     </div>
