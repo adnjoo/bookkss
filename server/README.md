@@ -2,7 +2,17 @@
 
 [@](https://bookkss.fly.dev) BE deployment, fly
 
-fly deploy instructions
+### Local
+
+Steps to run:
+
+1. set `DATABASE_URL` and `SECRET` in .env
+
+1. `npx prisma generate`
+
+1. `npm run dev`
+
+### fly deploy instructions
 
 `tsc` then deploy
 
