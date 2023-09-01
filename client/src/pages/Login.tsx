@@ -21,7 +21,7 @@ export function Login() {
       if (res.data) {
         console.log(res.data);
         localStorage.setItem('token', res.data.token);
-        window.location.href = '/';
+        window.location.href = '/dashboard';
       }
     } catch (err: any) {
       alert(err.response.data.message);
