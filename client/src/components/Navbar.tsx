@@ -97,6 +97,7 @@ export function Navbar() {
             >
               {(user ? authPages : nonAuthPages).map((page) => (
                 <Link
+                  key={page}
                   to={`/${page.toLowerCase()}`}
                   style={{ textDecoration: 'none' }}
                 >
