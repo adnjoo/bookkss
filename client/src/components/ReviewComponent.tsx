@@ -132,7 +132,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             </div>
           ) : (
             <h3
-              className='text-xl font-bold'
+              className='cursor-pointer text-xl font-bold duration-300 hover:text-blue-500'
               onClick={() => setIsEditingTitle(true)}
             >
               {review.title}

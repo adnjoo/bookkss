@@ -58,7 +58,7 @@ export const MyDateCalendar = ({
   return (
     <>
       <h3
-        className='cursor-pointer text-xl font-bold'
+        className='cursor-pointer text-xl font-bold duration-300 hover:text-blue-500'
         onClick={() => setShowDatePicker(!showDatePicker)}
       >
         {dayjs(review.reviewDate).format('YYYY-MM-DD')}
