@@ -74,16 +74,18 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   }, [containerRef]);
 
   const handleSaveReview = (
-    updatedPrivate: boolean = review.private,
-    archive: boolean = review.archive
+    newPrivate: boolean = review.private,
+    newArchive: boolean = review.archive,
+    newRating: number = review.rating
   ) => {
+    if (newRating) setRating(newRating);
     onSaveReview({
       reviewId: review.id,
       updatedBody: bodyRef.current,
-      setPrivate: updatedPrivate,
-      setArchive: archive,
+      setPrivate: newPrivate,
+      setArchive: newArchive,
       reviewDate: review.reviewDate,
-      rating: rating,
+      rating: newRating,
     });
     setEditMode(false);
   };
@@ -103,18 +105,6 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
       reviewDate: review.reviewDate,
     });
     setIsEditingTitle(false);
-  };
-
-  const handleRatingChange = (newRating: number) => {
-    setRating(newRating);
-    onSaveReview({
-      reviewId: review.id,
-      updatedBody: bodyRef.current,
-      setPrivate: review.private,
-      setArchive: review.archive,
-      reviewDate: review.reviewDate,
-      rating: newRating, // Save the updated rating to the review object
-    });
   };
 
   return (
@@ -149,7 +139,12 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
             </h3>
           )}
           <MyDateCalendar review={review} onSaveReview={onSaveReview} />
-          <Rating rating={rating} onRatingChange={handleRatingChange} />
+          <Rating
+            rating={rating}
+            onRatingChange={(rating) =>
+              handleSaveReview(undefined, undefined, rating)
+            }
+          />
         </span>
 
         <div className='gap-2'>
