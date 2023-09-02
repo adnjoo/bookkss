@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
+import { ToastContainer } from 'react-toastify';
 
-import App from './App.tsx';
 import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
+import App from './App.tsx';
 import {
   Dashboard,
   AboutUs,
@@ -27,6 +29,7 @@ const NavbarWrapper = () => {
       <LoadingBar color='#333333' progress={loading ? 50 : 100} height={5} />
       <Outlet />
       <Footer />
+      <ToastContainer position='bottom-left' autoClose={2000} />
     </>
   );
 };

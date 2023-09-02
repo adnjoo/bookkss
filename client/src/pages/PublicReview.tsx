@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import MDEditor from '@uiw/react-md-editor';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { Button, Tooltip } from '@mui/material';
 import { Share } from '@mui/icons-material';
@@ -81,7 +80,6 @@ export function PublicReview() {
       ) : (
         <p>Review not found.</p>
       )}
-      <ToastContainer position='bottom-left' autoClose={2000} />
     </div>
   );
 }

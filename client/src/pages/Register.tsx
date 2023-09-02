@@ -5,12 +5,31 @@ import { Button } from '@mui/material';
 
 import { SERVER_URL } from '../lib/helpers';
 
+export const isEmailValid = (email: string) => {
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailPattern.test(email);
+};
+
+export const isPasswordValid = (password: string) => {
+  return password.length >= 8;
+};
+
 export function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const register = async () => {
+    if (!isEmailValid(email)) {
+      setErrorMessage('Please enter a valid email.');
+      return; // Exit the function if email is invalid
+    }
+
+    if (!isPasswordValid(password)) {
+      setErrorMessage('Password must be at least 8 characters long.');
+      return;
+    }
+
     try {
       const res = await axios.post(`${SERVER_URL}/users/register`, {
         email,
