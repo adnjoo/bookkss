@@ -18,17 +18,19 @@ model User {
 }
 
 model Review {
-    id         Int      @id @default(autoincrement())
-    createdAt  DateTime @default(now())
-    reviewDate DateTime @default(now())
-    title      String
-    body       String
-    private    Boolean  @default(true)
-    userId     Int? // Connecting the review to the user
-    archive    Boolean  @default(false)
-    user       User?    @relation(fields: [userId], references: [id]) // Creating a relation to the User model
-    likes      Like[] // Connecting reviews to their likes
-    rating     Int      @default(0)
+    id               Int       @id @default(autoincrement())
+    createdAt        DateTime  @default(now())
+    reviewDate       DateTime  @default(now())
+    readingStartDate DateTime?
+    readingEndDate   DateTime?
+    title            String
+    body             String
+    private          Boolean   @default(true)
+    userId           Int? // Connecting the review to the user
+    archive          Boolean   @default(false)
+    user             User?     @relation(fields: [userId], references: [id]) // Creating a relation to the User model
+    likes            Like[] // Connecting reviews to their likes
+    rating           Int       @default(0)
 }
 
 model Like {
