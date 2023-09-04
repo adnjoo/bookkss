@@ -165,6 +165,7 @@ export const getPublicReview = async (req: Request, res: Response) => {
         userId: true,
         private: true,
         reviewDate: true,
+        rating: true,
       },
     });
 

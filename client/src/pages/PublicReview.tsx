@@ -10,6 +10,7 @@ import { Share } from '@mui/icons-material';
 import type { Review } from '../components/ReviewComponent';
 import { SERVER_URL } from '../lib/helpers';
 import { useLoadingStore } from '../zustand/store';
+import { Rating } from '../components/Rating';
 
 export function PublicReview() {
   const [loading, setLoading] = useLoadingStore((state: any) => [
@@ -56,6 +57,11 @@ export function PublicReview() {
       {review ? (
         <div>
           <h2 className='text-xl font-semibold'>{review.title}</h2>
+          <Rating
+            rating={review.rating}
+            showText={false}
+            onRatingChange={() => {}}
+          />
           <p className='my-2 mb-4 flex items-center text-gray-600'>
             Review date: {new Date(review?.reviewDate).toLocaleDateString()}
             <Tooltip title='Copy link to review' arrow sx={{ ml: 2 }}>
