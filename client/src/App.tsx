@@ -91,14 +91,17 @@ function App() {
           </h2>
           <div className='text-center'>
             <p className='my-4 text-lg text-gray-600'>
-              A room without books is like a body without a soul - Cicero
+              Bookkss is pretty good. I can store my notes for free and access
+              them really easily. The platform is new and shaping up, but I have
+              had a good experience with it. I am excited to see where it goes.
+              Thanks Bookkss team! - Deborah Ong, Software Engineer
               <img
-                src='/cicero.jpg'
-                alt='cicero'
+                src='/user1.jpg'
+                alt='user1'
                 className='mx-auto mt-2 w-14 rounded-full'
               />
             </p>
-            <p className='my-4 text-lg text-gray-600'>
+            {/* <p className='my-4 text-lg text-gray-600'>
               The more that you read, the more things you will know. The more
               that you learn, the more places you'll go. - Dr. Seuss (Author)
               <img
@@ -106,7 +109,7 @@ function App() {
                 alt='seuss'
                 className='mx-auto mt-2 w-14 rounded-full'
               />
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
