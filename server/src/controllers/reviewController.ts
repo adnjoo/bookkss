@@ -134,7 +134,13 @@ export const getPublicReviews = async (req: Request, res: Response) => {
         title: true,
         body: true,
         userId: true,
+        rating: true,
       },
+    });
+    publicReviews.sort((a, b) => {
+      return (
+        new Date(b.reviewDate).getTime() - new Date(a.reviewDate).getTime()
+      );
     });
     res.json(publicReviews);
   } catch (error) {

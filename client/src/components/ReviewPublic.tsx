@@ -44,9 +44,14 @@ export const ReviewPublic = ({
     >
       <div className='flex items-center justify-between'>
         <span>
-          <Link to={`/review/${review.id}`}>
-            <h3 className='cursor-pointer text-xl font-bold'>{review.title}</h3>
-          </Link>
+          <span className='flex gap-3'>
+            <Link to={`/review/${review.id}`}>
+              <h3 className='cursor-pointer text-xl font-bold'>
+                {review.title}
+              </h3>
+            </Link>
+            <Rating rating={review.rating} onRatingChange={() => {}} />
+          </span>
           <Link to={`/profile/${review.userId}`}>
             <p>by user: {review.userId}</p>
           </Link>

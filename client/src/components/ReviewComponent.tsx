@@ -108,7 +108,7 @@ export const ReviewComponent: React.FC<ReviewProps> = ({
   return (
     <div key={review.id} className='mb-4 items-center rounded border p-4'>
       <div className='mb-4 flex justify-between border-b pb-6'>
-        <span className='flex flex-col gap-4 sm:flex-row'>
+        <span className='flex flex-col items-center gap-4 sm:flex-row'>
           {isEditingTitle ? (
             <div className='flex gap-2'>
               <input
