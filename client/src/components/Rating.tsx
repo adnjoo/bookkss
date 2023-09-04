@@ -11,6 +11,7 @@ export const Rating: React.FC<RatingProps> = ({ rating, onRatingChange }) => {
     <div className='flex items-center gap-2'>
       <span>Rating: {rating} / 5</span>
       <RatingMui
+        data-testid='rating'
         name='rating'
         value={rating}
         onChange={(_, newRating) => {
