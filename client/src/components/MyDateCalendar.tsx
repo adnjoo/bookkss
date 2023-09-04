@@ -32,6 +32,7 @@ export const MyDateCalendar = ({
       setPrivate: review.private,
       setArchive: review.archive,
       reviewDate: reviewDate.toISOString(),
+      rating: review.rating,
     });
     setShowDatePicker(false);
   };
