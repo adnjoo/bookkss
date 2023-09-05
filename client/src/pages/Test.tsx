@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 
@@ -53,7 +53,9 @@ export function Test() {
     <div>
       <img className='m-4 h-24 w-24 rounded-full' src={profilePicture} />
       <h2>Upload Profile Picture</h2>
-      <Dropzone onDrop={(acceptedFiles) => setSelectedFile(acceptedFiles[0])}>
+      <Dropzone
+        onDrop={(acceptedFiles) => setSelectedFile(acceptedFiles[0] as any)}
+      >
         {({ getRootProps, getInputProps }) => (
           <div className='dropzone' {...getRootProps()}>
             <input {...getInputProps()} />
