@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useUserStore } from '../zustand/store';
 
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 export const logOut = () => {
   localStorage.removeItem('token');

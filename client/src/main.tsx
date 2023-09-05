@@ -17,6 +17,7 @@ import {
   Profile,
   PublicReview,
   Register,
+  Test,
 } from './pages';
 import { Footer, Navbar } from './components';
 import { useLoadingStore } from './zustand/store.ts';
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: '/blog',
         element: <Blog />,
+      },
+      {
+        path: '/test',
+        element: <Test />,
       },
       {
         path: '*',
