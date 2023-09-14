@@ -1,5 +1,7 @@
 import cors from 'cors';
 import express, { Request, Response } from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import { reviewRouter } from './routes/reviewRoutes';
 import { userRouter } from './routes/userRoutes';
