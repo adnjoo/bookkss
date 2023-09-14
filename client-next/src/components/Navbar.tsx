@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from 'react';
 import {
   AppBar,
   Box,
@@ -7,162 +7,160 @@ import {
   Typography,
   Menu,
   Container,
-  Avatar,
-  Button,
   Tooltip,
   MenuItem,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
+} from '@mui/material';
+import { Menu as MenuIcon, Login as LoginIcon } from '@mui/icons-material';
+import axios from 'axios';
+import Link from 'next/link';
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { logOut } from '../lib/helpers';
+import { SERVER_URL } from '../lib/helpers';
+import { useUserStore } from '../zustand/store';
 
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+const nonAuthPages = ['Discover', 'Blog'];
+const authPages = ['Dashboard', 'Archive', 'Discover'];
+
+export function Navbar() {
+  const user = useUserStore((state: any) => state.user);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
+  const setUser = useUserStore((state: any) => state.setUser);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios
+        .get(`${SERVER_URL}/users/is-auth`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUser(res.data.user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+    <AppBar position='static' color='transparent'>
+      <Container maxWidth='xl'>
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
+            component='a'
+            href='/'
+            variant='h4'
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              color: 'black',
+              display: {
+                xs: 'none',
+                md: 'block',
+              },
             }}
           >
-            LOGO
+            bookkss
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton size='large' onClick={handleOpenNavMenu}>
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
+              id='menu-appbar'
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+              {(user ? authPages : nonAuthPages).map((page) => (
+                <Link
+                  key={page}
+                  href={`/${page.toLowerCase()}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <MenuItem
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ display: 'flex', flexDirection: 'col' }}
+                  >
+                    <Typography textAlign='center'>{page}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
-            variant="h5"
+            id='mobile logo'
+            variant='h3'
             noWrap
-            component="a"
-            href="/"
+            component='a'
+            href='/'
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              color: 'black',
+              fontWeight: 800,
+              display: {
+                xs: 'flex',
+                md: 'none',
+              },
             }}
           >
-            LOGO
+            B
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
+          <Box
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+            id='desktop-menu'
+          >
+            {(user ? authPages : nonAuthPages).map((page) => (
+              <Link
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                href={`/${page.toLowerCase()}`}
+                style={{ textDecoration: 'none' }}
               >
-                {page}
-              </Button>
+                <Typography
+                  noWrap
+                  sx={{ color: 'black', fontWeight: 800, mr: 2 }}
+                >
+                  {page}
+                </Typography>
+              </Link>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Box sx={{ flexGrow: 0 }} id='right'>
+            <Tooltip title={user ? 'Logout' : 'Login'} arrow>
+              <IconButton
+                onClick={() => {
+                  user ? logOut() : (window.location.href = '/login');
+                }}
+              >
+                <LoginIcon sx={{ color: 'black' }} />
               </IconButton>
             </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
